@@ -16,7 +16,7 @@ import pygame
 import pygame.freetype
 import pygame.gfxdraw
 
-from Settings import Settings
+import fbgui.Settings as Settings
 
 class App(object):
   """ Application based on pygame """
