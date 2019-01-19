@@ -17,12 +17,17 @@ class Settings(object):
   
   def __init__(self,defaults=None):
     """ constructor:
-        pass a list of 'supported' keys in a dict with  default values
+        - pass a list of 'supported' keys in a dict with default values
+        - or pass a Settings-object (copy-constructor)
     """
     if defaults:
-      self._keys = defaults.keys()
-      for key in self._keys:
-        setattr(self,key,defaults[key])
+      if isinstance(defaults,Settings):
+        self._keys = defaults._keys
+        self.copy(defaults)
+      else:
+        self._keys = defaults.keys()
+        for key in self._keys:
+          setattr(self,key,defaults[key])
 
   # --- copy keys from other settings-object   -------------------------------
   
