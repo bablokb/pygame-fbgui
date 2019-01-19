@@ -15,4 +15,5 @@ from Color    import Color    as Color
 
 from App      import App      as App
 from Widget   import Widget   as Widget
-
+from Panel    import Panel    as Panel
+from Line     import Line     as Line
