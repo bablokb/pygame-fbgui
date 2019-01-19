@@ -14,27 +14,38 @@ import os
 
 import pygame
 import pygame.freetype
-import pygame.gfxdraw
 
 import fbgui.Settings as Settings
+import fbgui.Color    as Color
 
 class App(object):
   """ Application based on pygame """
+
+  screen = None
+  theme  = None
 
   # --- constructor   --------------------------------------------------------
   
   def __init__(self,settings=Settings()):
     "Ininitializes a new pygame screen using the framebuffer"
 
-    self.screen  = None
-    self.display = Settings({
+    App.app        = self
+    self.display   = Settings({
       'title':     "Application-Title",
       'width':     800,
       'height':    600,
-      'size':      (800,600),
-      'font_name': "FreeSans.ttf",
-      'font_size': 12})
+      'size':      (800,600)
+      })
     self.display.copy(settings)
+
+    App.theme = Settings({
+      'bg_color':     Color.WHITE,
+      'fg_color':     Color.BLACK,
+      'default_font': None,
+      'font_name':    "FreeSans.ttf",
+      'font_size':    12
+    })
+    App.theme.copy(settings)
 
     self._init_screen(settings)
     self._init_font()
@@ -58,7 +69,7 @@ class App(object):
     if have_X:
       pygame.display.init()
       self.display.size   = (self.display.width,self.display.height)
-      self.screen         = pygame.display.set_mode(self.display.size)
+      App.screen          = pygame.display.set_mode(self.display.size)
       if self.display.title:
         pygame.display.set_caption(self.display.title)
     else:
@@ -84,7 +95,7 @@ class App(object):
                                pygame.display.Info().current_h)
         self.display.width  = self.display.size[0]
         self.display.height = self.display.size[1]
-        self.screen = pygame.display.set_mode(self.display.size,
+        App.screen          = pygame.display.set_mode(self.display.size,
                                               pygame.FULLSCREEN)
 
   # --- initialize font support   --------------------------------------------
@@ -93,8 +104,9 @@ class App(object):
     """ initialize font support """
 
     pygame.freetype.init()
-    self.default_font = pygame.freetype.SysFont(self.display.font_name,
-                                                self.display.font_size)
+    if not App.theme.default_font:
+      App.theme.default_font = pygame.freetype.SysFont(App.theme.font_name,
+                                                App.theme.font_size)
 
   # --- main event loop   -----------------------------------------------------
 
@@ -106,7 +118,7 @@ class App(object):
       if event.type == pygame.QUIT:
         return
 
-      self.screen.fill((0,0,255))
+      self.screen.fill(App.theme.bg_color)
       pygame.display.flip()
 
   # --- terminate application   ----------------------------------------------
