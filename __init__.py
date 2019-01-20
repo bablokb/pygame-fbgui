@@ -10,6 +10,7 @@
 #
 # ----------------------------------------------------------------------------
 
+from Msg      import Msg      as Msg
 from Settings import Settings as Settings
 from Color    import Color    as Color
 
