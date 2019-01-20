@@ -28,14 +28,14 @@ class App(object):
   def __init__(self,settings=fbgui.Settings()):
     "Ininitializes the pygame display using the framebuffer"
 
-    App.app        = self
-    self.display   = fbgui.Settings({
+    App.display = fbgui.Settings({
+      'screen':    None,
       'title':     "Application-Title",
       'width':     800,
       'height':    600,
       'size':      (800,600)
       })
-    self.display.copy(settings)
+    App.display.copy(settings)
 
     App.theme = fbgui.Settings({
       'bg_color':     fbgui.Color.WHITE,
@@ -67,10 +67,10 @@ class App(object):
 
     if have_X:
       pygame.display.init()
-      self.display.size   = (self.display.width,self.display.height)
-      App.display         = pygame.display.set_mode(self.display.size)
-      if self.display.title:
-        pygame.display.set_caption(self.display.title)
+      App.display.size   = (App.display.width,App.display.height)
+      App.display.screen  = pygame.display.set_mode(App.display.size)
+      if App.display.title:
+        pygame.display.set_caption(App.display.title)
     else:
       # Check which frame buffer drivers are available
       # Start with fbcon since directfb hangs with composite output
@@ -90,11 +90,11 @@ class App(object):
         if not found:
           raise Exception('No suitable video driver found!')
         
-        self.display.size   = (pygame.display.Info().current_w,
+        App.display.size   = (pygame.display.Info().current_w,
                                pygame.display.Info().current_h)
-        self.display.width  = self.display.size[0]
-        self.display.height = self.display.size[1]
-        App.display         = pygame.display.set_mode(self.display.size,
+        App.display.width  = App.display.size[0]
+        App.display.height = App.display.size[1]
+        App.display.screen  = pygame.display.set_mode(App.display.size,
                                               pygame.FULLSCREEN)
 
   # --- initialize font support   --------------------------------------------
@@ -117,7 +117,7 @@ class App(object):
       if event.type == pygame.QUIT:
         return
 
-      App.display.fill(App.theme.bg_color)
+      App.display.screen.fill(App.theme.bg_color)
       pygame.display.flip()
 
   # --- terminate application   ----------------------------------------------
