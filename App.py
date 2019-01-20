@@ -21,13 +21,13 @@ import fbgui.Color    as Color
 class App(object):
   """ Application based on pygame """
 
-  screen = None
-  theme  = None
+  display = None
+  theme   = None
 
   # --- constructor   --------------------------------------------------------
   
   def __init__(self,settings=Settings()):
-    "Ininitializes a new pygame screen using the framebuffer"
+    "Ininitializes the pygame display using the framebuffer"
 
     App.app        = self
     self.display   = Settings({
@@ -47,14 +47,14 @@ class App(object):
     })
     App.theme.copy(settings)
 
-    self._init_screen(settings)
+    self._init_display(settings)
     self._init_font()
     pygame.fastevent.init()
 
-  # --- initialize pygame screen   -------------------------------------------
+  # --- initialize pygame display   ------------------------------------------
   
-  def _init_screen(self,settings):
-    """ initialize pygame screen
+  def _init_display(self,settings):
+    """ initialize pygame display
 
       Based on 'Python GUI in Linux frame buffer'
       http://www.karoltomala.com/blog/?p=679
@@ -69,7 +69,7 @@ class App(object):
     if have_X:
       pygame.display.init()
       self.display.size   = (self.display.width,self.display.height)
-      App.screen          = pygame.display.set_mode(self.display.size)
+      App.display         = pygame.display.set_mode(self.display.size)
       if self.display.title:
         pygame.display.set_caption(self.display.title)
     else:
@@ -95,7 +95,7 @@ class App(object):
                                pygame.display.Info().current_h)
         self.display.width  = self.display.size[0]
         self.display.height = self.display.size[1]
-        App.screen          = pygame.display.set_mode(self.display.size,
+        App.display         = pygame.display.set_mode(self.display.size,
                                               pygame.FULLSCREEN)
 
   # --- initialize font support   --------------------------------------------
@@ -118,7 +118,7 @@ class App(object):
       if event.type == pygame.QUIT:
         return
 
-      self.screen.fill(App.theme.bg_color)
+      App.display.fill(App.theme.bg_color)
       pygame.display.flip()
 
   # --- terminate application   ----------------------------------------------
