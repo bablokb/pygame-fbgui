@@ -15,8 +15,7 @@ import os
 import pygame
 import pygame.freetype
 
-import fbgui.Settings as Settings
-import fbgui.Color    as Color
+import fbgui
 
 class App(object):
   """ Application based on pygame """
@@ -26,11 +25,11 @@ class App(object):
 
   # --- constructor   --------------------------------------------------------
   
-  def __init__(self,settings=Settings()):
+  def __init__(self,settings=fbgui.Settings()):
     "Ininitializes the pygame display using the framebuffer"
 
     App.app        = self
-    self.display   = Settings({
+    self.display   = fbgui.Settings({
       'title':     "Application-Title",
       'width':     800,
       'height':    600,
@@ -38,9 +37,9 @@ class App(object):
       })
     self.display.copy(settings)
 
-    App.theme = Settings({
-      'bg_color':     Color.WHITE,
-      'fg_color':     Color.BLACK,
+    App.theme = fbgui.Settings({
+      'bg_color':     fbgui.Color.WHITE,
+      'fg_color':     fbgui.Color.BLACK,
       'default_font': None,
       'font_name':    "FreeSans.ttf",
       'font_size':    12
