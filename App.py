@@ -22,12 +22,18 @@ class App(object):
 
   display = None
   theme   = None
+  logger  = None
 
   # --- constructor   --------------------------------------------------------
   
   def __init__(self,settings=fbgui.Settings()):
     "Ininitializes the pygame display using the framebuffer"
 
+    # create global message-logger
+    App.logger      = fbgui.Msg()
+    fbgui.Msg.level = getattr(settings,"msg_level","INFO")
+
+    # global display object
     App.display = fbgui.Settings({
       'screen':    None,
       'title':     "Application-Title",
@@ -37,6 +43,7 @@ class App(object):
       })
     App.display.copy(settings)
 
+    # global theme settings
     App.theme = fbgui.Settings({
       'bg_color':     fbgui.Color.WHITE,
       'fg_color':     fbgui.Color.BLACK,
@@ -46,6 +53,7 @@ class App(object):
     })
     App.theme.copy(settings)
 
+    # initialize physical display, fonts and event-system
     self._init_display(settings)
     self._init_font()
     pygame.fastevent.init()
@@ -71,6 +79,8 @@ class App(object):
       App.display.screen  = pygame.display.set_mode(App.display.size)
       if App.display.title:
         pygame.display.set_caption(App.display.title)
+      App.logger.msg("DEBUG",
+                  "created X-based display with size: %d,%d" % App.display.size)
     else:
       # Check which frame buffer drivers are available
       # Start with fbcon since directfb hangs with composite output
@@ -90,12 +100,14 @@ class App(object):
         if not found:
           raise Exception('No suitable video driver found!')
         
-        App.display.size   = (pygame.display.Info().current_w,
+      App.display.size   = (pygame.display.Info().current_w,
                                pygame.display.Info().current_h)
-        App.display.width  = App.display.size[0]
-        App.display.height = App.display.size[1]
-        App.display.screen  = pygame.display.set_mode(App.display.size,
+      App.display.width  = App.display.size[0]
+      App.display.height = App.display.size[1]
+      App.display.screen = pygame.display.set_mode(App.display.size,
                                               pygame.FULLSCREEN)
+      App.logger.msg("DEBUG",
+                "created fullscreen display with size: %r" % App.display.size)
 
   # --- initialize font support   --------------------------------------------
 
