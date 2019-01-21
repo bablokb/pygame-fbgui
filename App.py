@@ -29,6 +29,8 @@ class App(object):
   def __init__(self,settings=fbgui.Settings()):
     "Ininitializes the pygame display using the framebuffer"
 
+    self._widget = None
+
     # create global message-logger
     App.logger      = fbgui.Msg()
     fbgui.Msg.level = getattr(settings,"msg_level","INFO")
@@ -118,6 +120,13 @@ class App(object):
     if not App.theme.default_font:
       App.theme.default_font = pygame.freetype.SysFont(App.theme.font_name,
                                                 App.theme.font_size)
+
+  # --- set top-level widget   ------------------------------------------------
+
+  def set_widget(self,widget):
+    """ set top-level widget """
+
+    self._widget = widget
 
   # --- main event loop   -----------------------------------------------------
 
