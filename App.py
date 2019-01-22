@@ -138,8 +138,9 @@ class App(object):
       if event.type == pygame.QUIT:
         return
 
-      App.display.screen.fill(App.theme.bg_color)
-      pygame.display.flip()
+      if self._widget:
+        self._widget.draw()
+        pygame.display.flip()
 
   # --- terminate application   ----------------------------------------------
 
