@@ -50,10 +50,11 @@ class Widget(object):
   def __init__(self,id,parent=None,settings=None,toplevel=False):
     """ constructor """
 
-    self._id       = id
-    self._parent   = parent
-    self._toplevel = toplevel
-    self._dirty    = True                     # initial state is always dirty
+    self._id        = id
+    self._parent    = parent
+    self._toplevel  = toplevel
+    self._dirty     = True                    # initial state is always dirty
+    self._is_layout = False                   # layout not done yet
 
     if toplevel:
       self.x       = 0
@@ -66,7 +67,7 @@ class Widget(object):
       self.w       = getattr(settings,'width',0)
       self.h       = getattr(settings,'height',0)
 
-    self.align   = getattr(settings,'align',(Widget.LEFT,Widget.BOTTOM))
+    self.align   = getattr(settings,'align',(fbgui.Widget.LEFT,fbgui.Widget.BOTTOM))
     if not type(self.align) is tuple:
       self.align = (self.align,self.align)
 
@@ -124,10 +125,10 @@ class Widget(object):
       self.screen.w = self.w
     elif 0 < self.w and self.w <= 1.0:
       # relative size
-      self.screen.w = self.w * w
+      self.screen.w = int(self.w * w)
     else:
       # default is minimum size
-      w_min, h_min = self._minimum_size()
+      w_min, h_min = self._minimum_size(w,h)
       self.screen.w = w_min
 
     if self.h > 1 or self.h == 1 and type(self.h) is int:
@@ -135,11 +136,11 @@ class Widget(object):
       self.screen.h = self.h
     elif 0 < self.h and self.h <= 1.0:
       # relative size
-      self.screen.h = self.h * self._parent.screen.h
+      self.screen.h = int(self.h * h)
     else:
       # default is minimum size
       if h_min == -1:
-        w_min, h_min = self._minimum_size()
+        w_min, h_min = self._minimum_size(w,h)
       self.screen.h = h_min
 
     fbgui.App.logger.msg("DEBUG","layout (%s): (%d,%d,%d,%d)" %
@@ -148,7 +149,7 @@ class Widget(object):
 
   # --- query minimum size   -------------------------------------------------
 
-  def _minimum_size(self):
+  def _minimum_size(self,w,h):
     """ query minimum size of widget """
 
     # note that this also works for toplevel-widgets, since
@@ -159,7 +160,7 @@ class Widget(object):
       w_min = self.w
     elif 0 < self.w and self.w <= 1.0:
       # relative size
-      w_min = self.w * self._parent.w
+      w_min = int(self.w * w)
     else:
       # default is no size (subclasses will change this)
       w_min = 0
@@ -169,12 +170,12 @@ class Widget(object):
       h_min = self.h
     elif 0 < self.h and self.h <= 1.0:
       # relative size
-      h_min = self.h * self._parent.screen.h
+      h_min = int(self.h * h)
     else:
       # default is no size (subclasses will change this)
       h_min = 0
 
-    fbgui.App.logger.msg("DEBUG","min_size (%s): (%d,%d)" % self._id,w_min,h_min)
+    fbgui.App.logger.msg("DEBUG","min_size (%s): (%d,%d)" % (self._id,w_min,h_min))
     return (w_min,h_min)
 
   # --- redraw widget   ------------------------------------------------------
