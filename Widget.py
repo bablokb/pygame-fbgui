@@ -47,11 +47,11 @@ class Widget(object):
 
   # --- constructor   --------------------------------------------------------
   
-  def __init__(self,id,parent=None,settings=None,toplevel=False):
+  def __init__(self,id,settings=None,toplevel=False):
     """ constructor """
 
     self._id        = id
-    self._parent    = parent
+    self._parent    = None
     self._toplevel  = toplevel
     self._dirty     = True                    # initial state is always dirty
     self._is_layout = False                   # layout not done yet

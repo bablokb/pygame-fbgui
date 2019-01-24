@@ -19,11 +19,10 @@ class Line(fbgui.Widget):
 
   # --- constructor   --------------------------------------------------------
   
-  def __init__(self,id,parent=None,settings=None,toplevel=False):
+  def __init__(self,id,settings=None,toplevel=False):
     """ constructor """
 
-    super(Line,self).__init__(id,settings=settings,
-                               parent=parent,toplevel=toplevel)
+    super(Line,self).__init__(id,settings=settings,toplevel=toplevel)
     self.orientation = getattr(settings,'orientation',fbgui.Widget.HORIZONTAL)
 
   # --- query minimum size   -------------------------------------------------
