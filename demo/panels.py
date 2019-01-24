@@ -60,7 +60,7 @@ def get_widgets():
         'bg_color'  : colors[color],
         'align'     : (halign,valign)
         })
-      box = fbgui.Panel("box%d" % color,main,settings=config)
+      box = fbgui.Panel("box%d" % color,settings=config)
       main.add(box)
       color += 1
 
@@ -72,13 +72,13 @@ def get_widgets():
     'align'      : fbgui.Widget.CENTER,
     'orientation': fbgui.Widget.HORIZONTAL 
         })
-  line = fbgui.Line("hline",main,settings=config)
+  line = fbgui.Line("hline",settings=config)
   main.add(line)
 
   config.width       = 0
   config.height      = 1.0
   config.orientation = fbgui.Widget.VERTICAL
-  line = fbgui.Line("vline",main,settings=config)
+  line = fbgui.Line("vline",settings=config)
   main.add(line)
 
   return main
