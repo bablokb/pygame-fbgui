@@ -44,6 +44,7 @@ class Panel(fbgui.Widget):
     """ add a child widget """
 
     self._childs.append(widget)
+    widget._set_parent(self)
 
   # --- remove child   -------------------------------------------------------
 
