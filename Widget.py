@@ -76,6 +76,13 @@ class Widget(object):
     self.theme   = fbgui.Settings(fbgui.App.theme)
     self.theme.copy(settings)
 
+  # --- set parent   ---------------------------------------------------------
+
+  def _set_parent(self,parent):
+    """ set parent of this widget """
+
+    self._parent = parent
+
   # --- force redraw   -------------------------------------------------------
   
   def invalidate(self,redraw=False):
