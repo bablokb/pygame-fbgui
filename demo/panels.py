@@ -39,12 +39,12 @@ def get_widgets():
     fbgui.Color.RED,
     fbgui.Color.GREEN,
     fbgui.Color.BLUE,
-    fbgui.Color.RED50,
-    fbgui.Color.GREEN50,
-    fbgui.Color.BLUE50,
-    fbgui.Color.RED25,
-    fbgui.Color.GREEN25,
-    fbgui.Color.BLUE25
+    fbgui.Color.RED075,
+    fbgui.Color.GREEN075,
+    fbgui.Color.BLUE075,
+    fbgui.Color.RED025,
+    fbgui.Color.GREEN025,
+    fbgui.Color.BLUE025
     ]
 
   main = fbgui.Panel("main",
