@@ -77,7 +77,7 @@ class App(object):
 
     if have_X:
       pygame.display.init()
-      App.display.size   = (App.display.width,App.display.height)
+      App.display.size    = (App.display.width,App.display.height)
       App.display.screen  = pygame.display.set_mode(App.display.size)
       if App.display.title:
         pygame.display.set_caption(App.display.title)
