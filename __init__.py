@@ -17,5 +17,7 @@ from Color    import Color    as Color
 from App      import App      as App
 from Widget   import Widget   as Widget
 from Panel    import Panel    as Panel
+from Box      import Box      as Box
+from HBox     import HBox     as HBox
 from Line     import Line     as Line
 from Label    import Label    as Label
