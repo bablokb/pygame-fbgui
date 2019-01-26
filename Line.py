@@ -30,18 +30,22 @@ class Line(fbgui.Widget):
   def _minimum_size(self,w,h):
     """ query minimum size of widget """
 
-    (w_min,h_min) = super(Line,self)._minimum_size(w,h)
-    if self.orientation == fbgui.Widget.HORIZONTAL:
-      h_min = 1            # horizontal lines have height==1
-      if w_min == 0:       # no explicit width, so
-        w_min = 1          # use default (line is one pixel wide)
-    else:
-      w_min = 1            # vertical lines have width==1
-      if h_min == 0:       # no explicit height, so
-        h_min = 1          # use default (line is one pixel wide)
+    if self.w_min  > 0 and self.h_min > 0:
+      return (self.w_min,self.h_min)
 
-    fbgui.App.logger.msg("DEBUG","min_size (%s): (%d,%d)" % (self._id,w_min,h_min))
-    return (w_min,h_min)
+    (self.w_min,self.h_min) = super(Line,self)._minimum_size(w,h)
+    if self.orientation == fbgui.Widget.HORIZONTAL:
+      self.h_min = 1            # horizontal lines have height==1
+      if self.w_min == 0:       # no explicit width, so
+        self.w_min = 1          # use default (line is one pixel wide)
+    else:
+      self.w_min = 1            # vertical lines have width==1
+      if self.h_min == 0:       # no explicit height, so
+        self.h_min = 1          # use default (line is one pixel wide)
+
+    fbgui.App.logger.msg("DEBUG","min_size (%s): (%d,%d)" %
+                                             (self._id,self.w_min,self.h_min))
+    return (self.w_min,self.h_min)
 
   # --- redraw widget   ------------------------------------------------------
 

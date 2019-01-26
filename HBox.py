@@ -27,6 +27,9 @@ class HBox(fbgui.Box):
   def _minimum_size(self,w,h):
     """ query minimum size of widget """
 
+    if self.w_min  > 0 and self.h_min > 0:
+      return (self.w_min,self.h_min)
+
     # minimum size is either absolute, relative to parent or
     #  - w_sum + (n-1)*padding + margins
     #  - h_max of childs + margins
@@ -42,14 +45,14 @@ class HBox(fbgui.Box):
       
     # child-dimensions
     self._get_sizes(w,h)
-    w_min = max(w_min,self._child_w_sum +
+    self.w_min = max(w_min,self._child_w_sum +
                                       (n_childs-1)*self.padding[0] +
                                               self.margins[0]+self.margins[1])
-    h_min = max(h_min,self._child_h_max + self.margins[2]+self.margins[3])
+    self.h_min = max(h_min,self._child_h_max + self.margins[2]+self.margins[3])
 
     fbgui.App.logger.msg("DEBUG",
-                             "min_size (%s): (%d,%d)" % (self._id,w_min,h_min))
-    return (w_min,h_min)
+              "min_size (%s): (%d,%d)" % (self._id,self.w_min,self.h_min))
+    return (self.w_min,self.h_min)
 
   # --- layout widget   ------------------------------------------------------
 

@@ -67,6 +67,10 @@ class Widget(object):
       self.w       = getattr(settings,'width',0)
       self.h       = getattr(settings,'height',0)
 
+    # minimum sizes
+    self.w_min = 0
+    self.h_min = 0
+
     self.align   = getattr(settings,'align',(fbgui.Widget.LEFT,fbgui.Widget.BOTTOM))
     if not type(self.align) is tuple:
       self.align = (self.align,self.align)
@@ -173,28 +177,32 @@ class Widget(object):
     # note that this also works for toplevel-widgets, since
     # these widgets always have absolute size
 
+    if self.w_min  > 0 and self.h_min > 0:
+      return (self.w_min,self.h_min)
+
     if self.w > 1 or self.w == 1 and type(self.w) is int:
       # absolute size
-      w_min = self.w
+      self.w_min = self.w
     elif 0 < self.w and self.w <= 1.0:
       # relative size
-      w_min = int(self.w * w)
+      self.w_min = int(self.w * w)
     else:
       # default is no size (subclasses will change this)
-      w_min = 0
+      self.w_min = 0
 
     if self.h > 1 or self.h == 1 and type(self.h) is int:
       # absolute size
-      h_min = self.h
+      self.h_min = self.h
     elif 0 < self.h and self.h <= 1.0:
       # relative size
-      h_min = int(self.h * h)
+      self.h_min = int(self.h * h)
     else:
       # default is no size (subclasses will change this)
-      h_min = 0
+      self.h_min = 0
 
-    fbgui.App.logger.msg("DEBUG","min_size default (%s): (%d,%d)" % (self._id,w_min,h_min))
-    return (w_min,h_min)
+    fbgui.App.logger.msg("DEBUG",
+           "min_size default (%s): (%d,%d)" % (self._id,self.w_min,self.h_min))
+    return (self.w_min,self.h_min)
 
   # --- redraw widget   ------------------------------------------------------
 

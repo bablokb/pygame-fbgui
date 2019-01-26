@@ -54,17 +54,21 @@ class Label(fbgui.Widget):
   def _minimum_size(self,w,h):
     """ query minimum size of widget """
 
-    (w_min,h_min) = super(Label,self)._minimum_size(w,h)
+    if self.w_min  > 0 and self.h_min > 0:
+      return (self.w_min,self.h_min)
+
+    (self.w_min,self.h_min) = super(Label,self)._minimum_size(w,h)
     if not self._text:
-      return (w_min,h_min)
+      return (self.w_min,self.h_min)
 
-    if w_min == 0:
-      w_min = self._rect.w
-    if h_min == 0:
-      h_min = self._rect.h
+    if self.w_min == 0:
+      self.w_min = self._rect.w
+    if self.h_min == 0:
+      self.h_min = self._rect.h
 
-    fbgui.App.logger.msg("DEBUG","min_size (%s): (%d,%d)" % (self._id,w_min,h_min))
-    return (w_min,h_min)
+    fbgui.App.logger.msg("DEBUG",
+                   "min_size (%s): (%d,%d)" % (self._id,self.w_min,self.h_min))
+    return (self.w_min,self.h_min)
 
   # --- redraw widget   ------------------------------------------------------
 
