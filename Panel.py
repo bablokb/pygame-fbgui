@@ -75,7 +75,7 @@ class Panel(fbgui.Widget):
     y = y + self.margins[2]
     w = w - self.margins[0] - self.margins[1]
     h = h - self.margins[2] - self.margins[3]
-    fbgui.App.logger.msg("DEBUG","x,y,w,h (%s): (%d,%d,%d,%d)" %
+    fbgui.App.logger.msg("DEBUG","x,y,w,h (%s childs): (%d,%d,%d,%d)" %
                          (self._id,x,y,w,h))
     
     # now layout children
