@@ -7,7 +7,6 @@
 # Additional settings:
 #
 #  - margins: single value or (left,right,top,bottom)
-#  - padding: single value or (horizontal,vertical)    (used by subclasses)
 #
 # Author: Bernhard Bablok
 # License: GPL3
@@ -32,10 +31,6 @@ class Panel(fbgui.Widget):
     if not type(self.margins) is tuple:
       self.margins = (self.margins,self.margins,self.margins,self.margins)
 
-    self.padding = getattr(settings,'padding',(0,0))
-    if not type(self.padding) is tuple:
-      self.padding = (self.padding,self.padding)
-
     self._childs    = []
 
   # --- add child   ----------------------------------------------------------
@@ -59,6 +54,8 @@ class Panel(fbgui.Widget):
     """ query minimum size of widget """
 
     (w_min,h_min) = super(Panel,self)._minimum_size(w,h)
+    w_min = max(w_min,self.margins[0]+self.margins[1])
+    h_min = max(h_min,self.margins[2]+self.margins[3])
     fbgui.App.logger.msg("DEBUG","min_size (%s): (%d,%d)" % (self._id,w_min,h_min))
     return (w_min,h_min)
 
@@ -92,7 +89,7 @@ class Panel(fbgui.Widget):
       elif child.align[0] == fbgui.Widget.RIGHT:
         x_c = x + w - w_min
       else:
-        x_c = x + w/2 - w_min/2
+        x_c = x + int((w - w_min)/2)
 
       # vertical alignment
       fbgui.App.logger.msg("DEBUG","valign (%s): %d" % (child._id,child.align[1]))
@@ -101,7 +98,7 @@ class Panel(fbgui.Widget):
       elif child.align[1] == fbgui.Widget.BOTTOM:
         y_c = y + h - h_min
       else:
-        y_c = y + h/2 - h_min/2
+        y_c = y + int((h - h_min)/2)
 
       child._layout(x_c,y_c,w,h)
 
