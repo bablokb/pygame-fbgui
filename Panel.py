@@ -68,7 +68,7 @@ class Panel(fbgui.Widget):
       return                                # layout already done
 
     # do default behaviour (sets self._is_layout to True)
-    super(Panel,self)._layout(x,y,w,h)
+    self._std_layout(x,y,w,h)
 
     # correct values for margins
     x = x + self.margins[0]
