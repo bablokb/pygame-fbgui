@@ -109,7 +109,18 @@ class Widget(object):
           w,h: width and height of parent (adapted by e.g. margins)
     """
 
-    fbgui.App.logger.msg("DEBUG","layout-in (%s): (%d,%d,%d,%d)" %
+    # just call the standard-layout mechanism here
+    self._std_layout(x,y,w,h)
+
+  # --- standard layout widget   ---------------------------------------------
+
+  def _std_layout(self,x,y,w,h):
+    """ layout widget:
+          x,y: target-position as defined by the parent
+          w,h: width and height of parent (adapted by e.g. margins)
+    """
+
+    fbgui.App.logger.msg("DEBUG","std-layout-in  (%s): (%d,%d,%d,%d)" %
                          (self._id,x,y,w,h))
 
     if self._is_layout:
@@ -150,7 +161,7 @@ class Widget(object):
         w_min, h_min = self._minimum_size(w,h)
       self.screen.h = h_min
 
-    fbgui.App.logger.msg("DEBUG","layout (%s): (%d,%d,%d,%d)" %
+    fbgui.App.logger.msg("DEBUG","std-layout-out (%s): (%d,%d,%d,%d)" %
            (self._id,self.screen.x,self.screen.y,self.screen.w,self.screen.h))
     self._is_layout = True
 
@@ -182,7 +193,7 @@ class Widget(object):
       # default is no size (subclasses will change this)
       h_min = 0
 
-    fbgui.App.logger.msg("DEBUG","min_size (%s): (%d,%d)" % (self._id,w_min,h_min))
+    fbgui.App.logger.msg("DEBUG","min_size default (%s): (%d,%d)" % (self._id,w_min,h_min))
     return (w_min,h_min)
 
   # --- redraw widget   ------------------------------------------------------
