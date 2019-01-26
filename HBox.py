@@ -35,20 +35,21 @@ class HBox(fbgui.Box):
     #  - h_max of childs + margins
 
     # size without children (panel size incl. margins)
-    (w_min,h_min) = super(HBox,self)._minimum_size(w,h)
+    (self.w_min,self.h_min) = super(HBox,self)._minimum_size(w,h)
 
     n_childs = len(self._childs)
     if not n_childs:
       fbgui.App.logger.msg("DEBUG",
-                           "min_size (%s): (%d,%d)" % (self._id,w_min,h_min))
-      return (w_min,h_min)
+                  "min_size (%s): (%d,%d)" % (self._id,self.w_min,self.h_min))
+      return (self.w_min,self.h_min)
       
     # child-dimensions
     self._get_sizes(w,h)
-    self.w_min = max(w_min,self._child_w_sum +
-                                      (n_childs-1)*self.padding[0] +
-                                              self.margins[0]+self.margins[1])
-    self.h_min = max(h_min,self._child_h_max + self.margins[2]+self.margins[3])
+    self.w_min = max(self.w_min,self._child_w_sum +
+                                    (n_childs-1)*self.padding[0] +
+                                         self.margins[0]+self.margins[1])
+    self.h_min = max(self.h_min,
+                     self._child_h_max + self.margins[2]+self.margins[3])
 
     fbgui.App.logger.msg("DEBUG",
               "min_size (%s): (%d,%d)" % (self._id,self.w_min,self.h_min))
@@ -90,15 +91,3 @@ class HBox(fbgui.Box):
       child._layout(x_c,y_c,w_c,h_c)
       x     += w_c + self.padding[0]
       index += 1
-
-  # --- redraw widget   ------------------------------------------------------
-
-  def draw(self):
-    """ draw the widget """
-
-    if not self._parent or self.theme.bg_color != self._parent.theme.bg_color:
-      fbgui.App.display.screen.fill(self.theme.bg_color,
-                rect=(self.screen.x,self.screen.y,self.screen.w,self.screen.h))
-
-    for child in self._childs:
-      child.draw()
