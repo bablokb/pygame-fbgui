@@ -32,14 +32,6 @@ import fbgui
 class Widget(object):
   """ base class for all Widgets """
 
-  HORIZONTAL =   1
-  VERTICAL   =   2
-  TOP        =   3
-  BOTTOM     =   4
-  LEFT       =   5
-  RIGHT      =   6
-  CENTER     =   7
-  
   # --- eq-operator   --------------------------------------------------------
   
   def __eq__(self, other):
@@ -69,7 +61,7 @@ class Widget(object):
     self.w_min = 0
     self.h_min = 0
 
-    self.align   = getattr(settings,'align',(fbgui.Widget.LEFT,fbgui.Widget.BOTTOM))
+    self.align   = getattr(settings,'align',(fbgui.LEFT,fbgui.BOTTOM))
     if not type(self.align) is tuple:
       self.align = (self.align,self.align)
 

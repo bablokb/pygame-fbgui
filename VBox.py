@@ -77,9 +77,9 @@ class VBox(fbgui.Box):
       y_c      = y
 
       # horizontal alignment
-      if child.align[0] == fbgui.Widget.LEFT:
+      if child.align[0] == fbgui.LEFT:
         x_c = x
-      elif child.align[0] == fbgui.Widget.RIGHT:
+      elif child.align[0] == fbgui.RIGHT:
         x_c = x + self._child_w_max - w_c
       else:
         x_c = x + int((self._child_w_max - w_c)/2)

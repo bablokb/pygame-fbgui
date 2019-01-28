@@ -52,8 +52,8 @@ def get_widgets():
                       toplevel=True)
   # add child panels
   color = 0
-  for valign in [fbgui.Widget.TOP,fbgui.Widget.CENTER,fbgui.Widget.BOTTOM]:
-    for halign in [fbgui.Widget.LEFT,fbgui.Widget.CENTER,fbgui.Widget.RIGHT]:
+  for valign in [fbgui.TOP,fbgui.CENTER,fbgui.BOTTOM]:
+    for halign in [fbgui.LEFT,fbgui.CENTER,fbgui.RIGHT]:
       config = fbgui.Settings({
         'width'     : 80,
         'height'    : 40,
@@ -69,15 +69,15 @@ def get_widgets():
     'width'      : 1.0,
     'height'     : 0,
     'fg_color'   : fbgui.Color.BLACK,
-    'align'      : fbgui.Widget.CENTER,
-    'orientation': fbgui.Widget.HORIZONTAL 
+    'align'      : fbgui.CENTER,
+    'orientation': fbgui.HORIZONTAL 
         })
   line = fbgui.Line("hline",settings=config)
   main.add(line)
 
   config.width       = 0
   config.height      = 1.0
-  config.orientation = fbgui.Widget.VERTICAL
+  config.orientation = fbgui.VERTICAL
   line = fbgui.Line("vline",settings=config)
   main.add(line)
 

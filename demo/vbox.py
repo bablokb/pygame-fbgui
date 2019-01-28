@@ -44,7 +44,7 @@ def get_widgets():
                       'margins': 5,
                       'padding': 2,
                       'bg_color': fbgui.Color.SILVER,
-                      'align':    (fbgui.Widget.LEFT,fbgui.Widget.TOP),
+                      'align':    (fbgui.LEFT,fbgui.TOP),
                       }))
   main.add(vbox)
 
@@ -53,21 +53,21 @@ def get_widgets():
                       settings=fbgui.Settings({
                       'font_size': FONT_SMALL,
                       'bg_color' : fbgui.Color.RED080,
-                      'align':     fbgui.Widget.LEFT,
+                      'align':     fbgui.LEFT,
                       }))
   vbox.add(txt1)
   txt2 = fbgui.Label("id_txt2","a small",
                       settings=fbgui.Settings({
                       'font_size': FONT_MEDIUM,
                       'bg_color' : fbgui.Color.GREEN080,
-                      'align':     fbgui.Widget.CENTER,
+                      'align':     fbgui.CENTER,
                       }))
   vbox.add(txt2)
   txt3 = fbgui.Label("id_txt1","and long text",
                       settings=fbgui.Settings({
                       'bg_color' : fbgui.Color.SILVER,
                       'font_size': FONT_LARGE,
-                      'align':     fbgui.Widget.RIGHT,
+                      'align':     fbgui.RIGHT,
                       }))
   vbox.add(txt3)
   return main

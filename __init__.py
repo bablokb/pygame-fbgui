@@ -10,6 +10,14 @@
 #
 # ----------------------------------------------------------------------------
 
+HORIZONTAL =   1
+VERTICAL   =   2
+TOP        =   3
+BOTTOM     =   4
+LEFT       =   5
+RIGHT      =   6
+CENTER     =   7
+
 from Msg      import Msg      as Msg
 from Settings import Settings as Settings
 from Color    import Color    as Color

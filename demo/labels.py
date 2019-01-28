@@ -70,8 +70,8 @@ def get_widgets():
                       toplevel=True)
   # add child panels
   index = 0
-  for valign in [fbgui.Widget.TOP,fbgui.Widget.CENTER,fbgui.Widget.BOTTOM]:
-    for halign in [fbgui.Widget.LEFT,fbgui.Widget.CENTER,fbgui.Widget.RIGHT]:
+  for valign in [fbgui.TOP,fbgui.CENTER,fbgui.BOTTOM]:
+    for halign in [fbgui.LEFT,fbgui.CENTER,fbgui.RIGHT]:
       config = fbgui.Settings({
         'fg_color'  : colors[index],
         'font_size' : sizes[index],

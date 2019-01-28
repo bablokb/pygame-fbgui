@@ -23,7 +23,7 @@ class Line(fbgui.Widget):
     """ constructor """
 
     super(Line,self).__init__(id,settings=settings,toplevel=toplevel)
-    self.orientation = getattr(settings,'orientation',fbgui.Widget.HORIZONTAL)
+    self.orientation = getattr(settings,'orientation',fbgui.HORIZONTAL)
 
   # --- query minimum size   -------------------------------------------------
 
@@ -34,7 +34,7 @@ class Line(fbgui.Widget):
       return (self.w_min,self.h_min)
 
     (self.w_min,self.h_min) = super(Line,self)._minimum_size(w,h)
-    if self.orientation == fbgui.Widget.HORIZONTAL:
+    if self.orientation == fbgui.HORIZONTAL:
       self.h_min = 1            # horizontal lines have height==1
       if self.w_min == 0:       # no explicit width, so
         self.w_min = 1          # use default (line is one pixel wide)
@@ -52,7 +52,7 @@ class Line(fbgui.Widget):
   def draw(self):
     """ draw the widget """
 
-    if self.orientation == fbgui.Widget.HORIZONTAL:
+    if self.orientation == fbgui.HORIZONTAL:
       pygame.gfxdraw.hline(fbgui.App.display.screen,
                            self.screen.x,self.screen.x+self.screen.w,
                            self.screen.y,self.theme.fg_color)

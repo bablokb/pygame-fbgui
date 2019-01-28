@@ -84,18 +84,18 @@ class Panel(fbgui.Widget):
 
       # horizontal alignment
       fbgui.App.logger.msg("DEBUG","halign (%s): %d" % (child._id,child.align[0]))
-      if child.align[0] == fbgui.Widget.LEFT:
+      if child.align[0] == fbgui.LEFT:
         x_c = x
-      elif child.align[0] == fbgui.Widget.RIGHT:
+      elif child.align[0] == fbgui.RIGHT:
         x_c = x + w - w_min
       else:
         x_c = x + int((w - w_min)/2)
 
       # vertical alignment
       fbgui.App.logger.msg("DEBUG","valign (%s): %d" % (child._id,child.align[1]))
-      if child.align[1] == fbgui.Widget.TOP:
+      if child.align[1] == fbgui.TOP:
         y_c = y
-      elif child.align[1] == fbgui.Widget.BOTTOM:
+      elif child.align[1] == fbgui.BOTTOM:
         y_c = y + h - h_min
       else:
         y_c = y + int((h - h_min)/2)

@@ -77,9 +77,9 @@ class HBox(fbgui.Box):
       x_c      = x
 
       # vertical alignment
-      if child.align[1] == fbgui.Widget.TOP:
+      if child.align[1] == fbgui.TOP:
         y_c = y
-      elif child.align[1] == fbgui.Widget.BOTTOM:
+      elif child.align[1] == fbgui.BOTTOM:
         y_c = y + self._child_h_max - h_c
       else:
         y_c = y + int((self._child_h_max - h_c)/2)
