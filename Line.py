@@ -60,4 +60,3 @@ class Line(fbgui.Widget):
       pygame.gfxdraw.vline(fbgui.App.display.screen,
                            self.screen.x,self.screen.y,
                            self.screen.y+self.screen.h,self.theme.fg_color)
-    self._dirty = False

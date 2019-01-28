@@ -60,10 +60,6 @@ class VBox(fbgui.Box):
   def _layout(self,x,y,w,h):
     """ layout widget """
 
-    if self._is_layout:
-      return                                # layout already done
-
-    # do default behaviour (sets self._is_layout to True)
     self._std_layout(x,y,w,h)
 
     # correct values for margins

@@ -53,8 +53,6 @@ class Widget(object):
     self._id        = id
     self._parent    = None
     self._toplevel  = toplevel
-    self._dirty     = True                    # initial state is always dirty
-    self._is_layout = False                   # layout not done yet
 
     if toplevel:
       self.x       = 0
@@ -87,16 +85,6 @@ class Widget(object):
 
     self._parent = parent
 
-  # --- force redraw   -------------------------------------------------------
-  
-  def invalidate(self,redraw=False):
-    """ force redraw """
-
-    self._dirty = True
-    if redraw:
-      # post pygame redraw event
-      pass
-
   # --- layout widget and children   -----------------------------------------
 
   def pack(self):
@@ -126,9 +114,6 @@ class Widget(object):
 
     fbgui.App.logger.msg("DEBUG","std-layout-in  (%s): (%d,%d,%d,%d)" %
                          (self._id,x,y,w,h))
-
-    if self._is_layout:
-      return                                # layout already done
 
     self.screen = fbgui.Settings({'x': 0, 'y':0, 'w': 0, 'h': 0})
 
@@ -167,7 +152,6 @@ class Widget(object):
 
     fbgui.App.logger.msg("DEBUG","std-layout-out (%s): (%d,%d,%d,%d)" %
            (self._id,self.screen.x,self.screen.y,self.screen.w,self.screen.h))
-    self._is_layout = True
 
   # --- query minimum size   -------------------------------------------------
 
@@ -209,9 +193,5 @@ class Widget(object):
   def draw(self):
     """ draw the widget """
 
-    if not self._dirty:
-      return
-
     # subclasses must implement their own logic here
-
-    self._dirty = False
+    pass
