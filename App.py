@@ -134,7 +134,7 @@ class App(object):
         self._widget.pack()
         self._widget.draw()
         pygame.display.flip()
-    if event.code == fbgui.EVENT_CODE_REDRAW:
+    elif event.code == fbgui.EVENT_CODE_REDRAW:
       App.logger.msg("DEBUG", "redraw event for widget %s" % event.widget._id)
       event.widget.draw()
       pygame.display.flip()
