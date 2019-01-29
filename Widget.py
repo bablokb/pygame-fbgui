@@ -87,7 +87,16 @@ class Widget(object):
     """ layout widget and children (for toplevel widgets) """
 
     assert self._toplevel, "pack() is only valid for toplevel widgets!"
+    self._invalidate()
     self._layout(self.x,self.y,self.w,self.h)
+
+  # --- invalidate size information   ----------------------------------------
+
+  def _invalidate(self):
+    """ (recursively) invalidate size-information """
+
+    self.w_min = 0
+    self.h_min = 0
 
   # --- layout widget   ------------------------------------------------------
 
