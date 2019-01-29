@@ -121,12 +121,50 @@ class App(object):
       App.theme.default_font = pygame.freetype.SysFont(App.theme.font_name,
                                                 App.theme.font_size)
 
+  # --- process internal event   ----------------------------------------------
+
+  def _process_internal_event(self,event):
+    """ process internal event """
+
+    App.logger.msg("DEBUG", "processing event with code %d" % event.code)
+
+    if event.code == fbgui.EVENT_CODE_LAYOUT:
+      App.logger.msg("DEBUG", "layout event from widget %s" % event.widget._id)
+      if self._widget:
+        self._widget.pack()
+        self._widget.draw()
+        pygame.display.flip()
+    if event.code == fbgui.EVENT_CODE_REDRAW:
+      App.logger.msg("DEBUG", "redraw event for widget %s" % event.widget._id)
+      event.widget.draw()
+      pygame.display.flip()
+    else:
+      # no other internal events are supported yet
+      assert False, "undefined event-code: %d" % event.code
+
   # --- set top-level widget   ------------------------------------------------
 
   def set_widget(self,widget):
     """ set top-level widget """
 
     self._widget = widget
+
+  # --- process quit-event   --------------------------------------------------
+
+  def on_quit(self):
+    """ process quit """
+
+    # the default implementation does nothing
+    pass
+
+  # --- process generic event   -----------------------------------------------
+
+  def on_event(self):
+    """ process event """
+
+    if self._widget:
+      self._widget.draw()
+      pygame.display.flip()
 
   # --- main event loop   -----------------------------------------------------
 
@@ -136,11 +174,12 @@ class App(object):
     while True:
       event = pygame.fastevent.wait()
       if event.type == pygame.QUIT:
+        self.on_quit()
         return
-
-      if self._widget:
-        self._widget.draw()
-        pygame.display.flip()
+      elif event.type == fbgui.EVENT:
+        self._process_internal_event(event)
+      else:
+        self.on_event()
 
   # --- terminate application   ----------------------------------------------
 
