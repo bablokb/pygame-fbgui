@@ -46,6 +46,10 @@ class Widget(object):
     self._parent    = None
     self._toplevel  = toplevel
 
+    # coordinates and size of widget (actually used during drawing)
+    self.screen     = fbgui.Settings({'x': 0, 'y':0, 'w': 0, 'h': 0})
+
+    # requested / default coordinates of widget
     if toplevel:
       self.x       = 0
       self.y       = 0
