@@ -44,6 +44,7 @@ class Label(fbgui.Widget):
 
     if text == self._text:
       return
+    fbgui.App.logger.msg("DEBUG","changing text of label %s" % self._id)
 
     self._text = text
     if self._text:
@@ -54,14 +55,16 @@ class Label(fbgui.Widget):
       self._rect    = None
 
     if not constructor:
-      if self._rect.w != self.screen.w and self._rect.h != self.screen.h:
+      if self._rect.w != self.screen.w or self._rect.h != self.screen.h:
         # size changed, so post a layout-event
+        fbgui.App.logger.msg("DEBUG","posting layout-event from %s" % self._id)
         event = pygame.fastevent.Event(fbgui.EVENT,
                                        code=fbgui.EVENT_CODE_LAYOUT,
                                        widget=self)
         pygame.fastevent.post(event)
       else:
         # only content changed, so post a redraw-event
+        fbgui.App.logger.msg("DEBUG","posting redraw-event from %s" % self._id)
         event = pygame.fastevent.Event(fbgui.EVENT,
                                        code=fbgui.EVENT_CODE_REDRAW,
                                        widget=self)
