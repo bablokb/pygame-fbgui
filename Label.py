@@ -34,12 +34,16 @@ class Label(fbgui.Widget):
         fbgui.App.logger.msg("DEBUG","using default font")
         self.theme.font = self.theme.default_font
 
-    self.set_text(text)
+    self._text = None
+    self.set_text(text,constructor=True)
 
   # --- set the text of this label   -----------------------------------------
 
-  def set_text(self,text,font=None):
+  def set_text(self,text,font=None,constructor=False):
     """ set the text of the label """
+
+    if text == self._text:
+      return
 
     self._text = text
     if self._text:
@@ -48,6 +52,20 @@ class Label(fbgui.Widget):
     else:
       self._surface = None
       self._rect    = None
+
+    if not constructor:
+      if self._rect.w != self.screen.w and self._rect.h != self.screen.h:
+        # size changed, so post a layout-event
+        event = pygame.fastevent.Event(fbgui.EVENT,
+                                       code=fbgui.EVENT_CODE_LAYOUT,
+                                       widget=self)
+        pygame.fastevent.post(event)
+      else:
+        # only content changed, so post a redraw-event
+        event = pygame.fastevent.Event(fbgui.EVENT,
+                                       code=fbgui.EVENT_CODE_REDRAW,
+                                       widget=self)
+        pygame.fastevent.post(event)
       
   # --- query minimum size   -------------------------------------------------
 
