@@ -48,6 +48,15 @@ class Panel(fbgui.Widget):
 
     self._childs.remove(widget)
 
+  # --- invalidate size information   ----------------------------------------
+
+  def _invalidate(self):
+    """ (recursively) invalidate size-information """
+
+    super(Panel,self)._invalidate()
+    for child in self._childs:
+      child._invalidate()
+
   # --- query minimum size   -------------------------------------------------
 
   def _minimum_size(self,w,h):
