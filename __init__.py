@@ -10,6 +10,11 @@
 #
 # ----------------------------------------------------------------------------
 
+import pygame
+
+# --- constants   ------------------------------------------------------------
+
+# layout
 HORIZONTAL =   1
 VERTICAL   =   2
 TOP        =   3
@@ -17,6 +22,11 @@ BOTTOM     =   4
 LEFT       =   5
 RIGHT      =   6
 CENTER     =   7
+
+# internal event
+EVENT             = pygame.NUMEVENTS
+EVENT_CODE_LAYOUT = 0
+EVENT_CODE_REDRAW = 0
 
 from Msg      import Msg      as Msg
 from Settings import Settings as Settings
