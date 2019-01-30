@@ -173,8 +173,8 @@ class App(object):
   def on_quit(self):
     """ process quit """
 
-    # the default implementation does nothing
-    pass
+    # the default implementation just quits pygame
+    pygame.quit()
 
   # --- process generic event   -----------------------------------------------
 
@@ -199,9 +199,3 @@ class App(object):
         self._process_internal_event(event)
       else:
         self.on_event()
-
-  # --- terminate application   ----------------------------------------------
-
-  def quit(self):
-    """ terminate application """
-    pygame.quit()
