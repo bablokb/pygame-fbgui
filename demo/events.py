@@ -13,6 +13,7 @@
 # ----------------------------------------------------------------------------
 
 import sys, os, datetime, threading, signal
+import pygame
 
 sys.path.append(os.path.join(os.path.dirname(sys.argv[0]),"../.."))
 
@@ -91,7 +92,8 @@ if __name__ == '__main__':
   config           = fbgui.Settings()
   config.msg_level = "DEBUG"
   config.bg_color  = BG_COLOR
-  config.font_size = FONT_MEDIUM
+  config.font_name = "couriernew"
+  config.font_size = FONT_LARGE
   config.width     = WIDTH
   config.height    = HEIGHT
   config.title     = "Test Events"
