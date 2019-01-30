@@ -24,6 +24,25 @@ class App(object):
   theme   = None
   logger  = None
 
+  # --- create font   ---------------------------------------------------------
+
+  @staticmethod
+  def create_font(name,size):
+    """ create font (either systemfont from name or font from file """
+
+    App.logger.msg("DEBUG","creating font: %s (%dpt)" % (name,size))
+    if name.find('.') > -1:
+      # name is path to font-file
+      try:
+        return pygame.freetype.Font(name,size)
+      except:
+        App.logger.msg("ERROR", "could not create font for: %s" % name)
+        App.logger.msg("INFO",  "using fallback-font FreeSans")
+        # use fallback
+        return pygame.freetype.SysFont("freesansbold",size)
+    else:
+      return pygame.freetype.SysFont(name,size)
+
   # --- constructor   --------------------------------------------------------
   
   def __init__(self,settings=fbgui.Settings()):
@@ -50,7 +69,7 @@ class App(object):
       'bg_color':     fbgui.Color.WHITE,
       'fg_color':     fbgui.Color.BLACK,
       'default_font': None,
-      'font_name':    "FreeSans.ttf",
+      'font_name':    "FreeSans",
       'font_size':    12
     })
     App.theme.copy(settings)
@@ -118,7 +137,7 @@ class App(object):
 
     pygame.freetype.init()
     if not App.theme.default_font:
-      App.theme.default_font = pygame.freetype.SysFont(App.theme.font_name,
+      App.theme.default_font = App.create_font(App.theme.font_name,
                                                 App.theme.font_size)
 
   # --- process internal event   ----------------------------------------------
