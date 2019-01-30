@@ -112,4 +112,3 @@ if __name__ == '__main__':
 
   app.set_widget(panel)
   app.run()
-  app.quit()
