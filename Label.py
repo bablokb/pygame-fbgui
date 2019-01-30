@@ -26,12 +26,11 @@ class Label(fbgui.Widget):
     if not hasattr(self.theme,"font"):
       if (self.theme.font_size != fbgui.App.theme.font_size or
           self.theme.font_name != fbgui.App.theme.font_name):
-        fbgui.App.logger.msg("DEBUG","creating font: %s (%dpt)" %
-                             (self.theme.font_name,self.theme.font_size))
-        self.theme.font = pygame.freetype.SysFont(self.theme.font_name,
+        self.theme.font = fbgui.App.create_font(self.theme.font_name,
                                                   self.theme.font_size)
       else:
-        fbgui.App.logger.msg("DEBUG","using default font")
+        fbgui.App.logger.msg("DEBUG","using default font for label: %s" %
+                             self._id)
         self.theme.font = self.theme.default_font
 
     self._text = None
