@@ -39,11 +39,11 @@ class Widget(object):
 
   # --- constructor   --------------------------------------------------------
   
-  def __init__(self,id,settings=None,toplevel=False):
+  def __init__(self,id,settings=None,toplevel=False,parent=None):
     """ constructor """
 
     self._id        = id
-    self._parent    = None
+    self._parent    = parent
     self._toplevel  = toplevel
 
     # coordinates and size of widget (actually used during drawing)
@@ -71,8 +71,14 @@ class Widget(object):
 
     self.flex    = getattr(settings,'flex',0)
 
-    self.theme   = fbgui.Settings(fbgui.App.theme)
+    if self._parent:
+      self.theme = fbgui.Settings(self._parent.theme)
+    else:
+      self.theme = fbgui.Settings(fbgui.App.theme)
     self.theme.copy(settings)
+
+    if self._parent:
+      self._parent.add_child(self)
 
   # --- set parent   ---------------------------------------------------------
 
