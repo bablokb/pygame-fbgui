@@ -78,7 +78,7 @@ class Widget(object):
     self.theme.copy(settings)
 
     if self._parent:
-      self._parent.add_child(self)
+      self._parent.add(self)
 
   # --- set parent   ---------------------------------------------------------
 
