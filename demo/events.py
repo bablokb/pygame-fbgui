@@ -63,22 +63,18 @@ class MyApp(fbgui.App):
                       'padding': 30,
                       'bg_color': fbgui.Color.SILVER,
                       'align':    (fbgui.CENTER,fbgui.CENTER),
-                      }))
+                      }),parent=main)
     main.add(hbox)
 
     # and text
     label = fbgui.Label("id_label","Number:",
                       settings=fbgui.Settings({
-                      'bg_color': fbgui.Color.SILVER,
                       'font_size': FONT_LARGE,
-                      }))
-    hbox.add(label)
+                      }),parent=hbox)
     number = fbgui.Label("id_number","x",
                       settings=fbgui.Settings({
-                      'bg_color': fbgui.Color.SILVER,
                       'font_size': FONT_LARGE,
-                      }))
-    hbox.add(number)
+                      }),parent=hbox)
     return main,number
 
   # -------------------------------------------------------------------------

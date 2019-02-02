@@ -87,8 +87,7 @@ def get_widgets():
         config.bg_color = fbgui.Color.BLACK
         config.width    = 80
         config.height   = 40
-      label = fbgui.Label("label-%d" % index,text,settings=config)
-      main.add(label)
+      label = fbgui.Label("label-%d" % index,text,settings=config,parent=main)
       index += 1
 
   return main
