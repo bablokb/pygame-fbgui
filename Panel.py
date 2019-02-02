@@ -22,10 +22,11 @@ class Panel(fbgui.Widget):
 
   # --- constructor   --------------------------------------------------------
   
-  def __init__(self,id,settings=None,toplevel=False):
+  def __init__(self,id,settings=None,toplevel=False,parent=None):
     """ constructor """
 
-    super(Panel,self).__init__(id,settings=settings,toplevel=toplevel)
+    super(Panel,self).__init__(id,settings=settings,
+                               toplevel=toplevel,parent=parent)
 
     self.margins = getattr(settings,'margins',(0,0,0,0))
     if not type(self.margins) is tuple:

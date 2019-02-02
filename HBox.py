@@ -17,10 +17,11 @@ class HBox(fbgui.Box):
 
   # --- constructor   --------------------------------------------------------
   
-  def __init__(self,id,settings=None,toplevel=False):
+  def __init__(self,id,settings=None,toplevel=False,parent=None):
     """ constructor """
 
-    super(HBox,self).__init__(id,settings=settings,toplevel=toplevel)
+    super(HBox,self).__init__(id,settings=settings,
+                              toplevel=toplevel,parent=parent)
 
   # --- query minimum size   -------------------------------------------------
 

@@ -21,10 +21,11 @@ class Box(fbgui.Panel):
 
   # --- constructor   --------------------------------------------------------
   
-  def __init__(self,id,settings=None,toplevel=False):
+  def __init__(self,id,settings=None,toplevel=False,parent=None):
     """ constructor """
 
-    super(Box,self).__init__(id,settings=settings,toplevel=toplevel)
+    super(Box,self).__init__(id,settings=settings,
+                             toplevel=toplevel,parent=parent)
 
     self.padding = getattr(settings,'padding',(0,0))
     if not type(self.padding) is tuple:
