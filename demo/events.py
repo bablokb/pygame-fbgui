@@ -33,59 +33,75 @@ HEIGHT = 600
 
 # ----------------------------------------------------------------------------
 
-def get_widgets():
-  """ create widget-tree """
+class MyApp(fbgui.App):
+  """ subclass of App for this application """
+
+  # -------------------------------------------------------------------------
+
+  def __init__(self,settings=fbgui.Settings()):
+    """ constructor """
+
+    super(MyApp,self).__init__(settings=settings)
+    self._stop_event = threading.Event()
+
+    panel,self.number_label = self.get_widgets()
+    panel.pack()
+    self.set_widget(panel)
+
+  # -------------------------------------------------------------------------
+
+  def get_widgets(self):
+    """ create widget-tree """
     
-  main = fbgui.Panel("main",
+    main = fbgui.Panel("main",
                       settings=fbgui.Settings({'margins': (10,10,10,10)}),
                       toplevel=True)
-  # add HBox
-  hbox = fbgui.HBox("hbox",
+    # add HBox
+    hbox = fbgui.HBox("hbox",
                       settings=fbgui.Settings({
                       'margins': 5,
                       'padding': 30,
                       'bg_color': fbgui.Color.SILVER,
                       'align':    (fbgui.CENTER,fbgui.CENTER),
                       }))
-  main.add(hbox)
+    main.add(hbox)
 
-  # and text
-  label = fbgui.Label("id_label","Number:",
+    # and text
+    label = fbgui.Label("id_label","Number:",
                       settings=fbgui.Settings({
                       'bg_color': fbgui.Color.SILVER,
                       'font_size': FONT_LARGE,
                       }))
-  hbox.add(label)
-  number = fbgui.Label("id_number","x",
+    hbox.add(label)
+    number = fbgui.Label("id_number","x",
                       settings=fbgui.Settings({
                       'bg_color': fbgui.Color.SILVER,
                       'font_size': FONT_LARGE,
                       }))
-  hbox.add(number)
-  return main,number
+    hbox.add(number)
+    return main,number
 
-# ----------------------------------------------------------------------------
+  # -------------------------------------------------------------------------
 
-def update(stop,number):
-  n = 0
-  global app
-  while True:
-    if stop.wait(1):
-      break
-    n += 1
-    app.logger.msg("DEBUG","new value of n: %d" % n)
-    number.set_text("%d" % n)
-    
-# --------------------------------------------------------------------------
+  def update(self):
+    n = 0
+    while True:
+      if self._stop_event.wait(1):
+        break
+      n += 1
+      self.logger.msg("DEBUG","new value of n: %d" % n)
+      self.number_label.set_text("%d" % n)
 
-def signal_handler(_signo, _stack_frame):
-  """ Signal-handler to cleanup threads """
+  # -----------------------------------------------------------------------
 
-  global stop
-  stop.set()
-  sys.exit(0)
+  def on_quit(self):
+    """ override base-class quit-method """
 
-# ----------------------------------------------------------------------------
+    super(MyApp,self).on_quit()
+    self._stop_event.set()
+    sys.exit(0)
+
+  # ----------------------------------------------------------------------------
 
 if __name__ == '__main__':
 
@@ -98,20 +114,10 @@ if __name__ == '__main__':
   config.height    = HEIGHT
   config.title     = "Test Events"
 
-  app          = fbgui.App(config)
-  panel,number = get_widgets()
-  panel.pack()
-  app.set_widget(panel)
-
-  # setup signal handlers
-  signal.signal(signal.SIGTERM, signal_handler)
-  signal.signal(signal.SIGINT, signal_handler)
+  myapp        = MyApp(config)
 
   # setup async-thread
-  stop = threading.Event()
-  update_thread = threading.Thread(target=update,args=(stop,number))
+  update_thread = threading.Thread(target=myapp.update)
   update_thread.start()
 
-  app.run()
-  stop.set()
-  app.quit()
+  myapp.run()
