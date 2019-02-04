@@ -35,11 +35,11 @@ class Label(fbgui.Widget):
         self.theme.font = self.theme.default_font
 
     self._text = None
-    self.set_text(text,constructor=True)
+    self.set_text(text,refresh=False)
 
   # --- set the text of this label   -----------------------------------------
 
-  def set_text(self,text,font=None,constructor=False):
+  def set_text(self,text,font=None,refresh=True):
     """ set the text of the label """
 
     if text == self._text:
@@ -54,7 +54,7 @@ class Label(fbgui.Widget):
       self._surface = None
       self._rect    = None
 
-    if not constructor:
+    if refresh:
       if self._rect.w != self.screen.w or self._rect.h != self.screen.h:
         # size changed, so post a layout-event
         fbgui.App.logger.msg("DEBUG","posting layout-event from %s" % self._id)
