@@ -62,8 +62,7 @@ class Widget(object):
       self.h       = getattr(settings,'height',0)
 
     # minimum sizes
-    self.w_min = 0
-    self.h_min = 0
+    self._is_size_valid = False
 
     self.align   = getattr(settings,'align',(fbgui.LEFT,fbgui.BOTTOM))
     if not type(self.align) is tuple:
@@ -101,8 +100,7 @@ class Widget(object):
   def _invalidate(self):
     """ (recursively) invalidate size-information """
 
-    self.w_min = 0
-    self.h_min = 0
+    self._is_size_valid = False
 
   # --- layout widget   ------------------------------------------------------
 
