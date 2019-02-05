@@ -25,18 +25,19 @@ class VBox(fbgui.Box):
 
   # --- query minimum size   -------------------------------------------------
 
-  def _minimum_size(self,w,h):
+  def _calc_minimum_size(self,w,h):
     """ query minimum size of widget """
 
-    if self.w_min  > 0 and self.h_min > 0:
-      return (self.w_min,self.h_min)
+    if self._is_size_valid:
+      return
 
     # minimum size is either absolute, relative to parent or
     #  - w_max of childs + margins
     #  - h_sum + (n-1)*padding + margins
 
     # size without children (panel size incl. margins)
-    (self.w_min,self.h_min) = super(VBox,self)._minimum_size(w,h)
+    # N.B.: Box._calc_minimum_size() will also calculate child-sizes
+    super(VBox,self)._calc_minimum_size(w,h)
 
     n_childs = len(self._childs)
     if not n_childs:
@@ -44,8 +45,7 @@ class VBox(fbgui.Box):
                   "min_size (%s): (%d,%d)" % (self._id,self.w_min,self.h_min))
       return (self.w_min,self.h_min)
       
-    # child-dimensions
-    self._get_sizes(w,h)
+    # now take maximum of size without children and total width/height of children
     self.h_min = max(self.h_min,self._child_h_sum +
                               (n_childs-1)*self.padding[0] +
                                          self.margins[2]+self.margins[3])
@@ -54,7 +54,8 @@ class VBox(fbgui.Box):
 
     fbgui.App.logger.msg("DEBUG",
               "min_size (%s): (%d,%d)" % (self._id,self.w_min,self.h_min))
-    return (self.w_min,self.h_min)
+
+    self._is_size_valid = True
 
   # --- layout widget   ------------------------------------------------------
 
@@ -66,8 +67,8 @@ class VBox(fbgui.Box):
     # correct values for margins
     x = x + self.margins[0]
     y = y + self.margins[2]
-    w = w - self.margins[0] - self.margins[1]
-    h = h - self.margins[2] - self.margins[3]
+    w = self.w_min - self.margins[0] - self.margins[1]
+    h = self.h_min - self.margins[2] - self.margins[3]
     fbgui.App.logger.msg("DEBUG","x,y,w,h (%s childs): (%d,%d,%d,%d)" %
                          (self._id,x,y,w,h))
     
@@ -81,9 +82,9 @@ class VBox(fbgui.Box):
       if child.align[0] == fbgui.LEFT:
         x_c = x
       elif child.align[0] == fbgui.RIGHT:
-        x_c = x + self._child_w_max - w_c
+        x_c = x + w - w_c
       else:
-        x_c = x + int((self._child_w_max - w_c)/2)
+        x_c = x + int((w - w_c)/2)
 
       child._layout(x_c,y_c,w_c,h_c)
       y     += h_c + self.padding[1]

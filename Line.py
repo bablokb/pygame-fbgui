@@ -28,13 +28,13 @@ class Line(fbgui.Widget):
 
   # --- query minimum size   -------------------------------------------------
 
-  def _minimum_size(self,w,h):
+  def _calc_minimum_size(self,w,h):
     """ query minimum size of widget """
 
-    if self.w_min  > 0 and self.h_min > 0:
-      return (self.w_min,self.h_min)
+    if self._is_size_valid:
+      return
 
-    (self.w_min,self.h_min) = super(Line,self)._minimum_size(w,h)
+    super(Line,self)._calc_minimum_size(w,h)
     if self.orientation == fbgui.HORIZONTAL:
       self.h_min = 1            # horizontal lines have height==1
       if self.w_min == 0:       # no explicit width, so
@@ -46,7 +46,7 @@ class Line(fbgui.Widget):
 
     fbgui.App.logger.msg("DEBUG","min_size (%s): (%d,%d)" %
                                              (self._id,self.w_min,self.h_min))
-    return (self.w_min,self.h_min)
+    self._is_size_valid = True
 
   # --- redraw widget   ------------------------------------------------------
 

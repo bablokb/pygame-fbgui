@@ -72,13 +72,13 @@ class Label(fbgui.Widget):
       
   # --- query minimum size   -------------------------------------------------
 
-  def _minimum_size(self,w,h):
+  def _calc_minimum_size(self,w,h):
     """ query minimum size of widget """
 
-    if self.w_min  > 0 and self.h_min > 0:
-      return (self.w_min,self.h_min)
+    if self._is_size_valid:
+      return
 
-    (self.w_min,self.h_min) = super(Label,self)._minimum_size(w,h)
+    super(Label,self)._calc_minimum_size(w,h)
     if not self._text:
       return (self.w_min,self.h_min)
 
@@ -89,7 +89,8 @@ class Label(fbgui.Widget):
 
     fbgui.App.logger.msg("DEBUG",
                    "min_size (%s): (%d,%d)" % (self._id,self.w_min,self.h_min))
-    return (self.w_min,self.h_min)
+
+    self._is_size_valid = True
 
   # --- redraw widget   ------------------------------------------------------
 

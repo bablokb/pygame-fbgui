@@ -93,6 +93,7 @@ class Widget(object):
 
     assert self._toplevel, "pack() is only valid for toplevel widgets!"
     self._invalidate()
+    self._calc_minimum_size(self.w,self.h)
     self._layout(self.x,self.y,self.w,self.h)
 
   # --- invalidate size information   ----------------------------------------
@@ -102,76 +103,10 @@ class Widget(object):
 
     self._is_size_valid = False
 
-  # --- layout widget   ------------------------------------------------------
+  # --- calculate minimum size based on parent   -----------------------------
 
-  def _layout(self,x,y,w,h):
-    """ layout widget:
-          x,y: target-position as defined by the parent
-          w,h: width and height of parent (adapted by e.g. margins)
-    """
-
-    # just call the standard-layout mechanism here
-    self._std_layout(x,y,w,h)
-
-  # --- standard layout widget   ---------------------------------------------
-
-  def _std_layout(self,x,y,w,h):
-    """ layout widget:
-          x,y: target-position as defined by the parent
-          w,h: width and height of parent (adapted by e.g. margins)
-    """
-
-    fbgui.App.logger.msg("DEBUG","std-layout-in  (%s): (%d,%d,%d,%d)" %
-                         (self._id,x,y,w,h))
-
-    self.screen = fbgui.Settings({'x': 0, 'y':0, 'w': 0, 'h': 0})
-
-    # implement default behaviour
-    #  - x,y absolute -> save widget x,y
-    #        else     -> use argument x,y
-    self.screen.x = self.x if self.x >= 0 else x
-    self.screen.y = self.y if self.y >= 0 else y
-
-    #  - w,h absolute -> save widget w,h
-    #        relative -> calc from parent w,h
-    #        0        -> use my minimum size
-    w_min, h_min = (-1,-1)
-    if self.w > 1 or self.w == 1 and type(self.w) is int:
-      # absolute size
-      self.screen.w = self.w
-    elif 0 < self.w and self.w <= 1.0:
-      # relative size
-      self.screen.w = int(self.w * w)
-    else:
-      # default is minimum size
-      w_min, h_min = self._minimum_size(w,h)
-      self.screen.w = w_min
-
-    if self.h > 1 or self.h == 1 and type(self.h) is int:
-      # absolute size
-      self.screen.h = self.h
-    elif 0 < self.h and self.h <= 1.0:
-      # relative size
-      self.screen.h = int(self.h * h)
-    else:
-      # default is minimum size
-      if h_min == -1:
-        w_min, h_min = self._minimum_size(w,h)
-      self.screen.h = h_min
-
-    fbgui.App.logger.msg("DEBUG","std-layout-out (%s): (%d,%d,%d,%d)" %
-           (self._id,self.screen.x,self.screen.y,self.screen.w,self.screen.h))
-
-  # --- query minimum size   -------------------------------------------------
-
-  def _minimum_size(self,w,h):
-    """ query minimum size of widget """
-
-    # note that this also works for toplevel-widgets, since
-    # these widgets always have absolute size
-
-    if self.w_min  > 0 and self.h_min > 0:
-      return (self.w_min,self.h_min)
+  def _set_size_from_parent(self,w,h):
+    """ try to calculate the widget-size from parent """
 
     if self.w > 1 or self.w == 1 and type(self.w) is int:
       # absolute size
@@ -194,8 +129,57 @@ class Widget(object):
       self.h_min = 0
 
     fbgui.App.logger.msg("DEBUG",
-           "min_size default (%s): (%d,%d)" % (self._id,self.w_min,self.h_min))
-    return (self.w_min,self.h_min)
+       "min_size from parent (%s): (%d,%d)" % (self._id,self.w_min,self.h_min))
+
+    # return True if size is defined
+    return self.w_min > 0 and self.h_min > 0
+
+  # --- query minimum size   -------------------------------------------------
+
+  def _calc_minimum_size(self,w,h):
+    """ query minimum size of widget """
+
+    if not self._is_size_valid:
+      self._set_size_from_parent(w,h)
+      self._is_size_valid = True
+
+  # --- layout widget   ------------------------------------------------------
+
+  def _layout(self,x,y,w,h):
+    """ layout widget:
+          x,y: target-position as defined by the parent
+          w,h: width and height of parent (adapted by e.g. margins)
+    """
+
+    # just call the standard-layout mechanism here
+    self._std_layout(x,y,w,h)
+
+  # --- standard layout widget   ---------------------------------------------
+
+  def _std_layout(self,x,y,w,h):
+    """ layout widget:
+          x,y: target-position as defined by the parent
+          w,h: width and height of parent (adapted by e.g. margins)
+    """
+
+    assert self._is_size_valid, "ERROR: minimum size not available"
+
+    fbgui.App.logger.msg("DEBUG","std-layout-in  (%s): (%d,%d,%d,%d)" %
+                         (self._id,x,y,w,h))
+
+    self.screen = fbgui.Settings({'x': 0, 'y':0, 'w': 0, 'h': 0})
+
+    # implement default behaviour
+    #  - x,y absolute -> save widget x,y
+    #        else     -> use argument x,y
+    self.screen.x = self.x if self.x >= 0 else x
+    self.screen.y = self.y if self.y >= 0 else y
+
+    self.screen.w = self.w_min
+    self.screen.h = self.h_min
+
+    fbgui.App.logger.msg("DEBUG","std-layout-out (%s): (%d,%d,%d,%d)" %
+           (self._id,self.screen.x,self.screen.y,self.screen.w,self.screen.h))
 
   # --- redraw widget   ------------------------------------------------------
 

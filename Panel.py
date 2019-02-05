@@ -60,18 +60,24 @@ class Panel(fbgui.Widget):
 
   # --- query minimum size   -------------------------------------------------
 
-  def _minimum_size(self,w,h):
+  def _calc_minimum_size(self,w,h):
     """ query minimum size of widget """
 
-    if self.w_min  > 0 and self.h_min > 0:
-      return (self.w_min,self.h_min)
+    if self._is_size_valid:
+      return
 
-    (w_min,h_min) = super(Panel,self)._minimum_size(w,h)
-    self.w_min = max(w_min,self.margins[0]+self.margins[1])
-    self.h_min = max(h_min,self.margins[2]+self.margins[3])
+    # calculate size of panel
+    from_parent = self._set_size_from_parent(w,h)
+    self.w_min = max(self.w_min,self.margins[0]+self.margins[1])
+    self.h_min = max(self.h_min,self.margins[2]+self.margins[3])
     fbgui.App.logger.msg("DEBUG",
                  "min_size (%s): (%d,%d)" % (self._id,self.w_min,self.h_min))
-    return (self.w_min,self.h_min)
+
+    # calculate size of all children
+    for child in self._childs:
+      child._calc_minimum_size(self.w,self.h)
+
+    self._is_size_valid = True
 
   # --- layout widget   ------------------------------------------------------
 
@@ -90,25 +96,22 @@ class Panel(fbgui.Widget):
     
     # now layout children
     for child in self._childs:
-      w_min, h_min = child._minimum_size(w,h)
 
       # horizontal alignment
-      fbgui.App.logger.msg("DEBUG","halign (%s): %d" % (child._id,child.align[0]))
       if child.align[0] == fbgui.LEFT:
         x_c = x
       elif child.align[0] == fbgui.RIGHT:
-        x_c = x + w - w_min
+        x_c = x + w - child.w_min
       else:
-        x_c = x + int((w - w_min)/2)
+        x_c = x + int((w - child.w_min)/2)
 
       # vertical alignment
-      fbgui.App.logger.msg("DEBUG","valign (%s): %d" % (child._id,child.align[1]))
       if child.align[1] == fbgui.TOP:
         y_c = y
       elif child.align[1] == fbgui.BOTTOM:
-        y_c = y + h - h_min
+        y_c = y + h - child.h_min
       else:
-        y_c = y + int((h - h_min)/2)
+        y_c = y + int((h - child.h_min)/2)
 
       child._layout(x_c,y_c,w,h)
 

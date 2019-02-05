@@ -25,18 +25,19 @@ class HBox(fbgui.Box):
 
   # --- query minimum size   -------------------------------------------------
 
-  def _minimum_size(self,w,h):
+  def _calc_minimum_size(self,w,h):
     """ query minimum size of widget """
 
-    if self.w_min  > 0 and self.h_min > 0:
-      return (self.w_min,self.h_min)
+    if self._is_size_valid:
+      return
 
     # minimum size is either absolute, relative to parent or
     #  - w_sum + (n-1)*padding + margins
     #  - h_max of childs + margins
 
     # size without children (panel size incl. margins)
-    (self.w_min,self.h_min) = super(HBox,self)._minimum_size(w,h)
+    # N.B.: Box._calc_minimum_size() will also calculate child-sizes
+    super(HBox,self)._calc_minimum_size(w,h)
 
     n_childs = len(self._childs)
     if not n_childs:
@@ -44,8 +45,7 @@ class HBox(fbgui.Box):
                   "min_size (%s): (%d,%d)" % (self._id,self.w_min,self.h_min))
       return (self.w_min,self.h_min)
       
-    # child-dimensions
-    self._get_sizes(w,h)
+    # now take maximum of size without children and total width/height of children
     self.w_min = max(self.w_min,self._child_w_sum +
                                     (n_childs-1)*self.padding[0] +
                                          self.margins[0]+self.margins[1])
@@ -54,7 +54,8 @@ class HBox(fbgui.Box):
 
     fbgui.App.logger.msg("DEBUG",
               "min_size (%s): (%d,%d)" % (self._id,self.w_min,self.h_min))
-    return (self.w_min,self.h_min)
+
+    self._is_size_valid = True
 
   # --- layout widget   ------------------------------------------------------
 
@@ -66,8 +67,8 @@ class HBox(fbgui.Box):
     # correct values for margins
     x = x + self.margins[0]
     y = y + self.margins[2]
-    w = w - self.margins[0] - self.margins[1]
-    h = h - self.margins[2] - self.margins[3]
+    w = self.w_min - self.margins[0] - self.margins[1]
+    h = self.h_min - self.margins[2] - self.margins[3]
     fbgui.App.logger.msg("DEBUG","x,y,w,h (%s childs): (%d,%d,%d,%d)" %
                          (self._id,x,y,w,h))
     
@@ -81,9 +82,9 @@ class HBox(fbgui.Box):
       if child.align[1] == fbgui.TOP:
         y_c = y
       elif child.align[1] == fbgui.BOTTOM:
-        y_c = y + self._child_h_max - h_c
+        y_c = y + h - h_c
       else:
-        y_c = y + int((self._child_h_max - h_c)/2)
+        y_c = y + int((h - h_c)/2)
 
       child._layout(x_c,y_c,w_c,h_c)
       x     += w_c + self.padding[0]

@@ -37,10 +37,13 @@ class Box(fbgui.Panel):
     self._child_h_sum = 0
     self._child_sizes = []
 
-  # --- query maximum size of children   -------------------------------------
+  # --- query minimum size   -------------------------------------------------
 
-  def _get_sizes(self,w,h):
-    """ query sizes of children """
+  def _calc_minimum_size(self,w,h):
+    """ query minimum size of widget """
+
+    if self._is_size_valid:
+      return
 
     self._child_w_max = 0
     self._child_h_max = 0
@@ -48,8 +51,17 @@ class Box(fbgui.Panel):
     self._child_h_sum = 0
     self._child_sizes = []
 
+    # calculate size of panel
+    from_parent = self._set_size_from_parent(w,h)
+    self.w_min = max(self.w_min,self.margins[0]+self.margins[1])
+    self.h_min = max(self.h_min,self.margins[2]+self.margins[3])
+    fbgui.App.logger.msg("DEBUG",
+                 "min_size (%s): (%d,%d)" % (self._id,self.w_min,self.h_min))
+
+    # calculate size of all children
     for child in self._childs:
-      (c_w,c_h) = child._minimum_size(w,h)
+      child._calc_minimum_size(w,h)
+      (c_w,c_h) = child.w_min, child.h_min
       self._child_w_max  = max(c_w,self._child_w_max)
       self._child_h_max  = max(c_h,self._child_h_max)
       self._child_w_sum += c_w
@@ -62,3 +74,5 @@ class Box(fbgui.Panel):
     fbgui.App.logger.msg("DEBUG",
         "child-sizes of (%s): (w_sum,h_sum)=(%d,%d)" %
                          (self._id,self._child_w_sum, self._child_h_sum))
+
+    self._is_size_valid = True
