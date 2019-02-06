@@ -27,14 +27,17 @@ class App(object):
   # --- create font   ---------------------------------------------------------
 
   @staticmethod
-  def create_font(name,size):
+  def create_font(name,size,path='.'):
     """ create font (either systemfont from name or font from file """
 
     App.logger.msg("DEBUG","creating font: %s (%dpt)" % (name,size))
     if name.find('.') > -1:
       # name is path to font-file
       try:
-        return pygame.freetype.Font(name,size)
+        if name.find(os.sep) > -1:
+          return pygame.freetype.Font(name,size)
+        else:
+          return pygame.freetype.Font(os.path.join(path,name),size)
       except:
         App.logger.msg("ERROR", "could not create font for: %s" % name)
         App.logger.msg("INFO",  "using fallback-font FreeSans")
@@ -69,8 +72,12 @@ class App(object):
       'bg_color':     fbgui.Color.WHITE,
       'fg_color':     fbgui.Color.BLACK,
       'default_font': None,
+      'font_path':    ".",
       'font_name':    "FreeSans",
-      'font_size':    12
+      'font_size':     12,
+      'font_size_s':    8,
+      'font_size_m':   12,
+      'font_size_l':   16
     })
     App.theme.copy(settings)
 
