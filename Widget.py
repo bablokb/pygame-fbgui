@@ -71,8 +71,11 @@ class Widget(object):
     self.flex    = getattr(settings,'flex',0)
 
     if self._parent:
+      fbgui.App.logger.msg("DEBUG","%s: copying theme from %s" %
+                           (self._id,self._parent._id))
       self.theme = fbgui.Settings(self._parent.theme)
     else:
+      fbgui.App.logger.msg("DEBUG","%s: copying theme from App" % self._id)
       self.theme = fbgui.Settings(fbgui.App.theme)
     self.theme.copy(settings)
 
