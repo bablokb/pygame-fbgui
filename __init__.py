@@ -38,5 +38,9 @@ from Panel    import Panel    as Panel
 from Box      import Box      as Box
 from HBox     import HBox     as HBox
 from VBox     import VBox     as VBox
+from Gap      import Gap      as Gap
+from HGap     import HGap     as HGap
+from VGap     import VGap     as VGap
+
 from Line     import Line     as Line
 from Label    import Label    as Label
