@@ -77,7 +77,9 @@ class App(object):
       'font_size':     12,
       'font_size_s':    8,
       'font_size_m':   12,
-      'font_size_l':   16
+      'font_size_l':   16,
+      'font_size_xl':  20,
+      'font_size_xxl': 24
     })
     App.theme.copy(settings)
 
