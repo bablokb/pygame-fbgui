@@ -125,7 +125,7 @@ class App(object):
             found = True
             break
           except pygame.error:
-            print 'Driver: {0} failed.'.format(driver)
+            App.logger.msg("DEBUG","Driver: % failed." % driver)
     
         if not found:
           raise Exception('No suitable video driver found!')

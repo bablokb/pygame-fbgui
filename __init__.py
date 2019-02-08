@@ -28,19 +28,19 @@ EVENT             = pygame.NUMEVENTS
 EVENT_CODE_LAYOUT = 0
 EVENT_CODE_REDRAW = 1
 
-from Msg      import Msg      as Msg
-from Settings import Settings as Settings
-from Color    import Color    as Color
+from . Msg      import Msg      as Msg
+from . Settings import Settings as Settings
+from . Color    import Color    as Color
 
-from App      import App      as App
-from Widget   import Widget   as Widget
-from Panel    import Panel    as Panel
-from Box      import Box      as Box
-from HBox     import HBox     as HBox
-from VBox     import VBox     as VBox
-from Gap      import Gap      as Gap
-from HGap     import HGap     as HGap
-from VGap     import VGap     as VGap
+from . App      import App      as App
+from . Widget   import Widget   as Widget
+from . Panel    import Panel    as Panel
+from . Box      import Box      as Box
+from . HBox     import HBox     as HBox
+from . VBox     import VBox     as VBox
+from . Gap      import Gap      as Gap
+from . HGap     import HGap     as HGap
+from . VGap     import VGap     as VGap
 
-from Line     import Line     as Line
-from Label    import Label    as Label
+from . Line     import Line     as Line
+from . Label    import Label    as Label
