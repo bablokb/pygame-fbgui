@@ -40,7 +40,9 @@ class Box(fbgui.Panel):
   # --- query minimum size   -------------------------------------------------
 
   def _calc_minimum_size(self,w,h):
-    """ query minimum size of widget """
+    """ query minimum size of widget
+        Note: this is incomplete, rest of logic is within VBox and HBox
+    """
 
     if self._is_size_valid:
       return
@@ -52,7 +54,7 @@ class Box(fbgui.Panel):
     self._child_sizes = []
 
     # calculate size of panel
-    from_parent = self._set_size_from_parent(w,h)
+    self._set_size_from_parent(w,h)
     self.w_min = max(self.w_min,self.margins[0]+self.margins[1])
     self.h_min = max(self.h_min,self.margins[2]+self.margins[3])
     fbgui.App.logger.msg("DEBUG",
