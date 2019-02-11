@@ -177,6 +177,13 @@ class App(object):
 
     self._widget = widget
 
+  # --- process start-event   -------------------------------------------------
+
+  def on_start(self):
+    """ actions just before starting main-event loop """
+
+    pass
+
   # --- process quit-event   --------------------------------------------------
 
   def on_quit(self):
@@ -198,7 +205,8 @@ class App(object):
 
   def run(self):
     """ main event loop """
-    
+
+    self.on_start()
     while True:
       event = pygame.fastevent.wait()
       if event.type == pygame.QUIT:
