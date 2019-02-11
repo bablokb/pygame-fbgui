@@ -67,16 +67,24 @@ class Panel(fbgui.Widget):
       return
 
     # calculate size of panel
-    from_parent = self._set_size_from_parent(w,h)
+    from_parent_w,from_parent_h = self._set_size_from_parent(w,h)
     self.w_min = max(self.w_min,self.margins[0]+self.margins[1])
     self.h_min = max(self.h_min,self.margins[2]+self.margins[3])
-    fbgui.App.logger.msg("DEBUG",
-                 "min_size (%s): (%d,%d)" % (self._id,self.w_min,self.h_min))
 
     # calculate size of all children
+    w_min = 0
+    h_min = 0
     for child in self._childs:
       child._calc_minimum_size(self.w,self.h)
+      w_min = max(w_min,child.w_min)
+      h_min = max(h_min,child.h_min)
 
+    if not from_parent_w:
+      self.w_min = max(self.w_min,w_min)
+    if not from_parent_h:
+      self.h_min = max(self.h_min,h_min)
+    fbgui.App.logger.msg("DEBUG",
+                 "min_size (%s): (%d,%d)" % (self._id,self.w_min,self.h_min))
     self._is_size_valid = True
 
   # --- layout widget   ------------------------------------------------------
