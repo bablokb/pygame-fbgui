@@ -135,7 +135,7 @@ class Widget(object):
        "min_size from parent (%s): (%d,%d)" % (self._id,self.w_min,self.h_min))
 
     # return True if size is defined
-    return self.w_min > 0 and self.h_min > 0
+    return (self.w_min>0, self.h_min>0)
 
   # --- query minimum size   -------------------------------------------------
 
