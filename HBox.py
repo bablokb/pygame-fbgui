@@ -41,7 +41,7 @@ class HBox(fbgui.Box):
 
     n_childs = len(self._childs)
     if not n_childs:
-      fbgui.App.logger.msg("DEBUG",
+      fbgui.App.logger.msg("TRACE",
                   "min_size (%s): (%d,%d)" % (self._id,self.w_min,self.h_min))
       return (self.w_min,self.h_min)
       
@@ -52,7 +52,7 @@ class HBox(fbgui.Box):
     self.h_min = max(self.h_min,
                      self._child_h_max + self.margins[2]+self.margins[3])
 
-    fbgui.App.logger.msg("DEBUG",
+    fbgui.App.logger.msg("TRACE",
               "min_size (%s): (%d,%d)" % (self._id,self.w_min,self.h_min))
 
     self._is_size_valid = True
@@ -69,7 +69,7 @@ class HBox(fbgui.Box):
     y = y + self.margins[2]
     w = self.w_min - self.margins[0] - self.margins[1]
     h = self.h_min - self.margins[2] - self.margins[3]
-    fbgui.App.logger.msg("DEBUG","x,y,w,h (%s childs): (%d,%d,%d,%d)" %
+    fbgui.App.logger.msg("TRACE","x,y,w,h (%s childs): (%d,%d,%d,%d)" %
                          (self._id,x,y,w,h))
     
     # now layout children

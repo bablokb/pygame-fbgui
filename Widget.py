@@ -71,11 +71,11 @@ class Widget(object):
     self.flex    = getattr(settings,'flex',0)
 
     if self._parent:
-      fbgui.App.logger.msg("DEBUG","%s: copying theme from %s" %
+      fbgui.App.logger.msg("TRACE","%s: copying theme from %s" %
                            (self._id,self._parent._id))
       self.theme = fbgui.Settings(self._parent.theme)
     else:
-      fbgui.App.logger.msg("DEBUG","%s: copying theme from App" % self._id)
+      fbgui.App.logger.msg("TRACE","%s: copying theme from App" % self._id)
       self.theme = fbgui.Settings(fbgui.App.theme)
     self.theme.copy(settings)
 
@@ -131,7 +131,7 @@ class Widget(object):
       # default is no size (subclasses will change this)
       self.h_min = 0
 
-    fbgui.App.logger.msg("DEBUG",
+    fbgui.App.logger.msg("TRACE",
        "min_size from parent (%s): (%d,%d)" % (self._id,self.w_min,self.h_min))
 
     # return True if size is defined
@@ -167,7 +167,7 @@ class Widget(object):
 
     assert self._is_size_valid, "ERROR: minimum size not available"
 
-    fbgui.App.logger.msg("DEBUG","std-layout-in  (%s): (%d,%d,%d,%d)" %
+    fbgui.App.logger.msg("TRACE","std-layout-in  (%s): (%d,%d,%d,%d)" %
                          (self._id,x,y,w,h))
 
     self.screen = fbgui.Settings({'x': 0, 'y':0, 'w': 0, 'h': 0})
@@ -181,7 +181,7 @@ class Widget(object):
     self.screen.w = self.w_min
     self.screen.h = self.h_min
 
-    fbgui.App.logger.msg("DEBUG","std-layout-out (%s): (%d,%d,%d,%d)" %
+    fbgui.App.logger.msg("TRACE","std-layout-out (%s): (%d,%d,%d,%d)" %
            (self._id,self.screen.x,self.screen.y,self.screen.w,self.screen.h))
 
   # --- redraw widget   ------------------------------------------------------

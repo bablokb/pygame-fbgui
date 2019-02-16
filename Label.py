@@ -31,7 +31,7 @@ class Label(fbgui.Widget):
                                                   self.theme.font_size,
                                                 self.theme.font_path)
       else:
-        fbgui.App.logger.msg("DEBUG","using default font for label: %s" %
+        fbgui.App.logger.msg("TRACE","using default font for label: %s" %
                              self._id)
         self.theme.font = self.theme.default_font
 
@@ -45,7 +45,7 @@ class Label(fbgui.Widget):
 
     if text == self._text:
       return
-    fbgui.App.logger.msg("DEBUG","changing text of label %s" % self._id)
+    fbgui.App.logger.msg("TRACE","changing text of label %s" % self._id)
 
     self._text = text
     if self._text:
@@ -58,14 +58,14 @@ class Label(fbgui.Widget):
     if refresh:
       if self._rect.w != self.screen.w or self._rect.h != self.screen.h:
         # size changed, so post a layout-event
-        fbgui.App.logger.msg("DEBUG","posting layout-event from %s" % self._id)
+        fbgui.App.logger.msg("TRACE","posting layout-event from %s" % self._id)
         event = pygame.fastevent.Event(fbgui.EVENT,
                                        code=fbgui.EVENT_CODE_LAYOUT,
                                        widget=self)
         pygame.fastevent.post(event)
       else:
         # only content changed, so post a redraw-event
-        fbgui.App.logger.msg("DEBUG","posting redraw-event from %s" % self._id)
+        fbgui.App.logger.msg("TRACE","posting redraw-event from %s" % self._id)
         event = pygame.fastevent.Event(fbgui.EVENT,
                                        code=fbgui.EVENT_CODE_REDRAW,
                                        widget=self)
@@ -88,7 +88,7 @@ class Label(fbgui.Widget):
     if self.h_min == 0:
       self.h_min = self._rect.h
 
-    fbgui.App.logger.msg("DEBUG",
+    fbgui.App.logger.msg("TRACE",
                    "min_size (%s): (%d,%d)" % (self._id,self.w_min,self.h_min))
 
     self._is_size_valid = True

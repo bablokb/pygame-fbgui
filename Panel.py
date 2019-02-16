@@ -83,7 +83,7 @@ class Panel(fbgui.Widget):
       self.w_min = max(self.w_min,w_min)
     if not from_parent_h:
       self.h_min = max(self.h_min,h_min)
-    fbgui.App.logger.msg("DEBUG",
+    fbgui.App.logger.msg("TRACE",
                  "min_size (%s): (%d,%d)" % (self._id,self.w_min,self.h_min))
     self._is_size_valid = True
 
@@ -99,7 +99,7 @@ class Panel(fbgui.Widget):
     y = y + self.margins[2]
     w = w - self.margins[0] - self.margins[1]
     h = h - self.margins[2] - self.margins[3]
-    fbgui.App.logger.msg("DEBUG","x,y,w,h (%s childs): (%d,%d,%d,%d)" %
+    fbgui.App.logger.msg("TRACE","x,y,w,h (%s childs): (%d,%d,%d,%d)" %
                          (self._id,x,y,w,h))
     
     # now layout children

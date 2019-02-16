@@ -57,7 +57,7 @@ class Box(fbgui.Panel):
     self._set_size_from_parent(w,h)
     self.w_min = max(self.w_min,self.margins[0]+self.margins[1])
     self.h_min = max(self.h_min,self.margins[2]+self.margins[3])
-    fbgui.App.logger.msg("DEBUG",
+    fbgui.App.logger.msg("TRACE",
                  "min_size (%s): (%d,%d)" % (self._id,self.w_min,self.h_min))
 
     # calculate size of all children
@@ -70,10 +70,10 @@ class Box(fbgui.Panel):
       self._child_h_sum += c_h
       self._child_sizes.append((c_w,c_h))
 
-    fbgui.App.logger.msg("DEBUG",
+    fbgui.App.logger.msg("TRACE",
         "child-sizes of (%s): (w_max,h_max)=(%d,%d)" %
                          (self._id,self._child_w_max, self._child_h_max))
-    fbgui.App.logger.msg("DEBUG",
+    fbgui.App.logger.msg("TRACE",
         "child-sizes of (%s): (w_sum,h_sum)=(%d,%d)" %
                          (self._id,self._child_w_sum, self._child_h_sum))
 

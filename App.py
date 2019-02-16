@@ -30,7 +30,7 @@ class App(object):
   def create_font(name,size,path='.'):
     """ create font (either systemfont from name or font from file """
 
-    App.logger.msg("DEBUG","creating font: %s (%dpt)" % (name,size))
+    App.logger.msg("TRACE","creating font: %s (%dpt)" % (name,size))
     if name.find('.') > -1:
       # name is path to font-file
       try:
@@ -109,7 +109,7 @@ class App(object):
       App.display.screen  = pygame.display.set_mode(App.display.size)
       if App.display.title:
         pygame.display.set_caption(App.display.title)
-      App.logger.msg("DEBUG",
+      App.logger.msg("TRACE",
                   "created X-based display with size: %d,%d" % App.display.size)
     else:
       # Check which frame buffer drivers are available
@@ -125,7 +125,7 @@ class App(object):
             found = True
             break
           except pygame.error:
-            App.logger.msg("DEBUG","Driver: % failed." % driver)
+            App.logger.msg("TRACE","Driver: % failed." % driver)
     
         if not found:
           raise Exception('No suitable video driver found!')
@@ -136,7 +136,7 @@ class App(object):
       App.display.height = App.display.size[1]
       App.display.screen = pygame.display.set_mode(App.display.size,
                                               pygame.FULLSCREEN)
-      App.logger.msg("DEBUG",
+      App.logger.msg("TRACE",
                 "created fullscreen display with size: %r" % App.display.size)
 
   # --- initialize font support   --------------------------------------------
@@ -154,16 +154,16 @@ class App(object):
   def _process_internal_event(self,event):
     """ process internal event """
 
-    App.logger.msg("DEBUG", "processing event with code %d" % event.code)
+    App.logger.msg("TRACE", "processing event with code %d" % event.code)
 
     if event.code == fbgui.EVENT_CODE_LAYOUT:
-      App.logger.msg("DEBUG", "layout event from widget %s" % event.widget._id)
+      App.logger.msg("TRACE", "layout event from widget %s" % event.widget._id)
       if self._widget:
         self._widget.pack()
         self._widget.draw()
         pygame.display.flip()
     elif event.code == fbgui.EVENT_CODE_REDRAW:
-      App.logger.msg("DEBUG", "redraw event for widget %s" % event.widget._id)
+      App.logger.msg("TRACE", "redraw event for widget %s" % event.widget._id)
       event.widget.draw()
       pygame.display.flip()
     else:

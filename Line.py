@@ -44,7 +44,7 @@ class Line(fbgui.Widget):
       if self.h_min == 0:       # no explicit height, so
         self.h_min = 1          # use default (line is one pixel wide)
 
-    fbgui.App.logger.msg("DEBUG","min_size (%s): (%d,%d)" %
+    fbgui.App.logger.msg("TRACE","min_size (%s): (%d,%d)" %
                                              (self._id,self.w_min,self.h_min))
     self._is_size_valid = True
 
