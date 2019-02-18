@@ -28,6 +28,8 @@ class Settings(object):
         self._keys = defaults.keys()
         for key in self._keys:
           setattr(self,key,defaults[key])
+    else:
+      self._keys = None
 
   # --- copy keys from other settings-object   -------------------------------
   
