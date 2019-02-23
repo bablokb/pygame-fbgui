@@ -86,7 +86,7 @@ def get_widgets():
 if __name__ == '__main__':
 
   config           = fbgui.Settings()
-  config.msg_level = "DEBUG"
+  config.msg_level = "TRACE"
   config.bg_color  = BG_COLOR
   config.width     = WIDTH
   config.height    = HEIGHT
