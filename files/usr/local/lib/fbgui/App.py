@@ -137,7 +137,7 @@ class App(object):
       App.display.screen = pygame.display.set_mode(App.display.size,
                                               pygame.FULLSCREEN)
       App.logger.msg("TRACE",
-                "created fullscreen display with size: %r" % App.display.size)
+             "created fullscreen display with size: %d,%d" % App.display.size)
 
   # --- initialize font support   --------------------------------------------
 
