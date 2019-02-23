@@ -158,10 +158,7 @@ class App(object):
 
     if event.code == fbgui.EVENT_CODE_LAYOUT:
       App.logger.msg("TRACE", "layout event from widget %s" % event.widget._id)
-      if self._widget:
-        self._widget.pack()
-        self._widget.draw()
-        pygame.display.flip()
+      self._draw_widget(True)
     elif event.code == fbgui.EVENT_CODE_REDRAW:
       App.logger.msg("TRACE", "redraw event for widget %s" % event.widget._id)
       event.widget.draw()
@@ -169,6 +166,17 @@ class App(object):
     else:
       # no other internal events are supported yet
       assert False, "undefined event-code: %d" % event.code
+
+  # --- draw top-level widget   -----------------------------------------------
+
+  def _draw_widget(self,pack=False):
+    """ draw top-level widget """
+
+    if self._widget:
+      if pack:
+        self._widget.pack()
+      self._widget.draw()
+      pygame.display.flip()
 
   # --- set top-level widget   ------------------------------------------------
 
@@ -197,15 +205,14 @@ class App(object):
   def on_event(self):
     """ process event """
 
-    if self._widget:
-      self._widget.draw()
-      pygame.display.flip()
+    self._draw_widget()
 
   # --- main event loop   -----------------------------------------------------
 
   def run(self):
     """ main event loop """
 
+    self._draw_widget()
     self.on_start()
     while True:
       event = pygame.fastevent.wait()
