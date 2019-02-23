@@ -209,6 +209,7 @@ class App(object):
     self.on_start()
     while True:
       event = pygame.fastevent.wait()
+      App.logger.msg("TRACE", "processing event %d" % event.type)
       if event.type == pygame.QUIT:
         self.on_quit()
         return
