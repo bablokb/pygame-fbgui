@@ -80,6 +80,12 @@ site.addsitedir('/usr/local/lib/python%d.%d/site-packages' %
                             (sys.version_info[0],sys.version_info[1]))
 EOF
   fi
+
+  # link with directory
+  if [ ! -L "/usr/local/lib/python$py_ver/site-packages/fbgui" ]; then
+    echo -e "[INFO] creating symlink to fbgui within /usr/local/lib/python$py_ver/site-packages/"
+    ln -s "/usr/local/lib/fbgui" "/usr/local/lib/python$py_ver/site-packages/"
+  fi
 }
 
 # --- main program   --------------------------------------------------------
