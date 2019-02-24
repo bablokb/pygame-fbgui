@@ -44,3 +44,4 @@ from . VGap     import VGap     as VGap
 
 from . Line     import Line     as Line
 from . Label    import Label    as Label
+from . Image    import Image    as Image
