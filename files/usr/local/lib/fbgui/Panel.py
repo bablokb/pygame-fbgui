@@ -121,7 +121,7 @@ class Panel(fbgui.Widget):
       else:
         y_c = y + int((h - child.h_min)/2)
 
-      child._layout(x_c,y_c,w,h)
+      child._layout(x_c,y_c,child.w_min,child.h_min)
 
   # --- redraw widget   ------------------------------------------------------
 
