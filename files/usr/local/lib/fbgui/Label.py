@@ -81,7 +81,7 @@ class Label(fbgui.Widget):
 
     super(Label,self)._calc_minimum_size(w,h)
     if not self._text:
-      return (self.w_min,self.h_min)
+      return
 
     if self.w_min == 0:
       self.w_min = self._rect.w
