@@ -106,7 +106,7 @@ if __name__ == '__main__':
   config.font_size = FONT_LARGE
   config.width     = WIDTH
   config.height    = HEIGHT
-  config.title     = "Test Events"
+  config.title     = "Test class Image"
 
   myapp = MyApp(sys.argv[1:],config)
   myapp.run()
