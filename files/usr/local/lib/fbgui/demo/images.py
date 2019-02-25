@@ -57,7 +57,7 @@ class MyApp(fbgui.App):
                       settings=fbgui.Settings({'margins': (10,10,10,10)}),
                       toplevel=True)
     # add Image
-    self._img_widget = fbgui.Image("img",None,
+    self._img_widget = fbgui.Image("img",img=None,
                       settings=fbgui.Settings({
                         'Xwidth': 600,
                         'Xheight': 200,
