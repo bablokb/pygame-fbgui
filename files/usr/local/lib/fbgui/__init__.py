@@ -24,7 +24,7 @@ RIGHT      =   6
 CENTER     =   7
 
 # internal event
-EVENT             = pygame.NUMEVENTS
+EVENT             = pygame.NUMEVENTS - 1
 EVENT_CODE_LAYOUT = 0
 EVENT_CODE_REDRAW = 1
 
