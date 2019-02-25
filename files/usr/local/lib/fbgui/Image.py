@@ -25,12 +25,12 @@ class Image(fbgui.Widget):
     super(Image,self).__init__(id,settings=settings,
                               toplevel=toplevel,parent=parent)
     self._scale = getattr(settings,'scale',False)
-    self._img = img
+    self._img = None
     self.set_image(img,refresh=False)
 
   # --- set the image of this Image   ----------------------------------------
 
-  def set_image(self,img,font=None,refresh=True):
+  def set_image(self,img,refresh=True):
     """ set the image of the Image """
 
     if img == self._img:
