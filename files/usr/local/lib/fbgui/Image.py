@@ -19,7 +19,7 @@ class Image(fbgui.Widget):
 
   # --- constructor   --------------------------------------------------------
   
-  def __init__(self,id,img,settings=None,toplevel=False,parent=None):
+  def __init__(self,id,img,settings=fbgui.Settings(),toplevel=False,parent=None):
     """ constructor """
 
     super(Image,self).__init__(id,settings=settings,

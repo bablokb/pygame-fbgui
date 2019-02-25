@@ -21,7 +21,7 @@ class VGap(fbgui.Gap):
 
   # --- constructor   --------------------------------------------------------
   
-  def __init__(self,id,settings=None,toplevel=False,parent=None):
+  def __init__(self,id,settings=fbgui.Settings(),toplevel=False,parent=None):
     """ constructor """
 
     settings.orientation = fbgui.HORIZONTAL

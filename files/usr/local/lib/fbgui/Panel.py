@@ -22,7 +22,7 @@ class Panel(fbgui.Widget):
 
   # --- constructor   --------------------------------------------------------
   
-  def __init__(self,id,settings=None,toplevel=False,parent=None):
+  def __init__(self,id,settings=fbgui.Settings(),toplevel=False,parent=None):
     """ constructor """
 
     super(Panel,self).__init__(id,settings=settings,

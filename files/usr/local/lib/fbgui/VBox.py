@@ -17,7 +17,7 @@ class VBox(fbgui.Box):
 
   # --- constructor   --------------------------------------------------------
   
-  def __init__(self,id,settings=None,toplevel=False,parent=None):
+  def __init__(self,id,settings=fbgui.Settings(),toplevel=False,parent=None):
     """ constructor """
 
     super(VBox,self).__init__(id,settings=settings,

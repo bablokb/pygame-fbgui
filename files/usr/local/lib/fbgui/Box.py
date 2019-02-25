@@ -21,7 +21,7 @@ class Box(fbgui.Panel):
 
   # --- constructor   --------------------------------------------------------
   
-  def __init__(self,id,settings=None,toplevel=False,parent=None):
+  def __init__(self,id,settings=fbgui.Settings(),toplevel=False,parent=None):
     """ constructor """
 
     super(Box,self).__init__(id,settings=settings,

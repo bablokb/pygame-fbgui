@@ -19,7 +19,7 @@ class Label(fbgui.Widget):
 
   # --- constructor   --------------------------------------------------------
   
-  def __init__(self,id,text,settings=None,toplevel=False,parent=None):
+  def __init__(self,id,text,settings=fbgui.Settings(),toplevel=False,parent=None):
     """ constructor """
 
     super(Label,self).__init__(id,settings=settings,
