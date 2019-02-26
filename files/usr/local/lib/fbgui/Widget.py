@@ -179,6 +179,9 @@ class Widget(object):
     self.screen.w = self.w_min
     self.screen.h = self.h_min
 
+    self._draw_rect=pygame.Rect(self.screen.x,self.screen.y,
+                                self.screen.w,self.screen.h)
+
     fbgui.App.logger.msg("TRACE","std-layout-out (%s): (%d,%d,%d,%d)" %
            (self._id,self.screen.x,self.screen.y,self.screen.w,self.screen.h))
 
