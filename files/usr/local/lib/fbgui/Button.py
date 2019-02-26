@@ -49,8 +49,11 @@ class Button(fbgui.HBox):
       if self._Image:
         self._Image.set_image(refresh=refresh)
       else:
+        settings = fbgui.Settings(self._settings)
+        settings.width  = 0
+        settings.height = 0
         self._Image = fbgui.Image(self._id+"_img",img=img,
-                                  settings=self._settings,parent=self)
+                                  settings=settings,parent=self)
 
     self._img = img
 
@@ -67,7 +70,10 @@ class Button(fbgui.HBox):
       if self._Label:
         self._Label.set_text(refresh=refresh)
       else:
+        settings = fbgui.Settings(self._settings)
+        settings.width  = 0
+        settings.height = 0
         self._Label = fbgui.Label(self._id+"_text",text,
-                                  settings=self._settings,parent=self)
+                                  settings=settings,parent=self)
 
     self._text = text
