@@ -202,9 +202,11 @@ class App(object):
 
   # --- process generic event   -----------------------------------------------
 
-  def on_event(self):
+  def on_event(self,event):
     """ process event """
 
+    if self._widget:
+      self._widget.handle_event(event)
     self._draw_widget()
 
   # --- main event loop   -----------------------------------------------------
@@ -223,4 +225,4 @@ class App(object):
       elif event.type == fbgui.EVENT:
         self._process_internal_event(event)
       else:
-        self.on_event()
+        self.on_event(event)
