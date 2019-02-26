@@ -90,16 +90,6 @@ class Widget(object):
 
     self._parent = parent
 
-  # --- layout widget and children   -----------------------------------------
-
-  def pack(self):
-    """ layout widget and children (for toplevel widgets) """
-
-    assert self._toplevel, "pack() is only valid for toplevel widgets!"
-    self._invalidate()
-    self._calc_minimum_size(self.w,self.h)
-    self._layout(self.x,self.y,self.w,self.h)
-
   # --- invalidate size information   ----------------------------------------
 
   def _invalidate(self):
@@ -184,6 +174,16 @@ class Widget(object):
 
     fbgui.App.logger.msg("TRACE","std-layout-out (%s): (%d,%d,%d,%d)" %
            (self._id,self.screen.x,self.screen.y,self.screen.w,self.screen.h))
+
+  # --- layout widget and children   -----------------------------------------
+
+  def pack(self):
+    """ layout widget and children (for toplevel widgets) """
+
+    assert self._toplevel, "pack() is only valid for toplevel widgets!"
+    self._invalidate()
+    self._calc_minimum_size(self.w,self.h)
+    self._layout(self.x,self.y,self.w,self.h)
 
   # --- redraw widget   ------------------------------------------------------
 
