@@ -185,6 +185,14 @@ class Widget(object):
     self._calc_minimum_size(self.w,self.h)
     self._layout(self.x,self.y,self.w,self.h)
 
+  # --- handle event   -------------------------------------------------------
+
+  def handle_event(self,event):
+    """ handle events """
+
+    # subclasses must implement their own logic here
+    pass
+
   # --- redraw widget   ------------------------------------------------------
 
   def draw(self):
