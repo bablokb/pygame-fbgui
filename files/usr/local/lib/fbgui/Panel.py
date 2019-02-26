@@ -141,7 +141,7 @@ class Panel(fbgui.Widget):
 
     if not self._parent or self.theme.bg_color != self._parent.theme.bg_color:
       fbgui.App.display.screen.fill(self.theme.bg_color,
-                rect=(self.screen.x,self.screen.y,self.screen.w,self.screen.h))
+                rect=self._draw_rect)
 
     for child in self._childs:
       child.draw()
