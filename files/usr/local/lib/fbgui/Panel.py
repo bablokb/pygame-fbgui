@@ -123,6 +123,17 @@ class Panel(fbgui.Widget):
 
       child._layout(x_c,y_c,child.w_min,child.h_min)
 
+  # --- handle event   -------------------------------------------------------
+
+  def handle_event(self,event):
+    """ handle events """
+
+    # either one of our childs handles the event, or we do it ourselves
+    for child in self._childs:
+      if child.handle_event(event):
+        return
+    return super(Panel,self).handle_event(event)
+
   # --- redraw widget   ------------------------------------------------------
 
   def draw(self):
