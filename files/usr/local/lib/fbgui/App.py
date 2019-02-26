@@ -206,7 +206,10 @@ class App(object):
     """ process event """
 
     if self._widget:
-      self._widget.handle_event(event)
+      etype = event.type
+      if etype in (pygame.MOUSEMOTION,
+                   pygame.MOUSEBUTTONUP, pygame.MOUSEBUTTONDOWN):
+        self._widget.handle_event(event)
     self._draw_widget()
 
   # --- main event loop   -----------------------------------------------------
