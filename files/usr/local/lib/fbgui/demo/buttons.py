@@ -57,9 +57,10 @@ def get_widgets():
     image = os.path.join(PGM_DIR,image)
     fbgui.Button("btn_%d"% index,img=image,text=text,
                       settings=fbgui.Settings({
+                            'width': 150,
                         'font_size': FONT_MEDIUM,
-                        'bg_color':  color,
-                        'align':     fbgui.CENTER,
+                         'bg_color': color,
+                            'align': fbgui.CENTER,
                       }),parent=vbox)
     index += 1
   return main
