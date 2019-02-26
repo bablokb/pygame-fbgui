@@ -62,7 +62,7 @@ class Box(fbgui.Panel):
 
     # calculate size of all children
     for child in self._childs:
-      child._calc_minimum_size(w,h)
+      child._calc_minimum_size(self.w_min,self.h_min)
       (c_w,c_h) = child.w_min, child.h_min
       self._child_w_max  = max(c_w,self._child_w_max)
       self._child_h_max  = max(c_h,self._child_h_max)
