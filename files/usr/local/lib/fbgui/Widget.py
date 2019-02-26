@@ -27,6 +27,8 @@
 #
 # ----------------------------------------------------------------------------
 
+import pygame
+
 import fbgui
 
 class Widget(object):
@@ -46,6 +48,11 @@ class Widget(object):
     self._parent    = parent
     self._toplevel  = toplevel
     self._settings  = settings
+
+    # event-handlers
+    self._on_mouse_motion    = getattr(settings,'on_mouse_motion',None)
+    self._on_mouse_btn_up    = getattr(settings,'on_mouse_btn_up',None)
+    self._on_mouse_btn_down  = getattr(settings,'on_mouse_btn_down',None)
 
     # coordinates and size of widget (actually used during drawing)
     self.screen     = fbgui.Settings({'x': 0, 'y':0, 'w': 0, 'h': 0})
@@ -190,8 +197,15 @@ class Widget(object):
   def handle_event(self,event):
     """ handle events """
 
-    # subclasses must implement their own logic here
-    pass
+    # multiplex events
+    if event.type == pygame.MOUSEMOTION and self._on_mouse_motion:
+      return self._on_mouse_motion(event)
+    elif event.type == pygame.MOUSEBUTTONUP and self._on_mouse_btn_up:
+      return self._on_mouse_btn_up(event)
+    elif event.type == pygame.MOUSEBUTTONDOWN and self._on_mouse_btn_down:
+      return self._on_mouse_btn_down(event)
+    else:
+      return False
 
   # --- redraw widget   ------------------------------------------------------
 
