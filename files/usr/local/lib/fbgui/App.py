@@ -69,19 +69,26 @@ class App(object):
 
     # global theme settings
     App.theme = fbgui.Settings({
-      'bg_color':     fbgui.Color.WHITE,
-      'fg_color':     fbgui.Color.BLACK,
-      'default_font': None,
-      'font_path':    ".",
-      'font_name':    "FreeSans",
-      'font_size':     12,
-      'font_size_s':    8,
-      'font_size_m':   12,
-      'font_size_l':   16,
-      'font_size_xl':  20,
-      'font_size_xxl': 24
+      'bg_color':       fbgui.Color.WHITE,
+      'bg_color_down':  None,
+      'bg_color_hover': None,
+      'fg_color':       fbgui.Color.BLACK,
+      'default_font':   None,
+      'font_path':      ".",
+      'font_name':      "FreeSans",
+      'font_size':      12,
+      'font_size_s':     8,
+      'font_size_m':    12,
+      'font_size_l':    16,
+      'font_size_xl':   20,
+      'font_size_xxl':  24
     })
     App.theme.copy(settings)
+    # define default (do-nothing) colors for hover/down
+    if not App.theme.bg_color_down:
+      App.theme.bg_color_down = App.theme.bg_color
+    if not App.theme.bg_color_hover:
+      App.theme.bg_color_hover = App.theme.bg_color
 
     # initialize physical display, fonts and event-system
     self._init_display(settings)
