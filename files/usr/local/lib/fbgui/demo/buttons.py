@@ -48,7 +48,8 @@ def get_widgets():
                       }),parent=main)
 
   # add four buttons
-  colors = [fbgui.Color.RED,fbgui.Color.GREEN,fbgui.Color.YELLOW,fbgui.Color.BLUE]
+  colors = [fbgui.Color.RED075,fbgui.Color.GREEN075,
+            fbgui.Color.YELLOW,fbgui.Color.BLUE075]
   text   = ["play","pause","stop","record"]
   images = ["play.png","pause.png","stop.png","record.png"]
   attribs = zip(colors,text,images)
