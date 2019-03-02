@@ -253,3 +253,36 @@ class Color(object):
   BLUE010 = pygame.Color("#000033")
   BLUE005 = pygame.Color("#00001a")
   BLUE000 = pygame.Color("#000000")
+
+  # --- compare two colors   -------------------------------------------------
+
+  @staticmethod
+  def eq(color1,color2):
+    """ compare two colors """
+
+    return (color1.r == color2.r and
+            color1.g == color2.g and
+            color1.b == color2.b and
+            color1.a == color2.a)
+
+  # --- return a lighter version of a color   --------------------------------
+
+  @staticmethod
+  def lighten(color):
+    """ return a lighter version of a color """
+
+    return pygame.Color(min(255,int(1.1*color.r)),
+                        min(255,int(1.1*color.g)),
+                        min(255,int(1.1*color.b)),
+                        color.a)
+
+  # --- return a darker version of a color   --------------------------------
+
+  @staticmethod
+  def darken(color):
+    """ return a darker version of a color """
+
+    return pygame.Color(int(0.9*color.r),
+                        int(0.9*color.g),
+                        int(0.9*color.b),
+                        color.a)
