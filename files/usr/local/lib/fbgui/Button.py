@@ -36,8 +36,11 @@ class Button(fbgui.HBox):
     self.set_text(text,refresh=False)
 
     # colors for button-states
-    self.theme.bg_color_down  = fbgui.Color.RED040
-    self.theme.bg_color_hover = fbgui.Color.RED080
+    # overwrite copy from parent or app in super-constructor
+    if not hasattr(settings,'bg_color_down'):
+      self.theme.bg_color_down = fbgui.Color.darken(self.theme.bg_color)
+    if not hasattr(settings,'bg_color_hover'):
+      self.theme.bg_color_hover = fbgui.Color.lighten(self.theme.bg_color)
 
   # --- set the image of this Button   ---------------------------------------
 
