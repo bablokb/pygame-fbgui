@@ -132,7 +132,7 @@ class Panel(fbgui.Widget):
     # we iterate the reversed list, since last added child is on top (drawn last)
     for child in reversed(self._childs):
       if child.handle_event(event):
-        return
+        return True
     return super(Panel,self).handle_event(event)
 
   # --- redraw widget   ------------------------------------------------------
