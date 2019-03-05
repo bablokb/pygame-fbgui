@@ -58,6 +58,7 @@ class Button(fbgui.HBox):
         settings = fbgui.Settings(self._settings)
         settings.width  = 0
         settings.height = 0
+        settings.align  = fbgui.CENTER
         self._Image = fbgui.Image(self._id+"_img",img=img,
                                   settings=settings,parent=self)
 
@@ -79,6 +80,7 @@ class Button(fbgui.HBox):
         settings = fbgui.Settings(self._settings)
         settings.width  = 0
         settings.height = 0
+        settings.align  = fbgui.CENTER
         self._Label = fbgui.Label(self._id+"_text",text,
                                   settings=settings,parent=self)
 
