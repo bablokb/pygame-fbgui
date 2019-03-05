@@ -106,9 +106,13 @@ class App(object):
     
     if hasattr(settings,"fb_device"):
       os.environ["SDL_FBDEV"] = settings.fb_device
-    else:
+    elif os.path.exists("/dev/fb1"):
       os.environ["SDL_FBDEV"] = "/dev/fb1"
+    else:
+      os.environ["SDL_FBDEV"] = "/dev/fb0"
+    App.logger.msg("TRACE","SDL_FBDEV: %s" % os.environ["SDL_FBDEV"])
     have_X = os.getenv("DISPLAY")
+    App.logger.msg("TRACE","have X: %r" % have_X)
 
     if have_X:
       pygame.display.init()
