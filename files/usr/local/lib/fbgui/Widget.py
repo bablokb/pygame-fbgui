@@ -238,6 +238,8 @@ class Widget(object):
     if self._draw_rect.collidepoint(event.pos):
       fbgui.App.logger.msg("TRACE","on_mouse_btn_down for %s" % self._id)
       self._state = Widget.MOUSE_DOWN
+      if hasattr(self,'on_click'):
+        return getattr(self,'on_click')(self,event)
     return False
 
   # --- handle mouse-button up events    ------------------------------------
