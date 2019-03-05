@@ -47,6 +47,12 @@ def get_widgets():
                       'align':    (fbgui.CENTER,fbgui.TOP),
                       }),parent=main)
 
+  # add a label
+  label = fbgui.Label("msg","",
+                      settings=fbgui.Settings({
+                      'align':    (fbgui.CENTER,fbgui.BOTTOM),
+                      }),parent=main)
+
   # add four buttons
   colors = [fbgui.Color.RED075,fbgui.Color.GREEN075,
             fbgui.Color.YELLOW,fbgui.Color.BLUE075]
@@ -56,15 +62,25 @@ def get_widgets():
   index   = 1
   for color,text,image in attribs:
     image = os.path.join(PGM_DIR,image)
-    fbgui.Button("btn_%d"% index,img=image,text=text,
+    btn = fbgui.Button("btn_%d"% index,img=image,text=text,
                       settings=fbgui.Settings({
                             'width': 150,
                         'font_size': FONT_MEDIUM,
                          'bg_color': color,
                             'align': fbgui.CENTER,
                       }),parent=vbox)
+    btn.on_click = lambda widget,event,text=text: set_msg(widget,event,text,label)
     index += 1
   return main
+
+# ----------------------------------------------------------------------------
+
+def set_msg(widget,event,text,label):
+    """ display info about a pressed button """
+
+    fbgui.App.logger.msg("TRACE","event for %s (%s): %r" % (widget._id,text,event))
+    label.set_text("button %s pressed" % text,refresh=True)
+    return True
 
 # ----------------------------------------------------------------------------
 
