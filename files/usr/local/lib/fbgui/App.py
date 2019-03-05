@@ -95,6 +95,9 @@ class App(object):
     self._init_font()
     pygame.fastevent.init()
 
+    # change visibility of mouse
+    pygame.mouse.set_visible(getattr(settings,'mouse_visible',True))
+
   # --- initialize pygame display   ------------------------------------------
   
   def _init_display(self,settings):
