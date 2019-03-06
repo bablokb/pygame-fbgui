@@ -140,12 +140,7 @@ class Panel(fbgui.Widget):
   def draw(self):
     """ draw the widget """
 
-    if self._state == fbgui.Widget.MOUSE_NORMAL:
-      color = self.theme.bg_color
-    elif self._state == fbgui.Widget.MOUSE_DOWN:
-      color = self.theme.bg_color_down
-    if self._state == fbgui.Widget.MOUSE_HOVER:
-      color = self.theme.bg_color_hover
+    color = self._get_bg_color()
 
     if not self._parent or color != self._parent.theme.bg_color:
       fbgui.App.display.screen.fill(color,rect=self._draw_rect)
