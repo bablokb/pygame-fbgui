@@ -46,3 +46,4 @@ from . Button   import Button   as Button
 from . Line     import Line     as Line
 from . Label    import Label    as Label
 from . Image    import Image    as Image
+from . Text     import Text     as Text
