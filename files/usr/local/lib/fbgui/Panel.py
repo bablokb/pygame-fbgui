@@ -48,6 +48,8 @@ class Panel(fbgui.Widget):
     """ remove a child widget """
 
     self._childs.remove(widget)
+    if refresh:
+      self.post_layout()
 
   # --- remove all child   ---------------------------------------------------
 
@@ -55,6 +57,8 @@ class Panel(fbgui.Widget):
     """ remove all child widgets """
 
     del self._childs[:]
+    if refresh:
+      self.post_layout()
 
   # --- invalidate size information   ----------------------------------------
 
