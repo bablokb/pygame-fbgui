@@ -52,18 +52,10 @@ class Image(fbgui.Widget):
     if refresh:
       if not self._scale:
         # post a layout-event
-        fbgui.App.logger.msg("TRACE","posting layout-event from %s" % self._id)
-        event = pygame.fastevent.Event(fbgui.EVENT,
-                                       code=fbgui.EVENT_CODE_LAYOUT,
-                                       widget=self)
-        pygame.fastevent.post(event)
+        self.post_layout()
       else:
         # only content changed, so post a redraw-event
-        fbgui.App.logger.msg("TRACE","posting redraw-event from %s" % self._id)
-        event = pygame.fastevent.Event(fbgui.EVENT,
-                                       code=fbgui.EVENT_CODE_REDRAW,
-                                       widget=self)
-        pygame.fastevent.post(event)
+        self.post_redraw()
       
   # --- query minimum size   -------------------------------------------------
 
