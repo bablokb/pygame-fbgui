@@ -44,10 +44,17 @@ class Panel(fbgui.Widget):
 
   # --- remove child   -------------------------------------------------------
 
-  def remove(self,widget):
+  def remove(self,widget,refresh=False):
     """ remove a child widget """
 
     self._childs.remove(widget)
+
+  # --- remove all child   ---------------------------------------------------
+
+  def remove_all(self,refresh=False):
+    """ remove all child widgets """
+
+    del self._childs[:]
 
   # --- invalidate size information   ----------------------------------------
 
