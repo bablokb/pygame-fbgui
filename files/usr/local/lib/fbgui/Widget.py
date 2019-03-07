@@ -216,6 +216,28 @@ class Widget(object):
     self._calc_minimum_size(self.w,self.h)
     self._layout(self.x,self.y,self.w,self.h)
 
+  # --- post layout event   --------------------------------------------------
+
+  def post_layout(self):
+    """ post layout event """
+
+    fbgui.App.logger.msg("TRACE","posting layout-event from %s" % self._id)
+    event = pygame.fastevent.Event(fbgui.EVENT,
+                                   code=fbgui.EVENT_CODE_LAYOUT,
+                                   widget=self)
+    pygame.fastevent.post(event)
+
+  # --- post redraw event   --------------------------------------------------
+
+  def post_redraw(self):
+    """ post redraw event """
+
+    fbgui.App.logger.msg("TRACE","posting redraw-event from %s" % self._id)
+    event = pygame.fastevent.Event(fbgui.EVENT,
+                                   code=fbgui.EVENT_CODE_REDRAW,
+                                   widget=self)
+    pygame.fastevent.post(event)
+
   # --- handle event   -------------------------------------------------------
 
   def handle_event(self,event):

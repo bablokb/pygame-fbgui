@@ -58,18 +58,10 @@ class Label(fbgui.Widget):
     if refresh:
       if self._rect.w != self.screen.w or self._rect.h != self.screen.h:
         # size changed, so post a layout-event
-        fbgui.App.logger.msg("TRACE","posting layout-event from %s" % self._id)
-        event = pygame.fastevent.Event(fbgui.EVENT,
-                                       code=fbgui.EVENT_CODE_LAYOUT,
-                                       widget=self)
-        pygame.fastevent.post(event)
+        self.post_layout()
       else:
         # only content changed, so post a redraw-event
-        fbgui.App.logger.msg("TRACE","posting redraw-event from %s" % self._id)
-        event = pygame.fastevent.Event(fbgui.EVENT,
-                                       code=fbgui.EVENT_CODE_REDRAW,
-                                       widget=self)
-        pygame.fastevent.post(event)
+        self.post_redraw()
       
   # --- query minimum size   -------------------------------------------------
 
