@@ -78,9 +78,10 @@ class Button(fbgui.HBox):
         self._Label.set_text(refresh=refresh)
       else:
         settings = fbgui.Settings(self._settings)
-        settings.width  = 0
-        settings.height = 0
-        settings.align  = fbgui.CENTER
+        settings.width    = 0
+        settings.height   = 0
+        settings.align    = fbgui.CENTER
+        settings.bg_color = fbgui.Color.TRANSPARENT
         self._Label = fbgui.Label(self._id+"_text",text,
                                   settings=settings,parent=self)
 
