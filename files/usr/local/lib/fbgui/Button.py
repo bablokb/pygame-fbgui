@@ -94,4 +94,3 @@ class Button(fbgui.HBox):
     # the parent-method delegates to children, which we don't want in
     # our case
     fbgui.Widget.handle_event(self,event)
-    #super(Button,self).handle_event(event)
