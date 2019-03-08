@@ -22,6 +22,8 @@ class Label(fbgui.Widget):
   def __init__(self,id,text,settings=fbgui.Settings(),toplevel=False,parent=None):
     """ constructor """
 
+    if not hasattr(settings,'bg_color'):
+      settings.bg_color = fbgui.Color.TRANSPARENT
     super(Label,self).__init__(id,settings=settings,
                                toplevel=toplevel,parent=parent)
     if not hasattr(self.theme,"font"):
@@ -56,7 +58,9 @@ class Label(fbgui.Widget):
       self._rect    = None
 
     if refresh:
-      if self._rect.w != self.screen.w or self._rect.h != self.screen.h:
+      if ( self._rect.w != self.screen.w or
+           self._rect.h != self.screen.h or
+           fbgui.Color.eq(self.theme.bg_color,fbgui.Color.TRANSPARENT)):
         # size changed, so post a layout-event
         self.post_layout()
       else:
