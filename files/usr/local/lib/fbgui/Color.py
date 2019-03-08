@@ -15,6 +15,8 @@ import pygame
 class Color(object):
   """ Color constants """
 
+  TRANSPARENT          = pygame.Color(0,0,0,0)
+
   # standard color-names
   ALICEBLUE            = pygame.Color("#F0F8FF")
   ANTIQUEWHITE         = pygame.Color("#FAEBD7")
