@@ -13,7 +13,7 @@
 import fbgui
 
 class Button(fbgui.HBox):
-  """ Horizontal box """
+  """ Button """
 
   # --- constructor   --------------------------------------------------------
   
@@ -86,3 +86,12 @@ class Button(fbgui.HBox):
 
     self._text = text
 
+  # --- handle event   -------------------------------------------------------
+
+  def handle_event(self,event):
+    """ handle events: replace parent implementation with standard """
+
+    # the parent-method delegates to children, which we don't want in
+    # our case
+    fbgui.Widget.handle_event(self,event)
+    #super(Button,self).handle_event(event)
