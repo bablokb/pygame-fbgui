@@ -62,7 +62,6 @@ def get_widgets():
                       }),parent=vbox)
   txt3 = fbgui.Label("id_txt1","and long text",
                       settings=fbgui.Settings({
-                      'bg_color' : fbgui.Color.SILVER,
                       'font_size': FONT_LARGE,
                       'align':     fbgui.RIGHT,
                       }),parent=vbox)
