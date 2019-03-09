@@ -51,17 +51,18 @@ def get_widgets():
                       settings=fbgui.Settings({'margins': (5,5,5,5)}),
                       toplevel=True)
   # add child panels
-  color = 0
+  index = 0
   for valign in [fbgui.TOP,fbgui.CENTER,fbgui.BOTTOM]:
     for halign in [fbgui.LEFT,fbgui.CENTER,fbgui.RIGHT]:
       config = fbgui.Settings({
         'width'     : 80,
         'height'    : 40,
-        'bg_color'  : colors[color],
+        'radius'    : 0.1*index,
+        'bg_color'  : colors[index],
         'align'     : (halign,valign)
         })
-      box = fbgui.Panel("box%d" % color,settings=config,parent=main)
-      color += 1
+      box = fbgui.Panel("box%d" % index,settings=config,parent=main)
+      index += 1
 
   # add child lines
   config = fbgui.Settings({
