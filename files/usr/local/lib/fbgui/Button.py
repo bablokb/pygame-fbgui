@@ -21,8 +21,12 @@ class Button(fbgui.HBox):
                settings=fbgui.Settings(),toplevel=False,parent=None):
     """ constructor """
 
+    # some default settings, bevor we call the super-constructor
     settings.padding = getattr(settings,'padding',5)
     settings.margins = getattr(settings,'margins',10)
+    settings.radius  = getattr(settings,'radius',0.9)
+
+    # now initialize HBox
     super(Button,self).__init__(id,settings=settings,
                               toplevel=toplevel,parent=parent)
 
