@@ -7,6 +7,7 @@
 # Additional settings:
 #
 #  - margins: single value or (left,right,top,bottom)
+#  - radius: radius of rounded corners (default: 0.0)
 #
 # Author: Bernhard Bablok
 # License: GPL3
@@ -15,6 +16,7 @@
 #
 # ----------------------------------------------------------------------------
 
+import pygame
 import fbgui.Widget
 
 class Panel(fbgui.Widget):
@@ -29,6 +31,7 @@ class Panel(fbgui.Widget):
                                toplevel=toplevel,parent=parent)
 
     self.margins = getattr(settings,'margins',(0,0,0,0))
+    self._radius = getattr(settings,'radius',0.0)
     if not type(self.margins) is tuple:
       self.margins = (self.margins,self.margins,self.margins,self.margins)
 
@@ -146,6 +149,49 @@ class Panel(fbgui.Widget):
         return True
     return super(Panel,self).handle_event(event)
 
+  # --- draw rounded rectangle   ---------------------------------------------
+
+  def _draw_rounded(self,color):
+    """ draw rectangle with rounded corners """
+
+    rect           = pygame.Rect(self._draw_rect)
+    draw_color     = pygame.Color(color.r,color.g,color.b,0)
+    alpha          = color.a
+    pos            = rect.topleft
+    rect.topleft   = (0,0)
+    surface        = pygame.Surface(rect.size,pygame.SRCALPHA)
+    circle_surface = pygame.Surface([min(rect.size)*3]*2,pygame.SRCALPHA)
+
+    # create ellipse
+    pygame.draw.ellipse(circle_surface,(0,0,0),circle_surface.get_rect(),0)
+    circle_surface = pygame.transform.smoothscale(circle_surface,
+                                       [int(min(rect.size)*self._radius)]*2)
+
+    # blit topleft (dest is rectangle with size of circle_surface)
+    dest = surface.blit(circle_surface,(0,0))
+
+    # move to bottom-right and blit
+    dest.bottomright = rect.bottomright
+    surface.blit(circle_surface,dest)
+
+    # move to top-right and blit
+    dest.topright = rect.topright
+    surface.blit(circle_surface,dest)
+
+    # move to bottom-left and blit
+    dest.bottomleft = rect.bottomleft
+    surface.blit(circle_surface,dest)
+
+    # fill target surface with black
+    surface.fill(fbgui.Color.BLACK,rect.inflate(-dest.w,0))
+    surface.fill(fbgui.Color.BLACK,rect.inflate(0,-dest.h))
+
+    # now fill with target color, recovering color and alpha
+    surface.fill(draw_color,special_flags=pygame.BLEND_RGBA_MAX)
+    surface.fill((255,255,255,alpha),special_flags=pygame.BLEND_RGBA_MIN)
+
+    fbgui.App.display.screen.blit(surface,(self.screen.x,self.screen.y))
+
   # --- redraw widget   ------------------------------------------------------
 
   def draw(self):
@@ -153,8 +199,11 @@ class Panel(fbgui.Widget):
 
     color = self._get_bg_color()
 
-    if not self._parent or color != self._parent.theme.bg_color:
-      fbgui.App.display.screen.fill(color,rect=self._draw_rect)
+    if not self._parent or not fbgui.Color.eq(color,self._parent.theme.bg_color):
+      if self._radius == 0.0:
+        fbgui.App.display.screen.fill(color,rect=self._draw_rect)
+      else:
+        self._draw_rounded(color)
 
     for child in self._childs:
       child.draw()
