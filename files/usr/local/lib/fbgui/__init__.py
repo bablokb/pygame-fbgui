@@ -27,6 +27,7 @@ CENTER     =   7
 EVENT             = pygame.NUMEVENTS - 1
 EVENT_CODE_LAYOUT = 0
 EVENT_CODE_REDRAW = 1
+EVENT_CODE_WIDGET = 2
 
 from . Msg      import Msg      as Msg
 from . Settings import Settings as Settings
