@@ -20,9 +20,10 @@ import fbgui
 class App(object):
   """ Application based on pygame """
 
-  display = None
-  theme   = None
-  logger  = None
+  display    = None
+  theme      = None
+  logger     = None
+  font_cache = {}
 
   # --- create font   ---------------------------------------------------------
 
@@ -30,21 +31,28 @@ class App(object):
   def create_font(name,size,path='.'):
     """ create font (either systemfont from name or font from file """
 
+    font = App.font_cache.get((name,size))
+    if font:
+      App.logger.msg("TRACE","reusing font: %s (%dpt)" % (name,size))
+      return font
+
     App.logger.msg("TRACE","creating font: %s (%dpt)" % (name,size))
     if name.find('.') > -1:
       # name is path to font-file
       try:
         if name.find(os.sep) > -1:
-          return pygame.freetype.Font(name,size)
+          App.font_cache[(name,size)] = pygame.freetype.Font(name,size)
         else:
-          return pygame.freetype.Font(os.path.join(path,name),size)
+          App.font_cache[(name,size)] = (
+            pygame.freetype.Font(os.path.join(path,name),size))
       except:
         App.logger.msg("ERROR", "could not create font for: %s" % name)
         App.logger.msg("INFO",  "using fallback-font FreeSans")
         # use fallback
-        return pygame.freetype.SysFont("freesansbold",size)
+        App.font_cache[(name,size)] = pygame.freetype.SysFont("freesansbold",size)
     else:
-      return pygame.freetype.SysFont(name,size)
+      App.font_cache[(name,size)] = pygame.freetype.SysFont(name,size)
+    return App.font_cache[(name,size)]
 
   # --- constructor   --------------------------------------------------------
   
