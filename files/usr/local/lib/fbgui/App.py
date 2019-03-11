@@ -10,7 +10,7 @@
 #
 # ----------------------------------------------------------------------------
 
-import os
+import os, glob
 
 import pygame
 import pygame.freetype
@@ -24,6 +24,21 @@ class App(object):
   theme      = None
   logger     = None
   font_cache = {}
+
+  # --- find font relative to a basedir   -------------------------------------
+
+  @staticmethod
+  def find_font(name,path='.'):
+    """ find font-file relative to a directory """
+
+    if os.path.isabs(name):
+      return name
+    else:
+      font = glob.glob(os.path.join(path,"**",name),recursive=True)
+      if len(font):
+        return font[0]
+      else:
+        return None
 
   # --- create font   ---------------------------------------------------------
 
@@ -39,18 +54,16 @@ class App(object):
     App.logger.msg("TRACE","creating font: %s (%dpt)" % (name,size))
     if name.find('.') > -1:
       # name is path to font-file
-      try:
-        if name.find(os.sep) > -1:
-          App.font_cache[(name,size)] = pygame.freetype.Font(name,size)
-        else:
-          App.font_cache[(name,size)] = (
-            pygame.freetype.Font(os.path.join(path,name),size))
-      except:
+      fname = App.find_font(name,path)
+      if fname:
+        App.font_cache[(name,size)] = pygame.freetype.Font(fname,size)
+      else:
         App.logger.msg("ERROR", "could not create font for: %s" % name)
-        App.logger.msg("INFO",  "using fallback-font FreeSans")
+        App.logger.msg("INFO",  "using fallback-font FreeSansBold")
         # use fallback
         App.font_cache[(name,size)] = pygame.freetype.SysFont("freesansbold",size)
     else:
+      # name is a sysfont-name
       App.font_cache[(name,size)] = pygame.freetype.SysFont(name,size)
     return App.font_cache[(name,size)]
 
@@ -76,13 +89,16 @@ class App(object):
     App.display.copy(settings)
 
     # global theme settings
+    fpath = os.getenv('FONTPATH')
+    if not fpath:
+      fpath = '/usr/share/fonts'
     App.theme = fbgui.Settings({
       'bg_color':       fbgui.Color.WHITE,
       'bg_color_down':  None,
       'bg_color_hover': None,
       'fg_color':       fbgui.Color.BLACK,
       'default_font':   None,
-      'font_path':      ".",
+      'font_path':      fpath,
       'font_name':      "FreeSans",
       'font_size':      12,
       'font_size_s':     8,
@@ -169,7 +185,7 @@ class App(object):
     pygame.freetype.init()
     if not App.theme.default_font:
       App.theme.default_font = App.create_font(App.theme.font_name,
-                                                App.theme.font_size)
+                                                App.theme.font_size,App.theme.font_path)
 
   # --- process internal event   ----------------------------------------------
 
