@@ -61,7 +61,7 @@ class Text(fbgui.VBox):
     for n in range(n_labels):
       label = fbgui.Label("%s_line_%d" % (self._id,n),"",
                                   settings=settings,parent=self)
-      label.set_text(self._lines[n])
+      label.set_text(self._lines[n],refresh=False)
 
     if refresh:
       self.post_layout()
