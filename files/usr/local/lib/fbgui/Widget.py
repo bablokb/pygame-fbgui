@@ -227,6 +227,12 @@ class Widget(object):
                                    widget=self)
     pygame.fastevent.post(event)
 
+  # --- handle internal event   ----------------------------------------------
+
+  def _handle_internal_event(self,event):
+    """ handle internal event (subclasses must override this method) """
+    pass
+
   # --- post redraw event   --------------------------------------------------
 
   def post_redraw(self):
@@ -250,6 +256,8 @@ class Widget(object):
       return self.on_mouse_btn_up(event)
     elif event.type == pygame.MOUSEBUTTONDOWN:
       return self.on_mouse_btn_down(event)
+    elif event.type == fbgui.EVENT:
+      return self._handle_internal_event(event)
     else:
       return False
 
