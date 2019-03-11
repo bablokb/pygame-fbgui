@@ -177,6 +177,9 @@ class App(object):
       App.logger.msg("TRACE", "redraw event for widget %s" % event.widget._id)
       event.widget.draw()
       pygame.display.flip()
+    elif event.code == fbgui.EVENT_CODE_WIDGET:
+      App.logger.msg("TRACE", "widget event for widget %s" % event.widget._id)
+      event.widget.handle_event(event)
     else:
       # no other internal events are supported yet
       assert False, "undefined event-code: %d" % event.code
