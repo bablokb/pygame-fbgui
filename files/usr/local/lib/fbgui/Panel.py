@@ -43,6 +43,7 @@ class Panel(fbgui.Widget):
     """ add a child widget """
 
     self._childs.append(widget)
+    self._is_size_valid = False
     widget._set_parent(self)
 
   # --- remove child   -------------------------------------------------------
@@ -51,6 +52,7 @@ class Panel(fbgui.Widget):
     """ remove a child widget """
 
     self._childs.remove(widget)
+    self._invalidate()
     if refresh:
       self.post_layout()
 
@@ -60,6 +62,7 @@ class Panel(fbgui.Widget):
     """ remove all child widgets """
 
     del self._childs[:]
+    self._invalidate()
     if refresh:
       self.post_layout()
 
@@ -196,6 +199,11 @@ class Panel(fbgui.Widget):
 
   def draw(self):
     """ draw the widget """
+
+    # in case we have an event triggering draw before a still pending
+    # layout event, we cannot draw anything yet
+    if not self._is_size_valid:
+      return
 
     color = self._get_bg_color()
 
