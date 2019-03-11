@@ -10,10 +10,15 @@
 #
 # ----------------------------------------------------------------------------
 
+import pygame
+
 import fbgui
 
 class Text(fbgui.VBox):
   """ Text box """
+
+  EVENT_SET_TEXT = 0
+  EVENT_CLEAR    = 1
 
   # --- constructor   --------------------------------------------------------
   
@@ -29,11 +34,11 @@ class Text(fbgui.VBox):
     self._text   = None   # text (complete)
     self._lines  = []     # text (split at \n)
 
-    self.set_text(text,refresh=False)
+    self._set_text(text,refresh=False)
 
-  # --- set the text of this Text   ----------------------------------------
+  # --- set the text of this Text (internal)   -----------------------------
 
-  def set_text(self,text,refresh=True):
+  def _set_text(self,text,refresh=True):
     """ set the text of the button """
 
     if text == self._text:
@@ -66,9 +71,26 @@ class Text(fbgui.VBox):
     if refresh:
       self.post_layout()
 
-  # --- clear the text of this Text   --------------------------------------
+  # --- set the text of this Text   ----------------------------------------
 
-  def clear(self,refresh=True):
+  def set_text(self,text,refresh=True):
+    """ set the text of this Text """
+
+    # N.B.: we just post a suitable event, since _set_text should only be
+    #       called from the main-thread
+
+    fbgui.App.logger.msg("TRACE","posting set_text-event from %s" % self._id)
+    event = pygame.fastevent.Event(fbgui.EVENT,
+                                   code=fbgui.EVENT_CODE_WIDGET,
+                                   widget=self)
+
+    event.method = Text.EVENT_SET_TEXT
+    event.text = text
+    event.refresh = refresh
+    pygame.fastevent.post(event)
+
+  # --- clear the text of this Text (internal)   ---------------------------
+  def _clear(self,refresh=True):
     """ clear the text of the button """
 
     if self._lines:
@@ -78,3 +100,32 @@ class Text(fbgui.VBox):
 
     if refresh:
       self.post_layout()
+
+  # --- clear the text of this Text   --------------------------------------
+
+  def clear(self,refresh=True):
+    """ clear the text of the button """
+
+    # N.B.: we just post a suitable event, since _clear should only be
+    #       called from the main-thread
+
+    fbgui.App.logger.msg("TRACE","posting clear-event from %s" % self._id)
+    event = pygame.fastevent.Event(fbgui.EVENT,
+                                   code=fbgui.EVENT_CODE_WIDGET,
+                                   widget=self)
+
+    event.method = Text.EVENT_CLEAR
+    event.refresh = refresh
+    pygame.fastevent.post(event)
+
+  # --- handle internal event   ----------------------------------------------
+
+  def _handle_internal_event(self,event):
+    """ handle internal events """
+
+    if event.method == Text.EVENT_SET_TEXT:
+      self._set_text(event.text,refresh=event.refresh)
+    elif event.method == Text.EVENT_CLEAR:
+      self._clear(refresh=event.refresh)
+    else:
+      assert 1 > 0, "illegal event-method: %d" % event.method
