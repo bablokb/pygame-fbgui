@@ -74,11 +74,11 @@ class Box(fbgui.Panel):
       self._child_h_sum += c_h
       weight_w_sum      += child.weight[0]
       weight_h_sum      += child.weight[1]
-      self._child_sizes.append((c_w,c_h,child.weight[0],child.weight[1])
+      self._child_sizes.append((c_w,c_h,child.weight[0],child.weight[1]))
 
     # for later distribution, calculate additional size per weight
     self._add_size = (max(0.0,self.w_min-self._child_w_sum)/float(weight_w_sum),
-                       max(0.0,self.h_min-self._child_h_sum)/float(weight_h_sum))
+                      max(0.0,self.h_min-self._child_h_sum)/float(weight_h_sum))
     fbgui.App.logger.msg("TRACE",
         "child-sizes of (%s): (w_max,h_max)=(%d,%d)" %
                          (self._id,self._child_w_max, self._child_h_max))
