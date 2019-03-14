@@ -6,6 +6,7 @@
 # Additional settings:
 #
 #  - padding: single value or (horizontal,vertical)    (used by subclasses)
+#  - weight:  single value or (horizontal,vertical)    (used by subclasses)
 #
 # Author: Bernhard Bablok
 # License: GPL3
@@ -61,6 +62,8 @@ class Box(fbgui.Panel):
                  "min_size (%s): (%d,%d)" % (self._id,self.w_min,self.h_min))
 
     # calculate size of all children
+    weight_w_sum = 0.0
+    weight_h_sum = 0.0
     for child in self._childs:
       child._calc_minimum_size(self.w_min-self.margins[0]-self.margins[1],
                                self.h_min-self.margins[2]-self.margins[3])
@@ -69,8 +72,13 @@ class Box(fbgui.Panel):
       self._child_h_max  = max(c_h,self._child_h_max)
       self._child_w_sum += c_w
       self._child_h_sum += c_h
-      self._child_sizes.append((c_w,c_h))
+      weight_w_sum      += child.weight[0]
+      weight_h_sum      += child.weight[1]
+      self._child_sizes.append((c_w,c_h,child.weight[0],child.weight[1])
 
+    # for later distribution, calculate additional size per weight
+    self._add_size = (max(0.0,self.w_min-self._child_w_sum)/float(weight_w_sum),
+                       max(0.0,self.h_min-self._child_h_sum)/float(weight_h_sum))
     fbgui.App.logger.msg("TRACE",
         "child-sizes of (%s): (w_max,h_max)=(%d,%d)" %
                          (self._id,self._child_w_max, self._child_h_max))
