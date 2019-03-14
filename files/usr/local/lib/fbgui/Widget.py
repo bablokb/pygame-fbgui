@@ -16,7 +16,7 @@
 #  - align  : single value or (horizontal,vertical)
 #             values: TOP/BOTTOM/LEFT/RIGHT
 #  - margins: single value or (left,right,top,bottom)
-#  - flex: weight for additional space:
+#  - weight: weight for additional space:
 #       0: widget uses it's minimal size
 #      >0: relative weight
 #
@@ -79,7 +79,9 @@ class Widget(object):
     if not type(self.align) is tuple:
       self.align = (self.align,self.align)
 
-    self.flex    = getattr(settings,'flex',0)
+    self.weight  = getattr(settings,'weight',(0,0))
+    if not type(self.weight) is tuple:
+      self.weight = (self.weight,self.weight)
 
     if self._parent:
       fbgui.App.logger.msg("TRACE","%s: copying theme from %s" %
