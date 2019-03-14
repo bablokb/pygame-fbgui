@@ -78,15 +78,16 @@ class HBox(fbgui.Box):
       w_c, h_c, w_c_add, h_c_add = self._child_sizes[index]
       w_c_add  = int(w_c_add*self._add_size)
       w_h_add  = int(h_c_add*self._add_size)
+      y_c      = y
 
-      # vertical alignment (move to childs)
-      #if child.align[1] == fbgui.TOP:
-      #  y_c = y
-      #elif child.align[1] == fbgui.BOTTOM:
-      #  y_c = y + h - h_c
-      #else:
-      #  y_c = y + int((h - h_c)/2)
+      # vertical alignment
+      if child.align[1] == fbgui.TOP:
+        y_c = y
+      elif child.align[1] == fbgui.BOTTOM:
+        y_c = y + h - h_c
+      else:
+        y_c = y + int((h - h_c)/2)
 
-      child._layout(x, y, w_c+w_c_add, h_c+h_c_add)
+      child._layout(x, y_c, w_c+w_c_add, h_c+h_c_add)
       x     += w_c + w_c_add + self.padding[0]
       index += 1
