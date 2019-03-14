@@ -75,17 +75,18 @@ class HBox(fbgui.Box):
     # now layout children
     index = 0
     for child in self._childs:
-      w_c, h_c = self._child_sizes[index]
-      x_c      = x
+      w_c, h_c, w_c_add, h_c_add = self._child_sizes[index]
+      w_c_add  = int(w_c_add*self._add_size)
+      w_h_add  = int(h_c_add*self._add_size)
 
-      # vertical alignment
-      if child.align[1] == fbgui.TOP:
-        y_c = y
-      elif child.align[1] == fbgui.BOTTOM:
-        y_c = y + h - h_c
-      else:
-        y_c = y + int((h - h_c)/2)
+      # vertical alignment (move to childs)
+      #if child.align[1] == fbgui.TOP:
+      #  y_c = y
+      #elif child.align[1] == fbgui.BOTTOM:
+      #  y_c = y + h - h_c
+      #else:
+      #  y_c = y + int((h - h_c)/2)
 
-      child._layout(x_c,y_c,w_c,h_c)
-      x     += w_c + self.padding[0]
+      child._layout(x, y, w_c+w_c_add, h_c+h_c_add)
+      x     += w_c + w_c_add + self.padding[0]
       index += 1
