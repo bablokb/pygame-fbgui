@@ -59,8 +59,8 @@ class MyApp(fbgui.App):
     # add Image
     self._img_widget = fbgui.Image("img",img=None,
                       settings=fbgui.Settings({
-                        'Xwidth': 600,
-                        'Xheight': 200,
+                        'width': 600,
+                        'height': 200,
                         'scale': False,             
                         'align': (fbgui.CENTER,fbgui.CENTER),
                       }),parent=main)
