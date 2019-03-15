@@ -12,7 +12,7 @@
 #
 # ----------------------------------------------------------------------------
 
-import sys, os, datetime
+import sys, os, datetime, glob
 
 sys.path.append(os.path.join(os.path.dirname(sys.argv[0]),"../.."))
 
@@ -44,6 +44,7 @@ def get_widgets():
   add_panels(main)
   add_lines(main)
   add_labels(main)
+  add_images(main)
   return main
 
 # ----------------------------------------------------------------------------
@@ -150,6 +151,39 @@ def add_labels(parent):
                        'bg_color' : fbgui.Color.BLUE080,
                        'font_size': FONT_LARGE,
                        }),parent=hbox)
+
+# ----------------------------------------------------------------------------
+
+def add_images(parent):
+  """ add images """
+
+  # add HBox
+  hbox = fbgui.HBox("hbox_images",
+                      settings=fbgui.Settings({
+                      'margins': 5,
+                      'padding': 30,
+                      'width': 1.0,
+                      'height': 80,
+                      'bg_color': fbgui.Color.SILVER,
+                      'align':    (fbgui.CENTER,fbgui.TOP),
+                      }),parent=parent)
+
+  images = glob.glob(os.path.join(os.path.dirname(sys.argv[0]),"*.png"))
+  index = 0
+  for img in images:
+    settings = fbgui.Settings({
+      'width': 40,
+      'height': 40,
+      'scale': False,
+      'weight': 1,
+      'align': (fbgui.CENTER,fbgui.CENTER),
+      })
+    if index % 2:
+      settings.scale = True
+    fbgui.Image("img_%d" % index,img=img,
+                settings=settings,parent=hbox)
+    index += 1
+
 
 # ----------------------------------------------------------------------------
 
