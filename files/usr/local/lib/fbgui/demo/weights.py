@@ -103,14 +103,14 @@ def add_labels(parent):
                        'width': 0.25,
                        'font_size': FONT_SMALL,
                        'bg_color' : fbgui.Color.RED080,
-                       'align':     fbgui.BOTTOM,
+                       'align':     (fbgui.CENTER,fbgui.BOTTOM),
                        }),parent=hbox)
   txt2 = fbgui.Label("id_txt2","a small",
                      settings=fbgui.Settings({
                        'width': 0.25,
                        'font_size': FONT_MEDIUM,
                        'bg_color' : fbgui.Color.GREEN080,
-                       'align':     fbgui.CENTER,
+                       'align':     (fbgui.RIGHT,fbgui.CENTER),
                        }),parent=hbox)
   txt3 = fbgui.Label("id_txt3","and long text",
                      settings=fbgui.Settings({
