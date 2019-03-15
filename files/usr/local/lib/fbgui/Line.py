@@ -48,6 +48,19 @@ class Line(fbgui.Widget):
                                              (self._id,self.w_min,self.h_min))
     self._is_size_valid = True
 
+  # --- layout widget   ------------------------------------------------------
+
+  def _layout(self,x,y,w,h):
+    """ layout widget """
+
+    self._std_layout(x,y,w,h)
+
+    # lines fill the complete requested area, so we correct the default
+    self.screen.w = w
+    self.screen.h = h
+    self._draw_rect=pygame.Rect(self.screen.x,self.screen.y,
+                                self.screen.w,self.screen.h)
+
   # --- redraw widget   ------------------------------------------------------
 
   def draw(self):
