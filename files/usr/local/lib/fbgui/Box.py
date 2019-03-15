@@ -77,13 +77,21 @@ class Box(fbgui.Panel):
       self._child_sizes.append((c_w,c_h,child.weight[0],child.weight[1]))
 
     # for later distribution, calculate additional size per weight
-    self._add_size = (max(0.0,self.w_min-self._child_w_sum)/float(weight_w_sum),
-                      max(0.0,self.h_min-self._child_h_sum)/float(weight_h_sum))
+    n_childs = len(self._childs)
+    w_add = (self.w_min-self.margins[0]-self.margins[1] -
+             (n_childs-1)*self.padding[0] - self._child_w_sum)
+    h_add = (self.h_min-self.margins[2]-self.margins[3] -
+             (n_childs-1)*self.padding[1] - self._child_h_sum)
+    self._add_size = (max(0.0,w_add)/float(weight_w_sum),
+                      max(0.0,h_add)/float(weight_h_sum))
+
     fbgui.App.logger.msg("TRACE",
         "child-sizes of (%s): (w_max,h_max)=(%d,%d)" %
                          (self._id,self._child_w_max, self._child_h_max))
     fbgui.App.logger.msg("TRACE",
         "child-sizes of (%s): (w_sum,h_sum)=(%d,%d)" %
                          (self._id,self._child_w_sum, self._child_h_sum))
+    fbgui.App.logger.msg("TRACE",
+        "child-sizes of (%s): (w_add,h_add)=(%d,%d)" % (self._id,w_add,h_add))
 
     self._is_size_valid = True
