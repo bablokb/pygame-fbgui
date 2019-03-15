@@ -94,13 +94,13 @@ class Label(fbgui.Widget):
   def draw(self):
     """ draw the widget """
 
+    # if the widget has a size, fill with background color
+    if self.screen.w > 0 and self.screen.h > 0:
+      if not self._parent or (
+        self.theme.bg_color.a > 0 and
+        fbgui.Color.neq(self.theme.bg_color,self._parent.theme.bg_color) ):
+        fbgui.App.display.screen.fill(self.theme.bg_color,
+               rect=(self.screen.x,self.screen.y,self.screen.w,self.screen.h))
     if self._surface:
       fbgui.App.display.screen.blit(self._surface,
                                     (self.screen.x,self.screen.y))
-    else:
-      # if the widget has a size, just fill with background color
-      if self.screen.w > 0 and self.screen.h > 0:
-        if not self._parent or ( self.theme.bg_color !=
-                                 self._parent.theme.bg_color ):
-          fbgui.App.display.screen.fill(self.theme.bg_color,
-               rect=(self.screen.x,self.screen.y,self.screen.w,self.screen.h))
