@@ -260,12 +260,16 @@ class Color(object):
 
   @staticmethod
   def eq(color1,color2):
-    """ compare two colors """
+    """ check if two colors are equal """
 
     return (color1.r == color2.r and
             color1.g == color2.g and
             color1.b == color2.b and
             color1.a == color2.a)
+
+  def neq(color1,color2):
+    """ check if two colors are different """
+    return not Color.eq(color1,color2)
 
   # --- return a lighter version of a color   --------------------------------
 
