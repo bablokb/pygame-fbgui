@@ -60,7 +60,7 @@ def get_widgets():
                       'bg_color' : fbgui.Color.GREEN080,
                       'align':     fbgui.CENTER,
                       }),parent=hbox)
-  txt3 = fbgui.Label("id_txt1","and long text",
+  txt3 = fbgui.Label("id_txt3","and long text",
                       settings=fbgui.Settings({
                       'bg_color' : fbgui.Color.BLUE080,
                       'font_size': FONT_LARGE,
