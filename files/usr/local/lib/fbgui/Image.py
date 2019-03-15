@@ -3,6 +3,10 @@
 # ----------------------------------------------------------------------------
 # An image widget. The image is automatcally scaled to the requested size.
 #
+# Additional settings:
+#   - scale:    scale image:  False (default) or True
+#   - min_size: minimum size if scaled: native size (default) or (w,h)
+#
 # Author: Bernhard Bablok
 # License: GPL3
 #
@@ -26,6 +30,9 @@ class Image(fbgui.Widget):
     super(Image,self).__init__(id,settings=settings,
                               toplevel=toplevel,parent=parent)
     self._scale = getattr(settings,'scale',False)
+    self._min_size = getattr(settings,'min_size',(-1,-1))
+    if not type(self._min_size) is tuple:
+      self._min_size = (self._min_size,self._min_size)
     self._img = None
     self.set_image(img,refresh=False)
 
@@ -70,8 +77,14 @@ class Image(fbgui.Widget):
       self._is_size_valid = True
       return
     elif self._scale:
-      self.w_min = 1
-      self.h_min = 1
+      if self._min_size[0] == -1:
+        self.w_min = self._rect.w
+      else:
+        self.w_min = self._min_size[0]
+      if self._min_size[1] == -1:
+        self.h_min = self._rect.h
+      else:
+        self.h_min = self._min_size[1]
       self._is_size_valid = True
       return
       
@@ -115,7 +128,7 @@ class Image(fbgui.Widget):
       return
 
     # scale image to new dimension if necessary
-    if not (self.screen.w == self._scaled_rect.w and
+    if self._scale and not (self.screen.w == self._scaled_rect.w and
         self.screen.h == self._scaled_rect.h):
       self._scaled_surface = (
         pygame.transform.scale(self._raw_surface,(self.screen.w,self.screen.h)))
