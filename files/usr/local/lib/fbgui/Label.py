@@ -89,6 +89,29 @@ class Label(fbgui.Widget):
 
     self._is_size_valid = True
 
+  # --- align the label   ----------------------------------------------------
+
+  def _align(self):
+    """ align the label on it's drawing area """
+
+    # horizontal alignment
+    if self.align[0] == fbgui.LEFT:
+      x_c = self.screen.x
+    elif self.align[0] == fbgui.RIGHT:
+      x_c = self.screen.x + self.screen.w - self._rect.w
+    else:
+      x_c = self.screen.x + int((self.screen.w - self._rect.w)/2)
+
+    # vertical alignment
+    if self.align[1] == fbgui.TOP:
+      y_c = self.screen.y
+    elif self.align[1] == fbgui.BOTTOM:
+      y_c = self.screen.y + self.screen.h - self._rect.h
+    else:
+      y_c = self.screen.y + int((self.screen.h - self._rect.h)/2)
+
+    return (x_c,y_c)
+
   # --- redraw widget   ------------------------------------------------------
 
   def draw(self):
@@ -102,5 +125,6 @@ class Label(fbgui.Widget):
         fbgui.App.display.screen.fill(self.theme.bg_color,
                rect=(self.screen.x,self.screen.y,self.screen.w,self.screen.h))
     if self._surface:
-      fbgui.App.display.screen.blit(self._surface,
-                                    (self.screen.x,self.screen.y))
+      # align the label on it's drawing area
+      pos = self._align()
+      fbgui.App.display.screen.blit(self._surface,pos)
