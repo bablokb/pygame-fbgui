@@ -35,9 +35,21 @@ HEIGHT = 600
 def get_widgets():
   """ create widget-tree """
     
-  main = fbgui.Panel("main",
-                      settings=fbgui.Settings({'margins': (10,10,10,10)}),
+  main = fbgui.VBox("main",
+                      settings=fbgui.Settings({
+                      'margins': (10,10,10,10),
+                      'padding': 20,
+                      }),
                       toplevel=True)
+  add_panels(main)
+  add_labels(main)
+  return main
+
+# ----------------------------------------------------------------------------
+
+def add_panels(parent):
+  """ add HBox with panels """
+
   # add a full-size HBox
   hbox = fbgui.HBox("hbox",
                       settings=fbgui.Settings({
@@ -46,7 +58,7 @@ def get_widgets():
                       'width': 1.0,
                       'bg_color': fbgui.Color.SILVER,
                       'align':    (fbgui.CENTER,fbgui.TOP),
-                      }),parent=main)
+                      }),parent=parent)
 
   # add three panels
   panel1 = fbgui.Panel("id_panel1",
@@ -59,17 +71,53 @@ def get_widgets():
   panel2 = fbgui.Panel("id_panel2",
                       settings=fbgui.Settings({
                          'height': 30,
-                         'weight': 2,
+                         'weight': 1,
                          'bg_color' : fbgui.Color.GREEN080,
                          'align':     fbgui.CENTER,
                          }),parent=hbox)
   panel3 = fbgui.Panel("id_panel3",
                        settings=fbgui.Settings({
                          'height': 40,
-                         'weight': 1,
+                         'weight': 2,
                          'bg_color' : fbgui.Color.BLUE080,
                          }),parent=hbox)
-  return main
+
+# ----------------------------------------------------------------------------
+
+def add_labels(parent):
+  """ add HBox with labels """
+
+  # add HBox
+  hbox = fbgui.HBox("hbox",
+                      settings=fbgui.Settings({
+                      'margins': 5,
+                      'padding': 30,
+                      'width': 1.0,
+                      'bg_color': fbgui.Color.SILVER,
+                      'align':    (fbgui.CENTER,fbgui.TOP),
+                      }),parent=parent)
+
+  # add three texts
+  txt1 = fbgui.Label("id_txt1","this is",
+                     settings=fbgui.Settings({
+                       'width': 0.25,
+                       'font_size': FONT_SMALL,
+                       'bg_color' : fbgui.Color.RED080,
+                       'align':     fbgui.BOTTOM,
+                       }),parent=hbox)
+  txt2 = fbgui.Label("id_txt2","a small",
+                     settings=fbgui.Settings({
+                       'width': 0.25,
+                       'font_size': FONT_MEDIUM,
+                       'bg_color' : fbgui.Color.GREEN080,
+                       'align':     fbgui.CENTER,
+                       }),parent=hbox)
+  txt3 = fbgui.Label("id_txt3","and long text",
+                     settings=fbgui.Settings({
+                       'weight': 2,
+                       'bg_color' : fbgui.Color.BLUE080,
+                       'font_size': FONT_LARGE,
+                       }),parent=hbox)
 
 # ----------------------------------------------------------------------------
 
