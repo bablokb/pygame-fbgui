@@ -82,8 +82,14 @@ class Box(fbgui.Panel):
              (n_childs-1)*self.padding[0] - self._child_w_sum)
     h_add = (self.h_min-self.margins[2]-self.margins[3] -
              (n_childs-1)*self.padding[1] - self._child_h_sum)
-    self._add_size = (max(0.0,w_add)/float(weight_w_sum),
-                      max(0.0,h_add)/float(weight_h_sum))
+    fbgui.App.logger.msg("TRACE",
+        "child-sizes of (%s): (w_add,h_add)=(%d,%d)" % (self._id,w_add,h_add))
+
+    if weight_w_sum:
+      w_add /= float(weight_w_sum)
+    if weight_h_sum:
+      h_add /= float(weight_h_sum)
+    self._add_size = (max(0.0,w_add),max(0.0,h_add))
 
     fbgui.App.logger.msg("TRACE",
         "child-sizes of (%s): (w_max,h_max)=(%d,%d)" %
@@ -91,7 +97,5 @@ class Box(fbgui.Panel):
     fbgui.App.logger.msg("TRACE",
         "child-sizes of (%s): (w_sum,h_sum)=(%d,%d)" %
                          (self._id,self._child_w_sum, self._child_h_sum))
-    fbgui.App.logger.msg("TRACE",
-        "child-sizes of (%s): (w_add,h_add)=(%d,%d)" % (self._id,w_add,h_add))
 
     self._is_size_valid = True
