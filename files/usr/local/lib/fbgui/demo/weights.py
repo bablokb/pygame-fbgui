@@ -42,6 +42,7 @@ def get_widgets():
                       }),
                       toplevel=True)
   add_panels(main)
+  add_lines(main)
   add_labels(main)
   return main
 
@@ -51,7 +52,7 @@ def add_panels(parent):
   """ add HBox with panels """
 
   # add a full-size HBox
-  hbox = fbgui.HBox("hbox",
+  hbox = fbgui.HBox("hbox_panels",
                       settings=fbgui.Settings({
                       'margins': 5,
                       'padding': 30,
@@ -84,11 +85,42 @@ def add_panels(parent):
 
 # ----------------------------------------------------------------------------
 
+def add_lines(parent):
+  """ add HBox with lines """
+
+  # add HBox
+  hbox = fbgui.HBox("hbox_lines",
+                      settings=fbgui.Settings({
+                      'margins': 5,
+                      'padding': 30,
+                      'width': 1.0,
+                      'height': 30,
+                      'bg_color': fbgui.Color.SILVER,
+                      'align':    (fbgui.CENTER,fbgui.TOP),
+                      }),parent=parent)
+  # add two lines
+  line1 = fbgui.Line("id_line1",
+                     settings=fbgui.Settings({
+                       'width': 0.25,
+                       'weight': 1,
+                       'fg_color' : fbgui.Color.RED,
+                       'align':     fbgui.CENTER,
+                       }),parent=hbox)
+  line2 = fbgui.Line("id_line2",
+                     settings=fbgui.Settings({
+                       'width': 0.25,
+                       'weight': 2,
+                       'fg_color' : fbgui.Color.BLUE,
+                       'align':     fbgui.CENTER,
+                       }),parent=hbox)
+
+# ----------------------------------------------------------------------------
+
 def add_labels(parent):
   """ add HBox with labels """
 
   # add HBox
-  hbox = fbgui.HBox("hbox",
+  hbox = fbgui.HBox("hbox_labels",
                       settings=fbgui.Settings({
                       'margins': 5,
                       'padding': 30,
