@@ -111,6 +111,12 @@ class Panel(fbgui.Widget):
 
     self._std_layout(x,y,w,h)
 
+    # panels fill the complete requested area, so we correct the default
+    self.screen.w = w
+    self.screen.h = h
+    self._draw_rect=pygame.Rect(self.screen.x,self.screen.y,
+                                self.screen.w,self.screen.h)
+
     # correct values for margins
     x = x + self.margins[0]
     y = y + self.margins[2]
