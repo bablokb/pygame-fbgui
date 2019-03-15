@@ -99,6 +99,10 @@ class MyApp(fbgui.App):
 
 if __name__ == '__main__':
 
+  if len(sys.argv) < 2:
+    print("usage: %s image [...]" % sys.argv[0])
+    sys.exit(3)
+
   config           = fbgui.Settings()
   config.msg_level = "TRACE"
   config.bg_color  = BG_COLOR
