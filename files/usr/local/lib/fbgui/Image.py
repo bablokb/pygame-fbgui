@@ -134,4 +134,5 @@ class Image(fbgui.Widget):
 
     # blit the image to the target position
     pos = self._align(self._scaled_rect)
-    fbgui.App.display.screen.blit(self._scaled_surface,pos)
+    fbgui.App.display.screen.blit(self._scaled_surface,pos,
+                                  area=(0,0,self.screen.w,self.screen.h))
