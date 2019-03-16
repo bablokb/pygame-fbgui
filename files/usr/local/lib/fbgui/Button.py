@@ -36,6 +36,16 @@ class Button(fbgui.HBox):
     self._text  = None   # button text
     self._Label = None   # Label widget
 
+    # use two gaps with weight to center image+label
+    fbgui.HGap(self._id+"_gap1",
+               settings=fbgui.Settings({'size': 0,
+                                        'weight': 1}),
+               parent=self)
+    fbgui.HGap(self._id+"_gap2",
+               settings=fbgui.Settings({'size': 0,
+                                        'weight': 1}),
+               parent=self)
+
     self.set_image(img,refresh=False)
     self.set_text(text,refresh=False)
 
@@ -57,14 +67,16 @@ class Button(fbgui.HBox):
 
     if img:
       if self._Image:
-        self._Image.set_image(refresh=refresh)
+        self._Image.set_image(img,refresh=refresh)
       else:
         settings = fbgui.Settings(self._settings)
         settings.width  = 0
         settings.height = 0
+        settings.weight = 0
         settings.align  = fbgui.CENTER
         self._Image = fbgui.Image(self._id+"_img",img=img,
-                                  settings=settings,parent=self)
+                                  settings=settings)
+        self.add(self._Image,1)
 
     self._img = img
 
@@ -84,11 +96,12 @@ class Button(fbgui.HBox):
         settings = fbgui.Settings(self._settings)
         settings.width    = 0
         settings.height   = 0
+        settings.weight   = 0
         settings.align    = fbgui.CENTER
         settings.bg_color = fbgui.Color.TRANSPARENT
         self._Label = fbgui.Label(self._id+"_text",text,
-                                  settings=settings,parent=self)
-
+                                  settings=settings)
+        self.add(self._Label,len(self._childs)-1)
     self._text = text
 
   # --- handle event   -------------------------------------------------------
