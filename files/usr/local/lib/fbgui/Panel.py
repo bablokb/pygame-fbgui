@@ -39,10 +39,13 @@ class Panel(fbgui.Widget):
 
   # --- add child   ----------------------------------------------------------
 
-  def add(self,widget):
+  def add(self,widget,index=None):
     """ add a child widget """
 
-    self._childs.append(widget)
+    if index is None:
+      self._childs.append(widget)
+    else:
+      self._childs.insert(index,widget)
     self._is_size_valid = False
     widget._set_parent(self)
 
