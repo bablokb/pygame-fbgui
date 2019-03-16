@@ -117,29 +117,6 @@ class Image(fbgui.Widget):
     fbgui.App.logger.msg("TRACE","layout (%s): (%d,%d,%d,%d)" %
            (self._id,self.screen.x,self.screen.y,self.screen.w,self.screen.h))
 
-  # --- align the image   ----------------------------------------------------
-
-  def _align(self,rect):
-    """ align the image on it's drawing area """
-
-    # horizontal alignment
-    if self.align[0] == fbgui.LEFT:
-      x_c = self.screen.x
-    elif self.align[0] == fbgui.RIGHT:
-      x_c = self.screen.x + self.screen.w - rect.w
-    else:
-      x_c = self.screen.x + int((self.screen.w - rect.w)/2)
-
-    # vertical alignment
-    if self.align[1] == fbgui.TOP:
-      y_c = self.screen.y
-    elif self.align[1] == fbgui.BOTTOM:
-      y_c = self.screen.y + self.screen.h - rect.h
-    else:
-      y_c = self.screen.y + int((self.screen.h - rect.h)/2)
-
-    return (x_c,y_c)
-
   # --- redraw widget   ------------------------------------------------------
 
   def draw(self):
