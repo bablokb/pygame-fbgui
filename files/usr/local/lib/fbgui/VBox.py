@@ -76,7 +76,7 @@ class VBox(fbgui.Box):
     index = 0
     for child in self._childs:
       w_c, h_c, _, h_c_add = self._child_sizes[index]
-      w_h_add  = int(h_c_add*self._add_size[1])
+      h_c_add  = int(h_c_add*self._add_size[1])
       x_c      = x
 
       # horizontal alignment
