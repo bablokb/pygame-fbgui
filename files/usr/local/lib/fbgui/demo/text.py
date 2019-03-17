@@ -22,7 +22,7 @@ import fbgui
 # --- global constants   -----------------------------------------------------
 
 FG_COLOR = fbgui.Color.BLACK
-BG_COLOR = fbgui.Color.WHITE
+BG_COLOR = fbgui.Color.RED075
 
 FONT_SMALL  = 12
 FONT_MEDIUM = 24
@@ -51,9 +51,20 @@ def get_widgets():
                        'align': (fbgui.CENTER,fbgui.TOP),
                       }),parent=main)
 
-  # add a text-box at the bottom
-  txt2 = "The first line.\nThe second line.\n xxx \nThe fourth line"
+  # add a text-box in the center
+  txt2 = "The first line.\nThe second line.\n clipped \nThe fourth line"
   text2 = fbgui.Text("txt2",txt2,
+                      settings=fbgui.Settings({
+                       'margins':  5,
+                       'height': 0.09,
+                       'bg_color': fbgui.Color.BLUE,
+                       'fg_color': fbgui.Color.WHITE,
+                       'align': (fbgui.CENTER,fbgui.CENTER),
+                      }),parent=main)
+
+  # add a text-box at the bottom
+  txt3 = "The first line.\nThe second line.\n xxx \nThe fourth line"
+  text2 = fbgui.Text("txt3",txt3,
                       settings=fbgui.Settings({
                        'margins':  5,
                        'bg_color': fbgui.Color.BLUE,
