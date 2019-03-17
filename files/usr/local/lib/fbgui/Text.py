@@ -128,4 +128,4 @@ class Text(fbgui.VBox):
     elif event.method == Text.EVENT_CLEAR:
       self._clear(refresh=event.refresh)
     else:
-      assert 1 > 0, "illegal event-method: %d" % event.method
+      assert False, "ERROR: illegal event-method: %d" % event.method
