@@ -46,11 +46,13 @@ class HBox(fbgui.Box):
       return (self.w_min,self.h_min)
       
     # now take maximum of size without children and total width/height of children
-    self.w_min = max(self.w_min,self._child_w_sum +
-                                    (n_childs-1)*self.padding[0] +
+    if not self._w_from_parent or self.weight[0] > 0:
+      # dynamic size
+      self.w_min = (self._child_w_sum + (n_childs-1)*self.padding[0] +
                                          self.margins[0]+self.margins[1])
-    self.h_min = max(self.h_min,
-                     self._child_h_max + self.margins[2]+self.margins[3])
+    if not self._h_from_parent:
+      # dynamic size
+      self.h_min = self._child_h_max + self.margins[2]+self.margins[3]
 
     fbgui.App.logger.msg("TRACE",
               "min_size (%s): (%d,%d)" % (self._id,self.w_min,self.h_min))
