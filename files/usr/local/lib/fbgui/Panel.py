@@ -95,7 +95,8 @@ class Panel(fbgui.Widget):
     w_min = 0
     h_min = 0
     for child in self._childs:
-      child._calc_minimum_size(self.w,self.h)
+      child._calc_minimum_size(self.w_min-self.margins[0]-self.margins[1],
+                               self.h_min-self.margins[2]-self.margins[3])
       w_min = max(w_min,child.w_min)
       h_min = max(h_min,child.h_min)
 
@@ -148,7 +149,6 @@ class Panel(fbgui.Widget):
         x_c = x + w - child.w_min
       else:
         x_c = x + int((w - child.w_min)/2)
-
       # vertical alignment
       if child.align[1] == fbgui.TOP:
         y_c = y
@@ -157,6 +157,8 @@ class Panel(fbgui.Widget):
       else:
         y_c = y + int((h - child.h_min)/2)
 
+      fbgui.App.logger.msg("TRACE","x_c,y_c,w,h (%s childs): (%d,%d,%d,%d)" %
+                         (self._id,x_c,y_c,w,h))
       child._layout(x_c,y_c,child.w_min,child.h_min)
 
   # --- handle event   -------------------------------------------------------
