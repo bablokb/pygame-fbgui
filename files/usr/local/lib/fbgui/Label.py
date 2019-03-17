@@ -104,4 +104,6 @@ class Label(fbgui.Widget):
     if self._surface:
       # align the label on it's drawing area
       pos = self._align(self._rect)
+      self._clip_push()
       fbgui.App.display.screen.blit(self._surface,pos)
+      self._clip_pop()

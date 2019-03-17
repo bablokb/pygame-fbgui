@@ -226,6 +226,7 @@ class Panel(fbgui.Widget):
 
     color = self._get_bg_color()
 
+    self._clip_push()
     if not self._parent or not fbgui.Color.eq(color,self._parent.theme.bg_color):
       if self._radius == 0.0:
         fbgui.App.display.screen.fill(color,rect=self._draw_rect)
@@ -234,3 +235,4 @@ class Panel(fbgui.Widget):
 
     for child in self._childs:
       child.draw()
+    self._clip_pop()

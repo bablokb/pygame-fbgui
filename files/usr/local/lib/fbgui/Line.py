@@ -66,6 +66,7 @@ class Line(fbgui.Widget):
   def draw(self):
     """ draw the widget """
 
+    self._clip_push()
     if self.orientation == fbgui.HORIZONTAL:
       pygame.gfxdraw.hline(fbgui.App.display.screen,
                            self.screen.x,self.screen.x+self.screen.w,
@@ -74,3 +75,4 @@ class Line(fbgui.Widget):
       pygame.gfxdraw.vline(fbgui.App.display.screen,
                            self.screen.x,self.screen.y,
                            self.screen.y+self.screen.h,self.theme.fg_color)
+    self._clip_pop()
