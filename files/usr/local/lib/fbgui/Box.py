@@ -55,7 +55,7 @@ class Box(fbgui.Panel):
     self._child_sizes = []
 
     # calculate size of panel
-    self._set_size_from_parent(w,h)
+    self._w_from_parent,self._h_from_parent = self._set_size_from_parent(w,h)
     self.w_min = max(self.w_min,self.margins[0]+self.margins[1])
     self.h_min = max(self.h_min,self.margins[2]+self.margins[3])
     fbgui.App.logger.msg("TRACE",
