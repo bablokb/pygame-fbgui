@@ -327,3 +327,22 @@ class Widget(object):
 
     # subclasses must implement their own logic here
     pass
+
+  # --- set clipping area   ---------------------------------------------------
+
+  def _clip_push(self):
+    """ set the clipping area to the current drawing-rectangle """
+
+    self._old_clip = fbgui.App.display.screen.get_clip()
+    new_clip       = self._draw_rect.clip(self._old_clip)
+    fbgui.App.display.screen.set_clip(new_clip)
+
+  # --- restore clipping area   -----------------------------------------------
+
+  def _clip_pop(self):
+    """ restore the clipping area to the old state """
+
+    if hasattr(self,'_old_clip'):
+      fbgui.App.display.screen.set_clip(self._old_clip)
+    else:
+      assert False, "ERROR: invalid clip_pop"

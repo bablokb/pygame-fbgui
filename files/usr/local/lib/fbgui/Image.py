@@ -136,7 +136,6 @@ class Image(fbgui.Widget):
     pos = self._align(self._scaled_rect)
 
     # implement clipping
-    old_clip = fbgui.App.display.screen.get_clip()
-    fbgui.App.display.screen.set_clip(self._draw_rect)
+    self._clip_push()
     fbgui.App.display.screen.blit(self._scaled_surface,pos)
-    fbgui.App.display.screen.set_clip(old_clip)
+    self._clip_pop()
