@@ -27,6 +27,7 @@ class Text(fbgui.VBox):
     """ constructor """
 
     settings.padding = getattr(settings,'padding',3)
+    settings.uniform = True
     super(Text,self).__init__(id,settings=settings,
                               toplevel=toplevel,parent=parent)
 
