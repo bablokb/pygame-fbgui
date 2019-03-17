@@ -41,7 +41,7 @@ def get_widgets():
                       toplevel=True)
 
   # add a text-box at the top
-  txt1 = "The first line.\nThe second line.\n xxx \nThe fourth line."
+  txt1 = "The first line.\nThe second line.\n\nThe fourth line."
   text1 = fbgui.Text("txt1",txt1,
                       settings=fbgui.Settings({
                        'margins':  5,
@@ -56,14 +56,14 @@ def get_widgets():
   text2 = fbgui.Text("txt2",txt2,
                       settings=fbgui.Settings({
                        'margins':  5,
-                       'height': 0.09,
+                       'height': 0.115,
                        'bg_color': fbgui.Color.BLUE,
                        'fg_color': fbgui.Color.WHITE,
                        'align': (fbgui.CENTER,fbgui.CENTER),
                       }),parent=main)
 
   # add a text-box at the bottom
-  txt3 = "The first line.\nThe second line.\n xxx \nThe fourth line"
+  txt3 = "The first line.\nThe second line.\n\nThe fourth line."
   text2 = fbgui.Text("txt3",txt3,
                       settings=fbgui.Settings({
                        'margins':  5,
