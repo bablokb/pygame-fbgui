@@ -89,6 +89,10 @@ class VBox(fbgui.Box):
       else:
         x_c = x + int((w - w_c)/2)
 
-      child._layout(x_c, y, w_c, h_c+h_c_add)
-      y     += h_c + h_c_add + self.padding[1]
+      if self.uniform[1]:
+        child._layout(x_c,y,w_c,self._child_h_max)
+        y     += self._child_h_max + self.padding[1]
+      else:
+        child._layout(x_c, y, w_c, h_c+h_c_add)
+        y     += h_c + h_c_add + self.padding[1]
       index += 1

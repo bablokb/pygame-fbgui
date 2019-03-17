@@ -89,6 +89,10 @@ class HBox(fbgui.Box):
       else:
         y_c = y + int((h - h_c)/2)
 
-      child._layout(x, y_c, w_c+w_c_add, h_c)
-      x     += w_c + w_c_add + self.padding[0]
+      if self.uniform[0]:
+        child._layout(x,y_c,self._child_w_max,h_c)
+        x     += self._child_w_max + self.padding[0]
+      else:
+        child._layout(x, y_c, w_c+w_c_add, h_c)
+        x     += w_c + w_c_add + self.padding[0]
       index += 1

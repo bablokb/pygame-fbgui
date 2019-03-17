@@ -6,7 +6,7 @@
 # Additional settings:
 #
 #  - padding: single value or (horizontal,vertical)    (used by subclasses)
-#  - weight:  single value or (horizontal,vertical)    (used by subclasses)
+#  - uniform: all childs have equal size (False,True)  (used by subclasses)
 #
 # Author: Bernhard Bablok
 # License: GPL3
@@ -31,6 +31,10 @@ class Box(fbgui.Panel):
     self.padding = getattr(settings,'padding',(0,0))
     if not type(self.padding) is tuple:
       self.padding = (self.padding,self.padding)
+
+    self.uniform = getattr(settings,'uniform',(False,False))
+    if not type(self.uniform) is tuple:
+      self.uniform = (self.uniform,self.uniform)
 
     self._child_w_max = 0
     self._child_h_max = 0
@@ -78,6 +82,11 @@ class Box(fbgui.Panel):
 
     # for later distribution, calculate additional size per weight
     n_childs = len(self._childs)
+    if self.uniform[0]:
+      self._child_w_sum = n_childs*self._child_w_max
+    if self.uniform[1]:
+      self._child_h_sum = n_childs*self._child_h_max
+
     w_add = (self.w_min-self.margins[0]-self.margins[1] -
              (n_childs-1)*self.padding[0] - self._child_w_sum)
     h_add = (self.h_min-self.margins[2]-self.margins[3] -
