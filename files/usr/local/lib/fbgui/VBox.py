@@ -69,30 +69,49 @@ class VBox(fbgui.Box):
     # correct values for margins
     x = x + self.margins[0]
     y = y + self.margins[2]
-    w = self.w_min - self.margins[0] - self.margins[1]
-    h = self.h_min - self.margins[2] - self.margins[3]
+    w = w - self.margins[0] - self.margins[1]
+    h = h - self.margins[2] - self.margins[3]
     fbgui.App.logger.msg("TRACE","x,y,w,h (%s childs): (%d,%d,%d,%d)" %
                          (self._id,x,y,w,h))
-    
+
+    # calculate additional size we have
+    n_childs = len(self._childs)
+    h_add = max(0,h-self._child_h_sum - (n_childs-1)*self.padding[1])
+    fbgui.App.logger.msg("TRACE","h_add (%s): %d" % (self._id,h_add))
+
+    if self.uniform[1]:
+      weight_sum = n_childs
+    else:
+      weight_sum = self._child_h_weight_sum
+    if not weight_sum:
+      weight_sum = 1     # prevent devision by zero
+
     # now layout children
     index = 0
     for child in self._childs:
-      w_c, h_c, _, h_c_add = self._child_sizes[index]
-      h_c_add  = int(h_c_add*self._add_size[1])
+      child_w, child_h = self._child_sizes[index]
+      if self.uniform[0]:
+        child_w = self._child_w_max
+      if self.uniform[1]:
+        weight = 1.0
+      else:
+        weight = child.weight[1]
+
+      child_add = int(h_add*weight/weight_sum)
       x_c      = x
 
       # horizontal alignment
       if child.align[0] == fbgui.LEFT:
         x_c = x
       elif child.align[0] == fbgui.RIGHT:
-        x_c = x + w - w_c
+        x_c = x + w - child_w
       else:
-        x_c = x + int((w - w_c)/2)
+        x_c = x + int((w - child_w)/2)
 
       if self.uniform[1]:
-        child._layout(x_c,y,w_c,self._child_h_max)
-        y     += self._child_h_max + self.padding[1]
+        child._layout(x_c,y,child_w,self._child_h_max+child_add)
+        y += self._child_h_max+child_add + self.padding[1]
       else:
-        child._layout(x_c, y, w_c, h_c+h_c_add)
-        y     += h_c + h_c_add + self.padding[1]
+        child._layout(x_c,y,child_w,child_h+child_add)
+        y += child_h+child_add + self.padding[1]
       index += 1
