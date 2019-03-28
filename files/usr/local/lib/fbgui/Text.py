@@ -63,6 +63,7 @@ class Text(fbgui.VBox):
     settings = fbgui.Settings(self._settings)
     settings.width  = 0
     settings.height = 0
+    settings.weight = 0
     settings.align  = fbgui.LEFT
     for n in range(n_labels):
       label = fbgui.Label("%s_line_%d" % (self._id,n),"",
