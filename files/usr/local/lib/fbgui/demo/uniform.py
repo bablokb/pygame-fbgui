@@ -50,24 +50,28 @@ def get_widgets():
                      }),parent=main)
 
   fbgui.Button("btn_red",None,"Off",
-                 settings=fbgui.Settings({
-                   'bg_color': fbgui.Color.RED
-                   }),parent=box)
+               settings=fbgui.Settings({
+                 'weight': 1,
+                 'bg_color': fbgui.Color.RED
+                 }),parent=box)
     
   fbgui.Button("btn_green",None,"Standby",
-                 settings=fbgui.Settings({
-                   'bg_color': fbgui.Color.GREEN
-                   }),parent=box)
+               settings=fbgui.Settings({
+                 'weight': 1,
+                 'bg_color': fbgui.Color.GREEN
+                 }),parent=box)
     
   fbgui.Button("btn_yellow",None,"Kodi",
                  settings=fbgui.Settings({
-                   'bg_color': fbgui.Color.YELLOW
-                   }),parent=box)
+                 'weight': 1,
+                 'bg_color': fbgui.Color.YELLOW
+                 }),parent=box)
     
   fbgui.Button("btn_blue",None,"Switch mode",
-                 settings=fbgui.Settings({
-                   'bg_color': fbgui.Color.BLUE
-                   }),parent=box)
+               settings=fbgui.Settings({
+                 'weight': 1,
+                 'bg_color': fbgui.Color.BLUE
+                 }),parent=box)
   return main
 
 # ----------------------------------------------------------------------------
