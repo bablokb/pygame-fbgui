@@ -93,10 +93,9 @@ class VBox(fbgui.Box):
       if self.uniform[0]:
         child_w = self._child_w_max
       if self.uniform[1]:
-        weight = 1.0
-      else:
-        weight = child.weight[1]
+        child_h = self._child_h_max
 
+      weight = child.weight[1]
       child_add = int(h_add*weight/weight_sum)
       x_c      = x
 
@@ -108,10 +107,6 @@ class VBox(fbgui.Box):
       else:
         x_c = x + int((w - child_w)/2)
 
-      if self.uniform[1]:
-        child._layout(x_c,y,child_w,self._child_h_max+child_add)
-        y += self._child_h_max+child_add + self.padding[1]
-      else:
-        child._layout(x_c,y,child_w,child_h+child_add)
-        y += child_h+child_add + self.padding[1]
+      child._layout(x_c,y,child_w,child_h+child_add)
+      y += child_h+child_add + self.padding[1]
       index += 1

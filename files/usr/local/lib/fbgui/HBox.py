@@ -90,13 +90,12 @@ class HBox(fbgui.Box):
     index = 0
     for child in self._childs:
       child_w, child_h = self._child_sizes[index]
+      if self.uniform[0]:
+        child_w = self._child_w_max
       if self.uniform[1]:
         child_h = self._child_h_max
-      if self.uniform[0]:
-        weight = 1.0
-      else:
-        weight = child.weight[0]
 
+      weight    = child.weight[0]
       child_add = int(w_add*weight/weight_sum)
       y_c       = y
 
@@ -108,10 +107,6 @@ class HBox(fbgui.Box):
       else:
         y_c = y + int((h - child_h)/2)
 
-      if self.uniform[0]:
-        child._layout(x,y_c,self._child_w_max+child_add,child_h)
-        x += self._child_w_max+child_add + self.padding[0]
-      else:
-        child._layout(x,y_c,child_w+child_add,child_h)
-        x += child_w+child_add + self.padding[0]
+      child._layout(x,y_c,child_w+child_add,child_h)
+      x += child_w+child_add + self.padding[0]
       index += 1
