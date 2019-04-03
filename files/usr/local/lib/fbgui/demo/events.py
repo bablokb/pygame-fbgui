@@ -90,12 +90,12 @@ class MyApp(fbgui.App):
 
   # -----------------------------------------------------------------------
 
-  def on_quit(self):
+  def on_quit(self,rc=0):
     """ override base-class quit-method """
 
-    super(MyApp,self).on_quit()
+    rc = super(MyApp,self).on_quit(rc=rc)
     self._stop_event.set()
-    sys.exit(0)
+    sys.exit(rc)
 
   # ----------------------------------------------------------------------------
 
