@@ -235,11 +235,12 @@ class App(object):
 
   # --- process quit-event   --------------------------------------------------
 
-  def on_quit(self):
+  def on_quit(self,rc=0):
     """ process quit """
 
     # the default implementation just quits pygame
     pygame.quit()
+    return rc
 
   # --- process generic event   -----------------------------------------------
 
@@ -264,8 +265,11 @@ class App(object):
       event = pygame.fastevent.wait()
       App.logger.msg("TRACE", "processing event %d" % event.type)
       if event.type == pygame.QUIT:
-        self.on_quit()
-        return
+        if hasattr(event,'rc'):
+          rc = event.rc
+        else:
+          rc = 0
+        return self.on_quit(rc)
       elif event.type == fbgui.EVENT:
         self._process_internal_event(event)
       else:
