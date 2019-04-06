@@ -160,6 +160,7 @@ class App(object):
           os.putenv('SDL_VIDEODRIVER', driver)
           try:
             pygame.display.init()
+            App.logger.msg("TRACE","using SDL-driver: %s" % driver)
             found = True
             break
           except pygame.error:
@@ -168,8 +169,9 @@ class App(object):
         if not found:
           raise Exception('No suitable video driver found!')
         
-      App.display.size   = (pygame.display.Info().current_w,
-                               pygame.display.Info().current_h)
+      d_info = pygame.display.Info()
+      App.logger.msg("TRACE","bits per pixel: %d, bytes per pixel: %d" % (d_info.bitsize,d_info.bytesize))
+      App.display.size   = (d_info.current_w,d_info.current_h)
       App.display.width  = App.display.size[0]
       App.display.height = App.display.size[1]
       App.display.screen = pygame.display.set_mode(App.display.size,
