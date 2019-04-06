@@ -188,7 +188,7 @@ class Panel(fbgui.Widget):
 
     # create ellipse
     pygame.draw.ellipse(circle_surface,(0,0,0),circle_surface.get_rect(),0)
-    circle_surface = pygame.transform.smoothscale(circle_surface,
+    circle_surface = pygame.transform.scale(circle_surface,
                                        [int(min(rect.size)*self._radius)]*2)
 
     # blit topleft (dest is rectangle with size of circle_surface)
