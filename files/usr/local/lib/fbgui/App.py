@@ -75,8 +75,8 @@ class App(object):
     self._widget = None
 
     # create global message-logger
-    App.logger      = fbgui.Msg()
-    fbgui.Msg.level = getattr(settings,"msg_level","INFO")
+    App.logger = fbgui.Msg(getattr(settings,"msg_level","INFO"),
+                           getattr(settings,"msg_syslog",False))
 
     # global display object
     App.display = fbgui.Settings({
