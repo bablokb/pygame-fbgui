@@ -130,7 +130,8 @@ class App(object):
       Based on 'Python GUI in Linux frame buffer'
       http://www.karoltomala.com/blog/?p=679
     """
-    
+
+    # query and set framebuffer-device
     if hasattr(settings,"fb_device"):
       os.environ["SDL_FBDEV"] = settings.fb_device
     elif os.path.exists("/dev/fb1"):
@@ -138,9 +139,28 @@ class App(object):
     else:
       os.environ["SDL_FBDEV"] = "/dev/fb0"
     App.logger.msg("TRACE","SDL_FBDEV: %s" % os.environ["SDL_FBDEV"])
+
+    # check for X-environment
     have_X = os.getenv("DISPLAY")
     App.logger.msg("TRACE","have X: %r" % have_X)
 
+    # query mouse-device and driver
+    if not have_X:
+      dev_file = getattr(settings,'mouse_dev',None)
+      if not dev_file:
+        for dev in ['touchscreen','ts_uinput','ts','event0']:
+          dev_file = os.path.join('/dev/input',dev)
+          if os.path.exists(dev_file):
+            break
+      if dev_file:
+        App.logger.msg("TRACE","SDL_MOUSEDEV: %s" % dev_file)
+        os.environ["SDL_MOUSEDEV"] = dev_file
+      mouse_drv = getattr(settings,'mouse_drv','TSLIB')
+      if mouse_drv:
+        App.logger.msg("TRACE","SDL_MOUSEDRV: %s" % mouse_drv)
+        os.environ["SDL_MOUSEDRV"] = mouse_drv
+
+    # initilize display
     if have_X:
       pygame.display.init()
       App.display.size    = (App.display.width,App.display.height)
