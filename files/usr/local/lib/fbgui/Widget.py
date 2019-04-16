@@ -186,8 +186,8 @@ class Widget(object):
     self.screen.x = self.x if self.x >= 0 else x
     self.screen.y = self.y if self.y >= 0 else y
 
-    self.screen.w = self.w_min
-    self.screen.h = self.h_min
+    self.screen.w = w
+    self.screen.h = h
 
     self._draw_rect=pygame.Rect(self.screen.x,self.screen.y,
                                 self.screen.w,self.screen.h)
