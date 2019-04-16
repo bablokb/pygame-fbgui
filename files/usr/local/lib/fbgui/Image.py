@@ -97,26 +97,6 @@ class Image(fbgui.Widget):
                                              (self._id,self.w_min,self.h_min))
     self._is_size_valid = True
 
-  # --- layout widget   ------------------------------------------------------
-
-  def _layout(self,x,y,w,h):
-    """ layout widget:
-          x,y: target-position as defined by the parent
-          w,h: width and height of parent (adapted by e.g. margins)
-    """
-
-    # call the standard-layout mechanism
-    self._std_layout(x,y,w,h)
-
-    # images fill the complete requested area, so we correct the default
-    self.screen.w = w
-    self.screen.h = h
-    self._draw_rect=pygame.Rect(self.screen.x,self.screen.y,
-                                self.screen.w,self.screen.h)
-
-    fbgui.App.logger.msg("TRACE","layout (%s): (%d,%d,%d,%d)" %
-           (self._id,self.screen.x,self.screen.y,self.screen.w,self.screen.h))
-
   # --- redraw widget   ------------------------------------------------------
 
   def draw(self):
