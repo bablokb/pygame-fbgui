@@ -108,22 +108,6 @@ class Panel(fbgui.Widget):
                  "min_size (%s): (%d,%d)" % (self._id,self.w_min,self.h_min))
     self._is_size_valid = True
 
-  # --- standard layout widget   ---------------------------------------------
-
-  def _std_layout(self,x,y,w,h):
-    """ layout widget:
-          x,y: target-position as defined by the parent
-          w,h: width and height of parent (adapted by e.g. margins)
-    """
-
-    super(Panel,self)._std_layout(x,y,w,h)
-
-    # panels fill the complete requested area, so we correct the default
-    self.screen.w = w
-    self.screen.h = h
-    self._draw_rect=pygame.Rect(self.screen.x,self.screen.y,
-                                self.screen.w,self.screen.h)
-
   # --- layout widget   ------------------------------------------------------
 
   def _layout(self,x,y,w,h):
