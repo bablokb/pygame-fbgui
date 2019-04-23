@@ -190,7 +190,9 @@ class App(object):
           raise Exception('No suitable video driver found!')
         
       d_info = pygame.display.Info()
-      App.logger.msg("TRACE","bits per pixel: %d, bytes per pixel: %d" % (d_info.bitsize,d_info.bytesize))
+      App.logger.msg("TRACE",
+                     "bits per pixel: %d, bytes per pixel: %d" %
+                     (d_info.bitsize,d_info.bytesize))
       App.display.size   = (d_info.current_w,d_info.current_h)
       App.display.width  = App.display.size[0]
       App.display.height = App.display.size[1]
@@ -235,11 +237,12 @@ class App(object):
   def _draw_widget(self,pack=False):
     """ draw top-level widget """
 
+    App.display.screen.fill(App.theme.bg_color)
     if self._widget:
       if pack:
         self._widget.pack()
       self._widget.draw()
-      pygame.display.flip()
+    pygame.display.flip()
 
   # --- set top-level widget   ------------------------------------------------
 
