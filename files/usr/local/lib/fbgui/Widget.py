@@ -91,6 +91,7 @@ class Widget(object):
       fbgui.App.logger.msg("TRACE","%s: copying theme from App" % self._id)
       self.theme = fbgui.Settings(fbgui.App.theme)
     self.theme.copy(settings)
+
     # overwrite copy from parent or app in super-constructor
     if not hasattr(settings,'bg_color_down'):
       self.theme.bg_color_down = self.theme.bg_color
@@ -230,6 +231,12 @@ class Widget(object):
       y_c = self.screen.y + int((self.screen.h - rect.h)/2)
 
     return (x_c,y_c)
+
+  # --- return id of widget   ------------------------------------------------
+
+  def id(self):
+    """ get id of widget """
+    return self._id
 
   # --- layout widget and children   -----------------------------------------
 
