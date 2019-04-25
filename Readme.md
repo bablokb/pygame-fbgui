@@ -43,6 +43,10 @@ On other systems, you should inspect `tools/install` and adapt it to your needs.
 The install-command basically copies the library and installs prerequisites
 (currently only python3-pygame).
 
+You will also find in the directories below `support` various sample-files,
+e.g. udev-rules for configuring the touch-device or a sample systemd
+unit-file. Copy these files or use them as templates.
+
 
 Documentation
 -------------
