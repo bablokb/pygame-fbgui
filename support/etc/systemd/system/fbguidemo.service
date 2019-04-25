@@ -1,0 +1,19 @@
+# ----------------------------------------------------------------------------
+# Sample systemd unit-definition file for pygame-fbgui programs.
+#
+# Author: Bernhard Bablok
+# License: GPL3
+#
+# Website: https://github.com/bablokb/pygame-fbgui
+#
+# ----------------------------------------------------------------------------
+
+[Unit]
+Description=Pygame-fbgui demo program
+ 
+[Service]
+Type=simple
+ExecStart=/usr/bin/nohup /usr/local/lib/fbgui/demo/buttons.py
+
+[Install]
+WantedBy=basic.target
