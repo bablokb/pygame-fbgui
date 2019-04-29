@@ -22,10 +22,9 @@ class Label(fbgui.Widget):
   def __init__(self,id,text,settings=fbgui.Settings(),toplevel=False,parent=None):
     """ constructor """
 
-    if not hasattr(settings,'bg_color'):
-      settings.bg_color = fbgui.Color.TRANSPARENT
     super(Label,self).__init__(id,settings=settings,
                                toplevel=toplevel,parent=parent)
+
     if not hasattr(self.theme,"font"):
       if (self.theme.font_size != fbgui.App.theme.font_size or
           self.theme.font_name != fbgui.App.theme.font_name):
