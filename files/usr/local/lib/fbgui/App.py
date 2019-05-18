@@ -146,8 +146,9 @@ class App(object):
 
     # query mouse-device and driver
     if not have_X:
-      dev_file = getattr(settings,'mouse_dev',None)
-      if not dev_file:
+      if hasattr(settings,'mouse_dev'):
+        dev_file = getattr(settings,'mouse_dev')
+      else:
         for dev in ['touchscreen','ts_uinput','ts','event0']:
           dev_file = os.path.join('/dev/input',dev)
           if os.path.exists(dev_file):
@@ -155,10 +156,10 @@ class App(object):
       if dev_file:
         App.logger.msg("TRACE","SDL_MOUSEDEV: %s" % dev_file)
         os.environ["SDL_MOUSEDEV"] = dev_file
-      mouse_drv = getattr(settings,'mouse_drv','TSLIB')
-      if mouse_drv:
-        App.logger.msg("TRACE","SDL_MOUSEDRV: %s" % mouse_drv)
-        os.environ["SDL_MOUSEDRV"] = mouse_drv
+        mouse_drv = getattr(settings,'mouse_drv','TSLIB')
+        if mouse_drv:
+          App.logger.msg("TRACE","SDL_MOUSEDRV: %s" % mouse_drv)
+          os.environ["SDL_MOUSEDRV"] = mouse_drv
 
     # initilize display
     if have_X:
