@@ -186,10 +186,10 @@ class App(object):
             break
           except pygame.error:
             App.logger.msg("TRACE","Driver: %s failed." % driver)
-    
-        if not found:
-          raise Exception('No suitable video driver found!')
-        
+
+      if not found:
+        raise Exception('No suitable video driver found!')
+
       d_info = pygame.display.Info()
       App.logger.msg("TRACE",
                      "bits per pixel: %d, bytes per pixel: %d" %
