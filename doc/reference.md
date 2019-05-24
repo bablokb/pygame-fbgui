@@ -90,8 +90,8 @@ A theme consists of a number of predefined settings:
     'bg_color_down':  App.theme.bg_color,
     'bg_color_hover': App.theme.bg_color,
     'fg_color':       fbgui.Color.BLACK,
-    'default_font':   None,
-    'font_path':      fpath,
+    'default_font':   None,  # use given font_name with given font_size
+    'font_path':      '/usr/share/fonts',
     'font_name':      "FreeSans",
     'font_size':      12,
     'font_size_s':     8,
