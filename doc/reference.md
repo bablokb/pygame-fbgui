@@ -174,7 +174,7 @@ the whole screen) and images.
 Currently the library supports three layout mechanisms
 
   - *absolute*: you provide the coordinates of the upper left corner
-  - *relative to the border*: any combination of 'LEFT`, `CENTER`, `RIGHT`
+  - *relative to the border*: any combination of `LEFT`, `CENTER`, `RIGHT`
     for the horizontal alignment and `TOP`, `CENTER`, `BOTTOM` for the
     vertical alignment
   - *flow*: layout the children in a horizontal or vertical manner
