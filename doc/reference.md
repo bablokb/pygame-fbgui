@@ -6,13 +6,14 @@ Table of Contents
 
   1. [Architecture](#architecture "Architecture")
   2. [Settings](#settings "Settings")
-  2. [Pygame Environment](#pygame-environment "Pygame Environment")
-  2. [Events](#events "Events")
-  2. [Colors](#colors "Colors")
-  2. [Theming](#theming "Theming")
-  2. [Fonts](#fonts "Fonts")
-  2. [Logging](#logging "Logging")
-  2. [Class Reference](#class-reference "Class Reference")
+  3. [Pygame Environment](#pygame-environment "Pygame Environment")
+  4. [Events](#events "Events")
+  5. [Colors](#colors "Colors")
+  6. [Theming](#theming "Theming")
+  7. [Fonts](#fonts "Fonts")
+  8. [Logging](#logging "Logging")
+  9. [Layouts](#layouts "Layouts")
+ 10. [Class Reference](#class-reference "Class Reference")
 
 
 Architecture
@@ -42,7 +43,7 @@ Settings
 --------
 
 Almost all objects of the pygame-fbgui class-hierarchy accept a
-[Settings](doc/Settings.md)-object in the constructor. `Settings` is mainly
+[Settings](./Settings.md)-object in the constructor. `Settings` is mainly
 a value-holder class. To initialize a `Settings`-object, you either pass
 a dictionary, or you create the object and add the settings afterwards:
 
@@ -62,7 +63,7 @@ Pygame-Environment
 Usually, the library takes care of the configuration of the pygame-environment
 (display-device, mouse-device). You don't have to set the usual `SDL*`
 variables yourself, instead pass the correct settings to the application class
-(see class [App](doc/App.md) for details).
+(see class [App](./App.md) for details).
 
 
 Events
@@ -75,7 +76,7 @@ own events, only use `pygame.USEREVENT` up to `pygame.NUMEVENTS-2`.
 Colors
 ------
 
-The [Color](doc/Color.md)-class supports various color-constants, especially
+The [Color](./Color.md)-class supports various color-constants, especially
 all values of the predefined HTML-colors. Also available are shaded versions
 of the basic colors, e.g. `fbgui.Colors.REDnnn` with `nnn` from `000` to
 `100` in steps of 5.
@@ -152,33 +153,65 @@ the library makes extensive use of the level "TRACE", so expect a lot of
 noise if you use this level.
 
 
+Layouts
+-------
+
+One of the main design goals of pygame-fbgui is the support of simple yet
+powerful layout-mechanisms. All widgets of GUI have a size. There are three
+alternatives to size a widget:
+
+  - *absolute size* (`width` and `height` given in pixels)
+  - *relative size* (`width` and `height` given as a fraction between 0.0 and 1.0)  
+    The relative size is always relative to the parent.
+  - *dynamic size*  
+    Here, the size is dynamically calculated at runtime
+
+Whenever possible, you should try to prevent using absolute sizes for
+widgets, because if you switch the screen, the layout will not work anymore.
+Typical exceptions are toplevel-widgets which are always absolute (they fill
+the whole screen) and images.
+
+Currently the library supports three layout mechanisms
+
+  - *absolute*: you provide the coordinates of the upper left corner
+  - *relative to the border*: any combination of 'LEFT`, `CENTER`, `RIGHT`
+    for the horizontal alignment and `TOP`, `CENTER`, `BOTTOM` for the
+    vertical alignment
+  - *flow*: layout the children in a horizontal or vertical manner
+
+The class [Panels](./Panels.md) supports the relative layout. The classes
+[HBox](./HBox.md) and [VBox](./VBox.md) support the flow-layout in horizontal
+and vertical directions. In a later version of the library there will
+be a [GridBox](./GridBox.md) supporting the flow-layout in two dimensions.
+
+
 Class Reference
 ---------------
 
 
-| Class                          | Description                                   |
-| -------------------------------|-----------------------------------------------|
-|[App](doc/App.md)               | The main application class                    |
-|[Box](doc/Box.md)               | Base-class of `HBox` and `VBox`               |
-|[Button](doc/Button.md)         | a button supporting text and an image         |
-|[Color](doc/Color.md)           | Color-constants and support functions         |
-|[Gap](doc/Gap.md)               | Base-class of `HGap` and `VGap`               |
-|[HBox](doc/HBox.md)             | A panel layouting it's children horizontally  |
-|[GridBox](doc/GridBox.md)       | A panel layouting it's children in a grid     |
-|[HGap](doc/HGap.md)             | A horizontal gap                              |
-|[Image](doc/Image.md)           | An image-widget supporting scaling            |
-|[Label](doc/Label.md)           | A single-line text                            |
-|[List](doc/List.md)             | A panel with list-items                       |
-|[Line](doc/Line.md)             | A horizontal or vertical line                 |
-|[Msg](doc/Msg.md)               | Logging support class                         |
-|[Panel](doc/Panel.md)           | A rectangular area and with child widgets     |
-|[ScrollArea](doc/ScrollArea.md) | A panel supporting scrolling                  |
-|[Settings](doc/Settings.md)     | Configuration class for `App` and widgets     |
-|[TabBox](doc/TabBox.md)         | A panel with tabs                             |
-|[Text](doc/Text.md)             | A multi-line textbox                          |
-|[VBox](doc/VBox.md)             | A panel layouting it's children vertically    |
-|[VGap](doc/VGap.md)             | A vertical gap                                |
-|[Widget](doc/Widget.md)         | The base class of all widgets                 |
+| Class                        | Description                                   |
+| -----------------------------|-----------------------------------------------|
+|[App](./App.md)               | The main application class                    |
+|[Box](./Box.md)               | Base-class of `HBox` and `VBox`               |
+|[Button](./Button.md)         | a button supporting text and an image         |
+|[Color](./Color.md)           | Color-constants and support functions         |
+|[Gap](./Gap.md)               | Base-class of `HGap` and `VGap`               |
+|[HBox](./HBox.md)             | A panel layouting it's children horizontally  |
+|[GridBox](./GridBox.md)       | A panel layouting it's children in a grid     |
+|[HGap](./HGap.md)             | A horizontal gap                              |
+|[Image](./Image.md)           | An image-widget supporting scaling            |
+|[Label](./Label.md)           | A single-line text                            |
+|[List](./List.md)             | A panel with list-items                       |
+|[Line](./Line.md)             | A horizontal or vertical line                 |
+|[Msg](./Msg.md)               | Logging support class                         |
+|[Panel](./Panel.md)           | A rectangular area and with child widgets     |
+|[ScrollArea](./ScrollArea.md) | A panel supporting scrolling                  |
+|[Settings](./Settings.md)     | Configuration class for `App` and widgets     |
+|[TabBox](./TabBox.md)         | A panel with tabs                             |
+|[Text](./Text.md)             | A multi-line textbox                          |
+|[VBox](./VBox.md)             | A panel layouting it's children vertically    |
+|[VGap](./VGap.md)             | A vertical gap                                |
+|[Widget](./Widget.md)         | The base class of all widgets                 |
 
 
 The following classes are planned, but not implemented yet:
