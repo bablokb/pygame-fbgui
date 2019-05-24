@@ -259,4 +259,5 @@ thanks to the `radius`-attribute.
 
 The second version also sets a different font for the time-label. The library
 uses either builtin-fonts or font-files. A builtin-font has no extension
-(.ttf in our case). Depending on the installation, pygame has a 
+(.ttf in our case). For details about fonts please have a look at the
+relevant section in the [Reference](doc/reference.md "Reference").
