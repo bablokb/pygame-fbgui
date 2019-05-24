@@ -9,7 +9,8 @@ The library is under constant development. Implementation is not complete,
 but everything implemented should work (if not, then it's a bug).
 
 Although targeted at small framebuffer displays, it also works under X11. In
-fact, development is done using X11.
+fact, development is done using X11. Adding support for Windows is
+probably a matter of a few lines of code (patches are welcome).
 
 
 Table of Contents
@@ -18,7 +19,9 @@ Table of Contents
   1. [News and Status](#news "News")
   2. [Hardware](#install "Hardware")
   3. [Installation](#install "Installation")
-  4. [Documentation](#documentation "Documentation")
+  4. [System Configuration](#system-configuration "System Configuration")
+  5. [Running pygame-fbgui as a systemd-service](#running-pygame-fbgui-as-a-systemd-service "Running pygame-fbgui as a systemd-service")
+  6. [Documentation](#documentation "Documentation")
 
 
 News
@@ -33,11 +36,6 @@ News
 
 Hardware
 --------
-
-You don't need additional steps if you install pygame-fbgui on your
-development system - pygame-fbgui works fine with X11. Windows users
-will probably have to tweak the class `App` (feedback and pull-requests
-on this issue is welcome).
 
 The target-platform for pygame-fbgui is a SBC with a small display. You
 should install and configure the display according to the vendor. Usually
@@ -59,9 +57,29 @@ On other systems, you should inspect `tools/install` and adapt it to your needs.
 The install-command basically copies the library and installs prerequisites
 (currently only python3-pygame).
 
-You will also find in the directories below `support` various sample-files,
-e.g. udev-rules for configuring the touch-device or a sample systemd
-unit-file. Copy these files or use them as templates.
+
+System Configuration
+--------------------
+
+For X11, no additional system-configuration should be necessary. You can
+test the library by running one of the demo programs:
+
+    /usr/local/lib/fbgui/demo/buttons.py
+
+The program displays a simple gui with four buttons. Try to press each
+button and see what happens.
+
+If you are running the program from a console window (Raspbian-lite, direct
+login - not via ssh) with a normal monitor attached, you must either install
+"gpm" (console-mouse support) or add the following line to the configuration
+of `buttons.py` (near the end of the program):
+
+    config.mouse_dev = None
+
+For small touch displays, you would install and configure the display
+according to the instructions of your vendor. This usually includes the
+installation of the packages `tslib` and `libts-bin`. You should also
+calibrate the touch device on the console using `ts_calibrate`.
 
 Since Debian-Jessie one of pygames low-level support-libraries (SDL) has a
 problem using the touchscreen-library `tslib`. Therefore, you need to
@@ -72,6 +90,20 @@ downgrade this library to the version used in Debian-Wheezy:
 This script is from Adafruit, you will find a link to the source-page in
 the script-header. Note that downgrading is not necessary on the development
 system (X11 does not use `tslib`).
+
+If pygame-fbgui does not identify your touch-device, you might have to add
+an udev-rule to your system. In this case, copy `98-touchscreen.rules`
+from the directory `support/etc/udev/rules.d` to `/etc/udev/rules.d`.
+Check your system-log (`/var/log/messages`) and adapt the "name" in the
+rule to the string from your system-log.
+
+
+Running pygame-fbgui as a systemd-service
+-----------------------------------------
+
+To run a pygame-fbgui program as a systemd-service, you should copy the
+template `support/etc/systemd/system/fbguidemo.service` to
+`/etc/systemd/system/` and adapt it to your needs.
 
 
 Documentation
