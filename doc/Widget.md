@@ -70,6 +70,6 @@ instance, e.g.
       fbgui.App.logger.msg("INFO","click for %s" % widget.id())
 
     clickable_text = fbgui.Label("click me")
-    clickable_text.on_click = lambda widget,event run_action(widget,event)
+    clickable_text.on_click = lambda widget,event: run_action(widget,event)
 
 You could also subclass `Label` and add a `on_click`-method to the subclass.
