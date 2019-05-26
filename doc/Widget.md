@@ -55,6 +55,9 @@ Public Methods
 | on_mouse_motion(event)     | process mouse-motion event                       |
 | on_mouse_btn_down(event)   | process mouse-button down event                  |
 | on_mouse_btn_up(event)     | process mouse-button up event                    |
+| is_selected()              | return selection-state of widget                 |
+| set_selected(state)        | set selection-state of widget                    |
+| toggle_selected()          | toggle selection-state of widget                 |
 
 
 You should call `post_layout()` or `post_redraw()` if you change the state of
