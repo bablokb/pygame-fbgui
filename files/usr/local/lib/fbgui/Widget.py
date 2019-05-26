@@ -51,6 +51,7 @@ class Widget(object):
     self._parent    = parent
     self._toplevel  = toplevel
     self._settings  = settings
+    self._selected  = False
 
     # state of mouse
     self._state     = Widget.MOUSE_NORMAL
@@ -236,6 +237,28 @@ class Widget(object):
   def id(self):
     """ get id of widget """
     return self._id
+
+  # --- return selection status   --------------------------------------------
+
+  def is_selected(self):
+    """ return selection status """
+    return self._selected
+
+  # --- set selection status   -----------------------------------------------
+
+  def set_selected(self,new_state):
+    """ set selection status """
+    old_state = self._selected
+    self._selected = new_state
+    return old_state
+
+  # --- toggle selection status   --------------------------------------------
+
+  def toggle_selected(self):
+    """ toggle selection status """
+    old_state = self._selected
+    self._selected = not old_state
+    return old_state
 
   # --- layout widget and children   -----------------------------------------
 
