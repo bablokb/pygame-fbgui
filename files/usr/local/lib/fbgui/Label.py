@@ -41,7 +41,7 @@ class Label(fbgui.Widget):
 
   # --- set the text of this label   -----------------------------------------
 
-  def set_text(self,text,font=None,refresh=True):
+  def set_text(self,text,refresh=True):
     """ set the text of the label """
 
     if text == self._text:
