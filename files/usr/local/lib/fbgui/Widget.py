@@ -314,6 +314,7 @@ class Widget(object):
                     "on_mouse_btn_down for %s: %r" % (self._id,event.pos))
       self._state = Widget.MOUSE_DOWN
       if hasattr(self,'on_click'):
+        fbgui.App.logger.msg("TRACE","delegate to on_click of %s" % self._id)
         return getattr(self,'on_click')(self,event)
     return False
 
