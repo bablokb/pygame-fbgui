@@ -40,7 +40,7 @@ class Text(fbgui.VBox):
   # --- set the text of this Text (internal)   -----------------------------
 
   def _set_text(self,text,refresh=True):
-    """ set the text of the button """
+    """ set the text of the widget (internal method) """
 
     if text == self._text:
       return
@@ -76,7 +76,7 @@ class Text(fbgui.VBox):
   # --- set the text of this Text   ----------------------------------------
 
   def set_text(self,text,refresh=True):
-    """ set the text of this Text """
+    """ set the text of this widget (public method) """
 
     # N.B.: we just post a suitable event, since _set_text should only be
     #       called from the main-thread
