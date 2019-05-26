@@ -78,7 +78,7 @@ def get_widgets():
 def set_msg(widget,event,text,label):
     """ display info about a pressed button """
 
-    fbgui.App.logger.msg("TRACE","event for %s (%s): %r" % (widget._id,text,event))
+    fbgui.App.logger.msg("TRACE","event for %s (%s): %r" % (widget.id(),text,event))
     label.set_text("button %s pressed" % text,refresh=True)
     return True
 
