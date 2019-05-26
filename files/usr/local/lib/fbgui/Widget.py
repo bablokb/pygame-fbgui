@@ -15,7 +15,6 @@
 #          1 <= w,h: absolute size (int!)
 #  - align  : single value or (horizontal,vertical)
 #             values: TOP/BOTTOM/LEFT/RIGHT
-#  - margins: single value or (left,right,top,bottom)
 #  - weight: weight for additional space:
 #       0: widget uses it's minimal size
 #      >0: relative weight
