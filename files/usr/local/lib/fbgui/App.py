@@ -108,11 +108,18 @@ class App(object):
       'font_size_xxl':  24
     })
     App.theme.copy(settings)
+
     # define default (do-nothing) colors for hover/down
     if not App.theme.bg_color_down:
       App.theme.bg_color_down = App.theme.bg_color
     if not App.theme.bg_color_hover:
       App.theme.bg_color_hover = App.theme.bg_color
+
+    # define color for selections
+    if not App.theme.fg_color_selected:
+      App.theme.fg_color_selected = App.theme.bg_color
+    if not App.theme.bg_color_selected:
+      App.theme.bg_color_selected = App.theme.fg_color
 
     # initialize physical display, fonts and event-system
     self._init_display(settings)
