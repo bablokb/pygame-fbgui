@@ -87,10 +87,15 @@ Theming
 
 A theme consists of a number of predefined settings:
 
-    'bg_color':       fbgui.Color.WHITE,
-    'bg_color_down':  App.theme.bg_color,
-    'bg_color_hover': App.theme.bg_color,
-    'fg_color':       fbgui.Color.BLACK,
+    'fg_color':       fbgui.Color.BLACK
+    'bg_color':       fbgui.Color.WHITE
+
+    'fg_color_selected':  App.theme.bg_color
+    'bg_color_selected':  App.theme.fg_color
+
+    'bg_color_hover': App.theme.bg_color
+    'bg_color_down':  App.theme.bg_color
+
     'default_font':   None,  # use given font_name with given font_size
     'font_path':      '/usr/share/fonts',
     'font_name':      "FreeSans",
@@ -101,7 +106,7 @@ A theme consists of a number of predefined settings:
     'font_size_xl':   20,
     'font_size_xxl':  24
 
-The list will probably expand in the future (e.g. for color of selections).
+The list will probably expand in the future.
 
 The toplevel window will inherit the theme from the application-object, and
 child-widgets will inherit the theme from their parents. During widget
