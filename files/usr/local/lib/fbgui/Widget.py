@@ -18,6 +18,9 @@
 #  - weight: weight for additional space:
 #       0: widget uses it's minimal size
 #      >0: relative weight
+#  - show_hover: change color of widget while mouse is over widget (def: False)
+#  - show_down: change color of widget while mouse is down (def: False)
+#
 #
 # Author: Bernhard Bablok
 # License: GPL3
@@ -75,6 +78,7 @@ class Widget(object):
     # minimum sizes
     self._is_size_valid = False
 
+    # save settings
     self.align   = getattr(settings,'align',(fbgui.LEFT,fbgui.BOTTOM))
     if not type(self.align) is tuple:
       self.align = (self.align,self.align)
@@ -82,6 +86,9 @@ class Widget(object):
     self.weight  = getattr(settings,'weight',(0,0))
     if not type(self.weight) is tuple:
       self.weight = (self.weight,self.weight)
+
+    self.show_hover = getattr(settings,'show_hover',False)
+    self.show_down  = getattr(settings,'show_down',False)
 
     if self._parent:
       fbgui.App.logger.msg("TRACE","%s: copying theme from %s" %
@@ -256,9 +263,7 @@ class Widget(object):
 
   def toggle_selected(self):
     """ toggle selection status """
-    old_state = self._selected
-    self._selected = not old_state
-    return old_state
+    return set_selected(not self._selected)
 
   # --- layout widget and children   -----------------------------------------
 

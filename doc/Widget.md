@@ -23,6 +23,8 @@ Settings
 | height        | height                | 0 or display-height (toplevel)  |
 | weight        | share of free space   | 0                               |
 | align         | alignment             | (LEFT,BOTTOM)                   |
+| show_hover    | widget changes color on mouse over | False              |
+| show_down     | widget changes color on mouse down | False              |
 
 Toplevel widgets always have `(x,y) = (0,0)` and `width` and `height` are
 automatically set to the display width and heigt.
