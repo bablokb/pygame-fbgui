@@ -87,6 +87,7 @@ class Widget(object):
     if not type(self.weight) is tuple:
       self.weight = (self.weight,self.weight)
 
+    # theming support
     self.show_hover = getattr(settings,'show_hover',False)
     self.show_down  = getattr(settings,'show_down',False)
 
@@ -98,6 +99,9 @@ class Widget(object):
       fbgui.App.logger.msg("TRACE","%s: copying theme from App" % self._id)
       self.theme = fbgui.Settings(fbgui.App.theme)
     self.theme.copy(settings)
+
+    # keep track of fg/bg-color
+    self._set_colors()
 
     if self._parent:
       self._parent.add(self)
@@ -233,6 +237,23 @@ class Widget(object):
 
     return (x_c,y_c)
 
+  # --- set colors depending on state   --------------------------------------
+
+  def _set_colors():
+    """ set bg/fg-color depending on state """
+
+    if self._selected:
+      self.bg_color = self.theme.bg_color_selected
+      self.fg_color = self.theme.fg_color_selected
+    else:
+      self.fg_color = self.theme.fg_color
+      if self._state == Widget.MOUSE_NORMAL:
+        self.bg_color = self.theme.bg_color
+      elif self._state == Widget.MOUSE_HOVER and self.show_hover:
+        self.bg_color = self.theme.bg_color_hover
+      elif self._state == Widget.MOUSE_DOWN and self.show_down:
+        self.bg_color = self.theme.bg_color_down
+
   # --- return id of widget   ------------------------------------------------
 
   def id(self):
@@ -251,6 +272,7 @@ class Widget(object):
     """ set selection status """
     old_state = self._selected
     self._selected = new_state
+    self._set_colors()
     return old_state
 
   # --- toggle selection status   --------------------------------------------
@@ -324,6 +346,7 @@ class Widget(object):
       self._state = Widget.MOUSE_HOVER
     else:
       self._state = Widget.MOUSE_NORMAL
+    self._set_colors()
     return False
 
   # --- handle mouse-button down events    ----------------------------------
@@ -335,6 +358,7 @@ class Widget(object):
       fbgui.App.logger.msg("TRACE",
                     "on_mouse_btn_down for %s: %r" % (self._id,event.pos))
       self._state = Widget.MOUSE_DOWN
+      self._set_colors()
       if hasattr(self,'on_click'):
         fbgui.App.logger.msg("TRACE","delegate to on_click of %s" % self._id)
         return getattr(self,'on_click')(self,event)
@@ -348,6 +372,7 @@ class Widget(object):
     if self._draw_rect.collidepoint(event.pos):
       fbgui.App.logger.msg("TRACE","on_mouse_btn_up for %s" % self._id)
       self._state = Widget.MOUSE_HOVER
+      self._set_colors()
     return False
 
   # --- redraw widget   ------------------------------------------------------
