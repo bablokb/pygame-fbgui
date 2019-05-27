@@ -31,9 +31,9 @@ class List(fbgui.VBox):
     super(List,self).__init__(id,settings=settings,
                               toplevel=toplevel,parent=parent)
     
-    settings.multiselect = getattr(settings,'multiselect',False)
+    self.multiselect = getattr(settings,'multiselect',False)
     self._offset   = 0
-    self._selected = []
+    self._selected_widget = None
     self._add_items(items,refresh=False)
 
   # --- set the items of this List (internal)   ----------------------------
@@ -122,6 +122,17 @@ class List(fbgui.VBox):
 
     fbgui.App.logger.msg("TRACE","list-item %s of %s clicked!" %
                                                         (widget.id(),self._id))
+
+    # update selection state
+    widget.toggle_selection()
+    if not self.multiselect:
+      if self._selected_widget and self._selected_widget.id() <> widget.id():
+        self._selected_widget.set_selection(False)
+      if widget.is_selected():
+        self._selected_widget = widget
+      else:
+        self._selected_widget = None
+
     _on_click_original = getattr(widget,'_on_click_original',None)
     if _on_click_original:
       fbgui.App.logger.msg("TRACE","calling _on_click_original for %s of %s" %
