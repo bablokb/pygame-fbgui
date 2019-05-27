@@ -210,7 +210,7 @@ class Panel(fbgui.Widget):
     if not self._is_size_valid:
       return
 
-    color = self._get_bg_color()
+    color = self.bg_color
 
     self._clip_push()
     if not self._parent or not fbgui.Color.eq(color,self._parent.theme.bg_color):
