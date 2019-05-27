@@ -99,12 +99,6 @@ class Widget(object):
       self.theme = fbgui.Settings(fbgui.App.theme)
     self.theme.copy(settings)
 
-    # overwrite copy from parent or app in super-constructor
-    if not hasattr(settings,'bg_color_down'):
-      self.theme.bg_color_down = self.theme.bg_color
-    if not hasattr(settings,'bg_color_hover'):
-      self.theme.bg_color_hover = self.theme.bg_color
-
     if self._parent:
       self._parent.add(self)
 
