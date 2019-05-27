@@ -22,9 +22,11 @@ class Button(fbgui.HBox):
     """ constructor """
 
     # some default settings, bevor we call the super-constructor
-    settings.padding = getattr(settings,'padding',5)
-    settings.margins = getattr(settings,'margins',10)
-    settings.radius  = getattr(settings,'radius',0.9)
+    settings.padding    = getattr(settings,'padding',5)
+    settings.margins    = getattr(settings,'margins',10)
+    settings.radius     = getattr(settings,'radius',0.9)
+    settings.show_hover = True
+    settings.show_down  = True
 
     # now initialize HBox
     super(Button,self).__init__(id,settings=settings,
