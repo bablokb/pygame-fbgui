@@ -57,9 +57,9 @@ class Line(fbgui.Widget):
     if self.orientation == fbgui.HORIZONTAL:
       pygame.gfxdraw.hline(fbgui.App.display.screen,
                            self.screen.x,self.screen.x+self.screen.w,
-                           self.screen.y,self.theme.fg_color)
+                           self.screen.y,self.fg_color)
     else:
       pygame.gfxdraw.vline(fbgui.App.display.screen,
                            self.screen.x,self.screen.y,
-                           self.screen.y+self.screen.h,self.theme.fg_color)
+                           self.screen.y+self.screen.h,self.fg_color)
     self._clip_pop()
