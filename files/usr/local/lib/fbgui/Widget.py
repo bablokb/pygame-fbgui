@@ -201,19 +201,6 @@ class Widget(object):
     fbgui.App.logger.msg("TRACE","std-layout-out (%s): (%d,%d,%d,%d)" %
            (self._id,self.screen.x,self.screen.y,self.screen.w,self.screen.h))
 
-  # --- get background-color   -----------------------------------------------
-
-  def _get_bg_color(self):
-    """ return background-color depending on mouse-state """
-
-    if self._state == fbgui.Widget.MOUSE_NORMAL:
-      color = self.theme.bg_color
-    elif self._state == fbgui.Widget.MOUSE_DOWN:
-      color = self.theme.bg_color_down
-    if self._state == fbgui.Widget.MOUSE_HOVER:
-      color = self.theme.bg_color_hover
-    return color
-
   # --- align the widget   ---------------------------------------------------
 
   def _align(self,rect):
