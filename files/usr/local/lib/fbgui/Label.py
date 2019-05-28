@@ -93,7 +93,9 @@ class Label(fbgui.Widget):
 
     # if the widget has a size, fill with background color
     if self.screen.w > 0 and self.screen.h > 0:
-      fbgui.App.display.screen.fill(self.bg_color,
+      if not self._parent or ( self.bg_color.a > 0 and
+                       fbgui.Color.neq(self.bg_color,self._parent.bg_color) ):
+        fbgui.App.display.screen.fill(self.bg_color,
                rect=(self.screen.x,self.screen.y,self.screen.w,self.screen.h))
 
     # now render the font
