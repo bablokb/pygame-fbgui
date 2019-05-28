@@ -226,7 +226,7 @@ class Widget(object):
 
   # --- set colors depending on state   --------------------------------------
 
-  def _set_colors():
+  def _set_colors(self):
     """ set bg/fg-color depending on state """
 
     if self._selected:
@@ -234,12 +234,12 @@ class Widget(object):
       self.fg_color = self.theme.fg_color_selected
     else:
       self.fg_color = self.theme.fg_color
-      if self._state == Widget.MOUSE_NORMAL:
-        self.bg_color = self.theme.bg_color
-      elif self._state == Widget.MOUSE_HOVER and self.show_hover:
+      if self._state == Widget.MOUSE_HOVER and self.show_hover:
         self.bg_color = self.theme.bg_color_hover
       elif self._state == Widget.MOUSE_DOWN and self.show_down:
         self.bg_color = self.theme.bg_color_down
+      else:
+        self.bg_color = self.theme.bg_color
 
   # --- return id of widget   ------------------------------------------------
 
@@ -266,7 +266,7 @@ class Widget(object):
 
   def toggle_selected(self):
     """ toggle selection status """
-    return set_selected(not self._selected)
+    return self.set_selected(not self._selected)
 
   # --- layout widget and children   -----------------------------------------
 
