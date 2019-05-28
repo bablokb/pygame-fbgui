@@ -260,6 +260,9 @@ class Widget(object):
     old_state = self._selected
     self._selected = new_state
     self._set_colors()
+    if hasattr(self,'on_selected'):
+      fbgui.App.logger.msg("TRACE","delegate to on_selected of %s" % self._id)
+      getattr(self,'on_selected')(self,new_state)
     return old_state
 
   # --- toggle selection status   --------------------------------------------
