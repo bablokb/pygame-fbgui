@@ -48,7 +48,7 @@ Public Methods
 --------------
 
 | Name                       | Description                                      |
-|--------------------- ------|--------------------------------------------------|
+|----------------------------|--------------------------------------------------|
 | id()                       | return the id of the widget                      |
 | pack()                     | trigger layout of widget tree (only toplevel)    |
 | post_layout()              | trigger layout (including redraw)                |
@@ -68,8 +68,19 @@ redraw the given widget. This also works from other threads.
 
 Note that you usually don't have to override the `on_mouse_xxx` methods.
 
-To receive click-events, simply add a `on_click`-method to your widget
-instance, e.g.
+
+Events
+------
+
+The `Widget`-class currently supports the following event-methods:
+
+| Name                       | Description                                      |
+|----------------------------|--------------------------------------------------|
+| on_click(widget,event)     | proces click-event. Return True if processed     |
+| on_selected(widget,state)  | proces select-event (no return value)            |
+
+To receive e.g. click-events, simply add a `on_click`-method to your widget
+instance:
 
     def run_action(widget,event):
       fbgui.App.logger.msg("INFO","click for %s" % widget.id())
