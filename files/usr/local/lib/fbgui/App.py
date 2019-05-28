@@ -93,19 +93,21 @@ class App(object):
     if not fpath:
       fpath = '/usr/share/fonts'
     App.theme = fbgui.Settings({
-      'bg_color':       fbgui.Color.WHITE,
-      'bg_color_down':  None,
-      'bg_color_hover': None,
-      'fg_color':       fbgui.Color.BLACK,
-      'default_font':   None,
-      'font_path':      fpath,
-      'font_name':      "FreeSans",
-      'font_size':      12,
-      'font_size_s':     8,
-      'font_size_m':    12,
-      'font_size_l':    16,
-      'font_size_xl':   20,
-      'font_size_xxl':  24
+      'bg_color':          fbgui.Color.WHITE,
+      'bg_color_down':     None,
+      'bg_color_hover':    None,
+      'bg_color_selected': None,
+      'fg_color':          fbgui.Color.BLACK,
+      'fg_color_selected': None,
+      'default_font':      None,
+      'font_path':         fpath,
+      'font_name':         "FreeSans",
+      'font_size':         12,
+      'font_size_s':        8,
+      'font_size_m':       12,
+      'font_size_l':       16,
+      'font_size_xl':      20,
+      'font_size_xxl':     24
     })
     App.theme.copy(settings)
 
