@@ -50,16 +50,14 @@ class Label(fbgui.Widget):
 
     self._text = text
     if self._text:
-      self._surface, self._rect = self.theme.font.render(self._text,
-                                      self.theme.fg_color,self.theme.bg_color)
+      self._rect = self.theme.font.get_rect(self._text)
     else:
-      self._surface = None
       self._rect    = None
 
     if refresh:
       if ( self._rect.w != self.screen.w or
            self._rect.h != self.screen.h or
-           fbgui.Color.eq(self.theme.bg_color,fbgui.Color.TRANSPARENT)):
+           fbgui.Color.eq(self.bg_color,fbgui.Color.TRANSPARENT)):
         # size changed, so post a layout-event
         self.post_layout()
       else:
@@ -95,14 +93,15 @@ class Label(fbgui.Widget):
 
     # if the widget has a size, fill with background color
     if self.screen.w > 0 and self.screen.h > 0:
-      if not self._parent or (
-        self.theme.bg_color.a > 0 and
-        fbgui.Color.neq(self.theme.bg_color,self._parent.theme.bg_color) ):
-        fbgui.App.display.screen.fill(self.theme.bg_color,
+      fbgui.App.display.screen.fill(self.bg_color,
                rect=(self.screen.x,self.screen.y,self.screen.w,self.screen.h))
-    if self._surface:
+
+    # now render the font
+    if self._rect:
       # align the label on it's drawing area
       pos = self._align(self._rect)
       self._clip_push()
-      fbgui.App.display.screen.blit(self._surface,pos)
+      self.theme.font.render_to(fbgui.App.display.screen,pos,self._text,
+                                      self.fg_color,self.bg_color)
+      #fbgui.App.display.screen.blit(self._surface,pos)
       self._clip_pop()
