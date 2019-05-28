@@ -84,7 +84,7 @@ if __name__ == '__main__':
   config.font_size = FONT_MEDIUM
   config.width     = WIDTH
   config.height    = HEIGHT
-  config.title     = "Test Buttons"
+  config.title     = "Test Texts"
 
   app   = fbgui.App(config)
   panel = get_widgets()
