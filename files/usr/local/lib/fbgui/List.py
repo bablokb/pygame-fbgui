@@ -124,10 +124,10 @@ class List(fbgui.VBox):
                                                         (widget.id(),self._id))
 
     # update selection state
-    widget.toggle_selection()
+    widget.toggle_selected()
     if not self.multiselect:
-      if self._selected_widget and self._selected_widget.id() <> widget.id():
-        self._selected_widget.set_selection(False)
+      if self._selected_widget and self._selected_widget.id() != widget.id():
+        self._selected_widget.set_selected(False)
       if widget.is_selected():
         self._selected_widget = widget
       else:
