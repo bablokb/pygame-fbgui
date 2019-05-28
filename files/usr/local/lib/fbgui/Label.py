@@ -101,7 +101,7 @@ class Label(fbgui.Widget):
       # align the label on it's drawing area
       pos = self._align(self._rect)
       self._clip_push()
-      self.theme.font.render_to(fbgui.App.display.screen,pos,self._text,
-                                      self.fg_color,self.bg_color)
-      #fbgui.App.display.screen.blit(self._surface,pos)
+      surface, _ = self.theme.font.render(self._text,
+                                                 self.fg_color,self.bg_color)
+      fbgui.App.display.screen.blit(surface,pos)
       self._clip_pop()
