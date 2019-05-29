@@ -115,6 +115,16 @@ class List(fbgui.VBox):
     else:
       assert False, "ERROR: illegal event-method: %d" % event.method
 
+  # --- return selected widgets   --------------------------------------------
+
+  def get_selected(self):
+    """ return selected widgets or None (multiselect will return list) """
+
+    if self.multiselect:
+      return [w for w in self._childs if w.is_selected()]
+    else:
+      return self._selected_widget
+    
   # --- intercept on_click of childs   ---------------------------------------
 
   def _on_child_clicked(self,widget,event):
@@ -136,10 +146,7 @@ class List(fbgui.VBox):
     # check for registered on_selection_changed event
     sc_handler = getattr(self,'on_selection_changed',None)
     if sc_handler:
-      if self.multiselect:
-        sc_handler([w for w in self._childs if w.is_selected()])
-      else:
-        sc_handler(self._selected_widget)
+      sc_handler(self.get_selected())
 
     _on_click_original = getattr(widget,'_on_click_original',None)
     if _on_click_original:
