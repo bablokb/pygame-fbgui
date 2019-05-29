@@ -74,10 +74,10 @@ Events
 
 The `Widget`-class currently supports the following event-methods:
 
-| Name                       | Description                                      |
-|----------------------------|--------------------------------------------------|
-| on_click(widget,event)     | proces click-event. Return True if processed     |
-| on_selected(widget,state)  | proces select-event (no return value)            |
+| Name                      | Description                                       |
+|---------------------------|---------------------------------------------------|
+| on_click(widget,event)    | process click-event. Return True if processed     |
+| on_selected(widget,state) | process select-event (no return value)            |
 
 To receive e.g. click-events, simply add a `on_click`-method to your widget
 instance:
