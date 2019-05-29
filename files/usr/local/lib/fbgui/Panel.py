@@ -35,7 +35,8 @@ class Panel(fbgui.Widget):
     if not type(self.margins) is tuple:
       self.margins = (self.margins,self.margins,self.margins,self.margins)
 
-    self._childs    = []
+    self._childs = []
+    self._inherit_select = True             # Lists will set this to False
 
   # --- add child   ----------------------------------------------------------
 
@@ -77,6 +78,16 @@ class Panel(fbgui.Widget):
     super(Panel,self)._invalidate()
     for child in self._childs:
       child._invalidate()
+
+  # --- set selection status   -----------------------------------------------
+
+  def set_selected(self,new_state):
+    """ set selection status (override Widget.set_selected()) """
+
+    result = super(Panel,self).set_selected(new_state)
+    if self._inherit_select:
+      for child in self._childs:
+        child.set_selected(new_state)
 
   # --- query minimum size   -------------------------------------------------
 
