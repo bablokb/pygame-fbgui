@@ -222,6 +222,5 @@ Class Reference
 The following classes are planned, but not implemented yet:
 
   - `GridBox`
-  - `List`
   - `ScrollArea`
   - `TabBox`
