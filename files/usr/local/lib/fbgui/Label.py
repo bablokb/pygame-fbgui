@@ -64,6 +64,12 @@ class Label(fbgui.Widget):
         # only content changed, so post a redraw-event
         self.post_redraw()
       
+  # --- get the text of this label   -----------------------------------------
+
+  def get_text(self):
+    """ return the text of the label """
+    return self._text
+
   # --- query minimum size   -------------------------------------------------
 
   def _calc_minimum_size(self,w,h):
