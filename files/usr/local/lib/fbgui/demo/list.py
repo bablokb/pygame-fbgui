@@ -22,7 +22,7 @@ import fbgui
 # --- global constants   -----------------------------------------------------
 
 FG_COLOR = fbgui.Color.BLACK
-BG_COLOR = fbgui.Color.RED075
+BG_COLOR = fbgui.Color.WHITE
 
 FONT_SMALL  = 12
 FONT_MEDIUM = 24
@@ -40,6 +40,16 @@ def get_widgets():
                       settings=fbgui.Settings({'margins': (10,10,10,10)}),
                       toplevel=True)
 
+  # add a info-label
+  global info
+  info = fbgui.Label("info","please select an item",
+                      settings=fbgui.Settings({
+                       'width': 1.0,
+                       'bg_color': fbgui.Color.GRAY,
+                       'fg_color': fbgui.Color.WHITE,
+                      'align':    (fbgui.LEFT,fbgui.BOTTOM),
+                      }),parent=main)
+
   # add a list at the top
   labels = [ fbgui.Label('id1',"first item"),
              fbgui.Label('id2',"second item"),
@@ -54,6 +64,7 @@ def get_widgets():
                        'fg_color': fbgui.Color.WHITE,
                        'align': (fbgui.CENTER,fbgui.TOP),
                       }),parent=main)
+  list1.on_selection_changed = lambda widget: on_selection_changed(widget)
 
   return main
 
@@ -64,6 +75,20 @@ def on_click(widget,event):
 
   global app
   app.logger.msg("DEBUG","running on_click-handler for %s" % widget.id())
+
+# ----------------------------------------------------------------------------
+
+def on_selection_changed(widget):
+  """ on selection changed event """
+
+  global app
+  global info
+  if widget:
+    app.logger.msg("DEBUG","selected widget: %s" % widget.id())
+    info.set_text("selected item: %s" % widget.get_text(),refresh=True)
+  else:
+    app.logger.msg("DEBUG","no widget selected")
+    info.set_text("no item selected",refresh=True)
 
 # ----------------------------------------------------------------------------
 
