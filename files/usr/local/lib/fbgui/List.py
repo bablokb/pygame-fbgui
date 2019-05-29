@@ -133,6 +133,14 @@ class List(fbgui.VBox):
       else:
         self._selected_widget = None
 
+    # check for registered on_selection_changed event
+    sc_handler = getattr(self,'on_selection_changed',None)
+    if sc_handler:
+      if self.multiselect:
+        sc_handler([w for w in self._childs if w.is_selected()])
+      else:
+        sc_handler(self._selected_widget)
+
     _on_click_original = getattr(widget,'_on_click_original',None)
     if _on_click_original:
       fbgui.App.logger.msg("TRACE","calling _on_click_original for %s of %s" %
