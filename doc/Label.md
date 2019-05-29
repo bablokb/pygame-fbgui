@@ -23,3 +23,4 @@ Public Methods
 | Name                        | Description                                   |
 |-----------------------------|-----------------------------------------------|
 | set_text(text,refresh=True) | set the text of this widget and refresh GUI   |
+| get_text()                  | return the text of the label                  |
