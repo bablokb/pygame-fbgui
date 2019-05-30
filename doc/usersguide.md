@@ -261,3 +261,38 @@ The second version also sets a different font for the time-label. The library
 uses either builtin-fonts or font-files. A builtin-font has no extension
 (.ttf in our case). For details about fonts please have a look at the
 relevant section in the [Reference](./reference.md "Reference").
+
+
+Updating the GUI
+----------------
+
+At this stage our clock is rather boring, since it displays a fixed date
+and time. We will fix this now by adding an update-function to our
+application-class:
+
+     1	  def _update(self):
+     2	    locale.setlocale(locale.LC_ALL, '')
+     3	    delay = 0.5
+     4	    while True:
+     5	      time.sleep(delay)
+     6	      now = datetime.datetime.now()
+     7	      try:
+     8	        self._dlabel.set_text(now.strftime("%a %x"))
+     9	        self._tlabel.set_text(now.strftime("%H:%M:%S"))
+    10	      except:
+    11	        break
+    12
+    13	  def on_start(self):
+    14	    threading.Thread(target=self._update).start()
+
+The application-class will call the `on_start()`-method just before entering
+the main event-loop (line 13+14). This method starts a new thread running the
+`_update()`-method. This will update the internal state of the labels
+using `set_text()`, and that method will then post a redraw-event to
+the main event-loop. So although it seems that the update-thread is
+updating the GUI, in reality it is the main application thread (method
+`run()` of the application).
+
+As a side-note it is not a good idea to update the
+display every half a second (or even every second), because this probably
+keeps your Pi from doing more important things.
