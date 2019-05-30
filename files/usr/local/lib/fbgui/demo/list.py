@@ -33,6 +33,38 @@ HEIGHT = 600
 
 # ----------------------------------------------------------------------------
 
+class ListItem(fbgui.HBox):
+  """ an item with two childs """
+
+  counter = 0
+  def __init__(self):
+    """ constructor """
+    ListItem.counter += 1
+    id = "Item_%d" % ListItem.counter
+    super(ListItem,self).__init__(id,
+                                  settings=fbgui.Settings({
+                                    'width': 1.0,
+                                    'radius': 0.2,
+                                    'margins': 2,
+                                    'padding': 2
+                                    }))
+    # add first child (big number)
+    font_size = fbgui.App.theme.font_size * 2
+    fbgui.Label("label_%d" % ListItem.counter,
+                "%d" % ListItem.counter,
+                settings=fbgui.Settings({
+                  'width': 0.05,
+                  'align': fbgui.RIGHT,
+                  'font_size': font_size
+                }),parent=self)
+
+    # add second child (Text)
+    text = "First line of item %d\nSecond line of item %d" % (
+                                          ListItem.counter, ListItem.counter)
+    fbgui.Text("text_%d" % ListItem.counter,text,parent=self)
+
+# ----------------------------------------------------------------------------
+
 def get_widgets():
   """ create widget-tree """
     
@@ -66,6 +98,20 @@ def get_widgets():
                       }),parent=main)
   list1.on_selection_changed = lambda widget: on_selection_changed(widget)
 
+  # add a list at the center
+  items = [ ListItem() for i in range(4) ]
+  
+  list2 = fbgui.List("list2",items,
+                      settings=fbgui.Settings({
+                       'margins':  5,
+                       'width': 0.9,
+                       'multiselect': True,
+                       'bg_color': fbgui.Color.BLUE,
+                       'fg_color': fbgui.Color.WHITE,
+                       'align': (fbgui.CENTER,fbgui.CENTER),
+                      }),parent=main)
+  list2.on_selection_changed = lambda widget: on_selection_changed(widget)
+
   return main
 
 # ----------------------------------------------------------------------------
@@ -81,14 +127,16 @@ def on_click(widget,event):
 def on_selection_changed(widget):
   """ on selection changed event """
 
-  global app
-  global info
-  if widget:
-    app.logger.msg("DEBUG","selected widget: %s" % widget.id())
-    info.set_text("selected item: %s" % widget.get_text(),refresh=True)
+  global app,info
+  if isinstance(widget,list):
+    text = ", ".join([ w.id() for w in widget ])
   else:
-    app.logger.msg("DEBUG","no widget selected")
-    info.set_text("no item selected",refresh=True)
+    if widget:
+      text = widget.id()
+    else:
+      text = "none"
+  app.logger.msg("DEBUG","selected items: %s" % text)
+  info.set_text("selected items: %s" % text,refresh=True)
 
 # ----------------------------------------------------------------------------
 
