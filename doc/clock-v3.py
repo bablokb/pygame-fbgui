@@ -29,7 +29,7 @@ class Clock(fbgui.App):
                                }),parent=self._vbox)
     self._tlabel = fbgui.Label("tlabel","14:23:12",
                                settings=fbgui.Settings({
-                                 'font_name': "DejaVuSansMono-Bold.ttf",
+                                 'font_name': "DSEG7Classic-Bold.ttf",
                                  'font_size': self.theme.font_size_xxl,
                                  'align': fbgui.CENTER
                                }),parent=self._vbox)
