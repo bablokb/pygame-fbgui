@@ -31,9 +31,10 @@ class List(fbgui.VBox):
     super(List,self).__init__(id,settings=settings,
                               toplevel=toplevel,parent=parent)
     
-    self.multiselect = getattr(settings,'multiselect',False)
-    self._offset   = 0
+    self.multiselect      = getattr(settings,'multiselect',False)
+    self._offset          = 0
     self._selected_widget = None
+    self._inherit_select  = False
     self._add_items(items,refresh=False)
 
   # --- set the items of this List (internal)   ----------------------------
