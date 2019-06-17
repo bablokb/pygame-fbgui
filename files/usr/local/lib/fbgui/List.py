@@ -42,7 +42,7 @@ class List(fbgui.VBox):
   def _add_items(self,items,refresh=True):
     """ set the items of this widget """
 
-    fbgui.App.logger.msg("TRACE","changing items of %s" % self._id)
+    fbgui.App.logger.msg("TRACE","%s: _add_items()" % self._id)
 
     if not items:
       fbgui.App.logger.msg("TRACE","no items to add for %s" % self._id)
@@ -54,7 +54,8 @@ class List(fbgui.VBox):
       if hasattr(item,'on_click'):
         item._on_click_original = item.on_click
       item.on_click = lambda widget,event: self._on_child_clicked(widget,event)
-      self.add(item)
+      if item._parent is None or item._parent.id() != self._id:
+        self.add(item)
 
     if refresh:
       self.post_layout()
@@ -82,6 +83,7 @@ class List(fbgui.VBox):
   def _clear(self,refresh=True):
     """ clear the content of the List (internal method) """
 
+    fbgui.App.logger.msg("TRACE","%s: _clear()" % self._id)
     if len(self._childs):
       self.remove_all()
     if refresh:
