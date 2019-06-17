@@ -61,7 +61,7 @@ class List(fbgui.VBox):
 
   # --- add items to this List   -------------------------------------------
 
-  def add_itmes(self,items,refresh=True):
+  def add_items(self,items,refresh=True):
     """ add items to the list """
 
     # N.B.: we just post a suitable event, since _add_items should only be
