@@ -25,8 +25,11 @@ Settings
 Public Methods
 --------------
 
-| Name          | Description                                          |
-|---------------|------------------------------------------------------|
-| add           | add a child-widget                                   |
-| remove        | remove a child-widget                                |
-| remove_all    | remove all child-widgets                             |
+| Name                         | Description                           |
+|------------------------------|---------------------------------------|
+| add(widget,index=None)       | add a child-widget                    |
+| remove(widget,refresh=False) | remove a child-widget                 |
+| remove_all(refresh=False)    | remove all child-widgets              |
+| set_offset(offset)           | set the offset to the given value     |
+| inc_offset(inc=1)            | increment the offset                  |
+| dec_offset(dec=1)            | decrement the offset                  |
