@@ -32,7 +32,6 @@ class List(fbgui.VBox):
                               toplevel=toplevel,parent=parent)
     
     self.multiselect      = getattr(settings,'multiselect',False)
-    self._offset          = 0
     self._selected_widget = None
     self._inherit_select  = False
     self._add_items(items,refresh=False)
@@ -124,7 +123,7 @@ class List(fbgui.VBox):
     """ return selected widgets or None (multiselect will return list) """
 
     if self.multiselect:
-      return [w for w in self._childs if w.is_selected()]
+      return [w for w in self._childs[self._offset:] if w.is_selected()]
     else:
       return self._selected_widget
     
