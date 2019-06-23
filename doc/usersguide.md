@@ -296,3 +296,25 @@ updating the GUI, in reality it is the main application thread (method
 As a side-note it is not a good idea to update the
 display every half a second (or even every second), because this probably
 keeps your Pi from doing more important things.
+
+
+Events
+------
+
+Widgets support **events**, i.e. on interaction the library will call
+special methods. Every widget currently supports the `on_click` and
+`on_selected` events. Other widgets define additional events (e.g. the
+`List`-widget has a `on_selection_changed` event).
+
+To process events, just add a method to the attribute with the same name
+as the event:
+
+    def my_click_method(widget,event):
+       """ process click event """
+       pass
+
+    btn = fbgui.Button(...)
+    btn.on_click = my_click_method
+
+The signature of the method depends on the event, for details, see the
+[reference](./reference.md "Reference").
