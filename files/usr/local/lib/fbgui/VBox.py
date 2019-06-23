@@ -39,7 +39,7 @@ class VBox(fbgui.Box):
     # N.B.: Box._calc_minimum_size() will also calculate child-sizes
     super(VBox,self)._calc_minimum_size(w,h)
 
-    n_childs = len(self._childs)
+    n_childs = len(self._childs[self._offset:])
     if not n_childs:
       fbgui.App.logger.msg("TRACE",
                   "min_size (%s): (%d,%d)" % (self._id,self.w_min,self.h_min))
@@ -75,7 +75,7 @@ class VBox(fbgui.Box):
                          (self._id,x,y,w,h))
 
     # calculate additional size we have
-    n_childs = len(self._childs)
+    n_childs = len(self._childs[self._offset:])
     h_add = max(0,h-self._child_h_sum - (n_childs-1)*self.padding[1])
     fbgui.App.logger.msg("TRACE","h_add (%s): %d" % (self._id,h_add))
 
@@ -88,7 +88,7 @@ class VBox(fbgui.Box):
 
     # now layout children
     index = 0
-    for child in self._childs:
+    for child in self._childs[self._offset:]:
       child_w, child_h = self._child_sizes[index]
       if self.uniform[0]:
         child_w = self._child_w_max

@@ -68,7 +68,7 @@ class Box(fbgui.Panel):
     # calculate size of all children
     self._child_w_weight_sum = 0.0
     self._child_h_weight_sum = 0.0
-    for child in self._childs:
+    for child in self._childs[self._offset:]:
       child._calc_minimum_size(self.w_min-self.margins[0]-self.margins[1],
                                self.h_min-self.margins[2]-self.margins[3])
       (c_w,c_h) = child.w_min, child.h_min
@@ -81,7 +81,7 @@ class Box(fbgui.Panel):
       self._child_sizes.append((c_w,c_h))
 
     # when all childs have equal size, use largest size to calculate sum
-    n_childs = len(self._childs)
+    n_childs = len(self._childs[self._offset:])
     if self.uniform[0]:
       self._child_w_sum = n_childs*self._child_w_max
     if self.uniform[1]:
