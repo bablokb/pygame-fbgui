@@ -35,8 +35,9 @@ class Panel(fbgui.Widget):
     if not type(self.margins) is tuple:
       self.margins = (self.margins,self.margins,self.margins,self.margins)
 
-    self._childs = []
-    self._inherit_select = True             # Lists will set this to False
+    self._childs = []             # list of childs
+    self._inherit_select = True   # Lists will set this to False
+    self._offset         = 0      # used by subclasses to process subsets
 
   # --- add child   ----------------------------------------------------------
 
@@ -76,8 +77,29 @@ class Panel(fbgui.Widget):
     """ (recursively) invalidate size-information """
 
     super(Panel,self)._invalidate()
-    for child in self._childs:
+    for child in self._childs:              # invalidate all childs!
       child._invalidate()
+
+  # --- set offset   ---------------------------------------------------------
+
+  def set_offset(self,offset):
+    """ set offset to given value """
+
+    self._offset = offset
+
+  # --- increment offset   ---------------------------------------------------
+
+  def inc_offset(self,inc=1):
+    """ increment offset """
+
+    self._offset += inc
+
+  # --- decrement offset   ---------------------------------------------------
+
+  def dec_offset(self,dec=1):
+    """ decrement offset """
+
+    self._offset -= dec
 
   # --- set selection status   -----------------------------------------------
 
@@ -86,7 +108,7 @@ class Panel(fbgui.Widget):
 
     result = super(Panel,self).set_selected(new_state)
     if self._inherit_select:
-      for child in self._childs:
+      for child in self._childs[self._offset:]:
         child.set_selected(new_state)
 
   # --- query minimum size   -------------------------------------------------
@@ -105,7 +127,7 @@ class Panel(fbgui.Widget):
     # calculate size of all children
     w_min = 0
     h_min = 0
-    for child in self._childs:
+    for child in self._childs[self._offset:]:
       child._calc_minimum_size(self.w_min-self.margins[0]-self.margins[1],
                                self.h_min-self.margins[2]-self.margins[3])
       w_min = max(w_min,child.w_min)
@@ -135,7 +157,7 @@ class Panel(fbgui.Widget):
                          (self._id,x,y,w,h))
     
     # now layout children
-    for child in self._childs:
+    for child in self._childs[self._offset:]:
 
       # horizontal alignment
       if child.align[0] == fbgui.LEFT:
@@ -163,7 +185,7 @@ class Panel(fbgui.Widget):
 
     # either one of our childs handles the event, or we do it ourselves
     # we iterate the reversed list, since last added child is on top (drawn last)
-    for child in reversed(self._childs):
+    for child in reversed(self._childs[self._offset:]):
       if child.handle_event(event):
         return True
     return super(Panel,self).handle_event(event)
@@ -230,6 +252,6 @@ class Panel(fbgui.Widget):
       else:
         self._draw_rounded(color)
 
-    for child in self._childs:
+    for child in self._childs[self._offset:]:
       child.draw()
     self._clip_pop()
