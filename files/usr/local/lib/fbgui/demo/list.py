@@ -99,12 +99,13 @@ def get_widgets():
   list1.on_selection_changed = lambda widget: on_selection_changed(widget)
 
   # add a list at the center
-  items = [ ListItem() for i in range(4) ]
+  items = [ ListItem() for i in range(8) ]
   
   list2 = fbgui.List("list2",items,
                       settings=fbgui.Settings({
                        'margins':  5,
                        'width': 0.9,
+                       'height': 0.5,
                        'multiselect': True,
                        'bg_color': fbgui.Color.BLUE,
                        'fg_color': fbgui.Color.WHITE,
