@@ -85,7 +85,9 @@ class Panel(fbgui.Widget):
   def set_offset(self,offset):
     """ set offset to given value """
 
-    self._offset = offset
+    if offset <> self._offset:
+      self._offset = offset
+      self._invalidate()
 
   # --- increment offset   ---------------------------------------------------
 
@@ -93,6 +95,7 @@ class Panel(fbgui.Widget):
     """ increment offset """
 
     self._offset += inc
+    self._invalidate()
 
   # --- decrement offset   ---------------------------------------------------
 
@@ -100,6 +103,7 @@ class Panel(fbgui.Widget):
     """ decrement offset """
 
     self._offset -= dec
+    self._invalidate()
 
   # --- set selection status   -----------------------------------------------
 
