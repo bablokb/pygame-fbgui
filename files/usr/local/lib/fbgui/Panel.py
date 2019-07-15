@@ -85,7 +85,7 @@ class Panel(fbgui.Widget):
   def set_offset(self,offset):
     """ set offset to given value """
 
-    if offset <> self._offset:
+    if offset != self._offset:
       self._offset = offset
       self._invalidate()
 
