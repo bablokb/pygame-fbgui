@@ -27,6 +27,14 @@ Table of Contents
 News
 ----
 
+### July  2019 ###
+
+  - added documentation
+  - added Widget `List`
+  - support selection
+  - support offsets for panels (used for scrolling lists)
+  - various bugfixes
+
 ### April 2019 ###
 
   - Core widgets available
