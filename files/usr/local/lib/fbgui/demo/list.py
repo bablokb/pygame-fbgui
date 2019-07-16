@@ -44,6 +44,7 @@ class ListItem(fbgui.HBox):
     super(ListItem,self).__init__(id,
                                   settings=fbgui.Settings({
                                     'width': 1.0,
+                                    'align': fbgui.CENTER,
                                     'radius': 0.2,
                                     'margins': 2,
                                     'padding': 2
@@ -62,6 +63,25 @@ class ListItem(fbgui.HBox):
     text = "First line of item %d\nSecond line of item %d" % (
                                           ListItem.counter, ListItem.counter)
     fbgui.Text("text_%d" % ListItem.counter,text,parent=self)
+
+# ----------------------------------------------------------------------------
+
+def create_scroll_box(parent,widget):
+  """ create the scroll-box for the list """
+
+  bbox = fbgui.VBox("list2_bbox",
+                    settings=fbgui.Settings({
+                      'height': 1.0,
+                       'bg_color': fbgui.Color.GRAY090,
+                      }),
+                    parent=parent)
+  prev_button = fbgui.Button("prev",text="^",parent=bbox)
+  prev_button.list = widget
+  prev_button.on_click = on_up
+  fbgui.VGap("prev",settings=fbgui.Settings({'weight': 1}),parent=bbox)
+  next_button = fbgui.Button("next",text="v",parent=bbox)
+  next_button.list = widget
+  next_button.on_click = on_down
 
 # ----------------------------------------------------------------------------
 
@@ -98,22 +118,47 @@ def get_widgets():
                       }),parent=main)
   list1.on_selection_changed = lambda widget: on_selection_changed(widget)
 
-  # add a list at the center
+  # add a list at the center with scroll-buttons
+  hbox  = fbgui.HBox("list2_hbox",
+                     settings=fbgui.Settings({
+                       'margins':  2,
+                       'height': 0.5,
+                       'bg_color': fbgui.Color.BLUE,
+                       'align': (fbgui.CENTER,fbgui.CENTER)}),
+                       parent=main)
+
   items = [ ListItem() for i in range(8) ]
   
   list2 = fbgui.List("list2",items,
                       settings=fbgui.Settings({
-                       'margins':  5,
-                       'width': 0.9,
-                       'height': 0.5,
                        'multiselect': True,
+                       'weight': 1,
                        'bg_color': fbgui.Color.BLUE,
                        'fg_color': fbgui.Color.WHITE,
-                       'align': (fbgui.CENTER,fbgui.CENTER),
-                      }),parent=main)
+                       'align': (fbgui.CENTER,fbgui.TOP)
+                      }),parent=hbox)
   list2.on_selection_changed = lambda widget: on_selection_changed(widget)
+  create_scroll_box(hbox,list2)
 
   return main
+
+# ----------------------------------------------------------------------------
+
+def on_up(widget,event):
+  """ prev button of list """
+
+  app.logger.msg("DEBUG","scroll list up")
+  widget.list.dec_offset()
+  widget.post_layout()
+
+# ----------------------------------------------------------------------------
+
+def on_down(widget,event):
+  """ next button of list """
+
+  app.logger.msg("DEBUG","scroll list down")
+  widget.list.inc_offset()
+  widget.post_layout()
 
 # ----------------------------------------------------------------------------
 
