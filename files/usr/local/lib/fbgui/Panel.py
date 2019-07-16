@@ -258,6 +258,14 @@ class Panel(fbgui.Widget):
       else:
         self._draw_rounded(color)
 
+    # temporarely add clipping for margins
+    rect = pygame.Rect(self._draw_rect.x+self.margins[0],
+                       self._draw_rect.y+self.margins[2],
+                       self._draw_rect.w-self.margins[0]-self.margins[2],
+                       self._draw_rect.h-self.margins[1]-self.margins[3])
+    client_clip = rect.clip(self._old_clip)
+    fbgui.App.display.screen.set_clip(client_clip)
+
     for child in self._childs[self._offset:]:
       child.draw()
     self._clip_pop()
