@@ -241,7 +241,7 @@ class Panel(fbgui.Widget):
 
   # --- redraw widget   ------------------------------------------------------
 
-  def draw(self):
+  def draw(self,surface):
     """ draw the widget """
 
     # in case we have an event triggering draw before a still pending

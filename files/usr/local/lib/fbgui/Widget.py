@@ -367,7 +367,7 @@ class Widget(object):
 
   # --- redraw widget   ------------------------------------------------------
 
-  def draw(self):
+  def draw(self,surface):
     """ draw the widget """
 
     # subclasses must implement their own logic here

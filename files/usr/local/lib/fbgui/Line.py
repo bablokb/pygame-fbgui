@@ -50,7 +50,7 @@ class Line(fbgui.Widget):
 
   # --- redraw widget   ------------------------------------------------------
 
-  def draw(self):
+  def draw(self,surface):
     """ draw the widget """
 
     self._clip_push()

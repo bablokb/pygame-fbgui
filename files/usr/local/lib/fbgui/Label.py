@@ -94,7 +94,7 @@ class Label(fbgui.Widget):
 
   # --- redraw widget   ------------------------------------------------------
 
-  def draw(self):
+  def draw(self,surface):
     """ draw the widget """
 
     # if the widget has a size, fill with background color
@@ -109,7 +109,8 @@ class Label(fbgui.Widget):
       # align the label on it's drawing area
       pos = self._align(self._rect)
       self._clip_push()
-      surface, _ = self.theme.font.render(self._text,
+      surface, rect = self.theme.font.render(self._text,
                                                  self.fg_color,self.bg_color)
-      fbgui.App.display.screen.blit(surface,pos)
+      area = pygame.Rect(xoff,yoff,rect.w-xoff,rect.h-yoff)
+      fbgui.App.display.screen.blit(surface,pos,area)
       self._clip_pop()
