@@ -251,7 +251,7 @@ class App(object):
     if self._widget:
       if pack:
         self._widget.pack()
-      self._widget.draw()
+      self._widget.draw(App.display.screen)
     pygame.display.flip()
 
   # --- set top-level widget   ------------------------------------------------
