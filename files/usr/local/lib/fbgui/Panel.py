@@ -267,5 +267,5 @@ class Panel(fbgui.Widget):
     fbgui.App.display.screen.set_clip(client_clip)
 
     for child in self._childs[self._offset:]:
-      child.draw()
+      child.draw(surface)
     self._clip_pop()
