@@ -37,6 +37,7 @@ class Label(fbgui.Widget):
         self.theme.font = self.theme.default_font
 
     self._text = None
+    self._rect = pygame.Rect(0,0,0,0)
     self.set_text(text,refresh=False)
 
   # --- set the text of this label   -----------------------------------------
@@ -52,7 +53,7 @@ class Label(fbgui.Widget):
     if self._text:
       self._rect = self.theme.font.get_rect(self._text)
     else:
-      self._rect    = None
+      self._rect = pygame.Rect(0,0,0,0)
 
     if refresh:
       if ( self._rect.w != self.screen.w or
@@ -105,7 +106,7 @@ class Label(fbgui.Widget):
                rect=(self.screen.x,self.screen.y,self.screen.w,self.screen.h))
 
     # now render the font
-    if self._rect:
+    if self._rect.w > 0 and self._rect.h > 0:
       # align the label on it's drawing area
       pos = self._align(self._rect)
       self._clip_push()
