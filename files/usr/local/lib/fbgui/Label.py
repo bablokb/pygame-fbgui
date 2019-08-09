@@ -17,8 +17,6 @@ import fbgui
 class Label(fbgui.Widget):
   """ draw a text """
 
-  EVENT_SET_TEXT = 0
-
   # --- constructor   --------------------------------------------------------
   
   def __init__(self,id,text,settings=fbgui.Settings(),toplevel=False,parent=None):
@@ -42,28 +40,10 @@ class Label(fbgui.Widget):
     self._rect = pygame.Rect(0,0,0,0)
     self.set_text(text,refresh=False)
 
-  # --- set the text of this Text   ----------------------------------------
-
-  def set_text(self,text,refresh=True):
-    """ set the text of this widget (public method) """
-
-    # N.B.: we just post a suitable event, since _set_text should only be
-    #       called from the main-thread
-
-    fbgui.App.logger.msg("TRACE","posting set_text-event from %s" % self._id)
-    event = pygame.fastevent.Event(fbgui.EVENT,
-                                   code=fbgui.EVENT_CODE_WIDGET,
-                                   widget=self)
-
-    event.method = Label.EVENT_SET_TEXT
-    event.text = text
-    event.refresh = refresh
-    pygame.fastevent.post(event)
-
   # --- set the text of this label   -----------------------------------------
 
-  def _set_text(self,text,refresh=True):
-    """ set the text of the label (internal method) """
+  def set_text(self,text,refresh=True):
+    """ set the text of the label """
 
     if text == self._text:
       return
@@ -134,13 +114,3 @@ class Label(fbgui.Widget):
                                                  self.fg_color,self.bg_color)
       fbgui.App.display.screen.blit(surface,pos)
       self._clip_pop()
-
-  # --- handle internal event   ----------------------------------------------
-
-  def _handle_internal_event(self,event):
-    """ handle internal events """
-
-    if event.method == Label.EVENT_SET_TEXT:
-      self._set_text(event.text,refresh=event.refresh)
-    else:
-      assert False, "ERROR: illegal event-method: %d" % event.method
