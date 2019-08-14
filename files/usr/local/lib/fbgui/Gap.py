@@ -38,7 +38,7 @@ class Gap(fbgui.Panel):
 
   # --- redraw widget   ------------------------------------------------------
 
-  def draw(self,surface):
+  def draw(self,surface=None):
     """ draw the widget """
 
     # do nothing!

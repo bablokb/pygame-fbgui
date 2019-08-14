@@ -99,7 +99,7 @@ class Image(fbgui.Widget):
 
   # --- redraw widget   ------------------------------------------------------
 
-  def draw(self,surface):
+  def draw(self,surface=None):
     """ draw the widget """
 
     if not self._img:

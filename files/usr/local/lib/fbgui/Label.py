@@ -95,7 +95,7 @@ class Label(fbgui.Widget):
 
   # --- redraw widget   ------------------------------------------------------
 
-  def draw(self,surface):
+  def draw(self,surface=None):
     """ draw the widget """
 
     # if the widget has a size, fill with background color
