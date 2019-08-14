@@ -98,6 +98,10 @@ class Label(fbgui.Widget):
   def draw(self,surface=None):
     """ draw the widget """
 
+    # surface is None for redraw events, so save surface
+    if surface is not None:
+      self._surface = surface
+
     # if the widget has a size, fill with background color
     if self.screen.w > 0 and self.screen.h > 0:
       if not self._parent or ( self.bg_color.a > 0 and

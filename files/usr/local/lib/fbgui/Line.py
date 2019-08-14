@@ -53,6 +53,10 @@ class Line(fbgui.Widget):
   def draw(self,surface=None):
     """ draw the widget """
 
+    # surface is None for redraw events, so save surface
+    if surface is not None:
+      self._surface = surface
+
     self._clip_push()
     if self.orientation == fbgui.HORIZONTAL:
       pygame.gfxdraw.hline(fbgui.App.display.screen,

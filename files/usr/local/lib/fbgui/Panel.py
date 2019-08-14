@@ -249,6 +249,10 @@ class Panel(fbgui.Widget):
     if not self._is_size_valid:
       return
 
+    # surface is None for redraw events, so save surface
+    if surface is not None:
+      self._surface = surface
+
     color = self.bg_color
 
     self._clip_push()
