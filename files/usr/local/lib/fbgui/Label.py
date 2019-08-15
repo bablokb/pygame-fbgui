@@ -114,8 +114,7 @@ class Label(fbgui.Widget):
       # align the label on it's drawing area
       pos = self._align(self._rect)
       self._clip_push()
-      surface, rect = self.theme.font.render(self._text,
+      surface, _ = self.theme.font.render(self._text,
                                                  self.fg_color,self.bg_color)
-      area = pygame.Rect(xoff,yoff,rect.w-xoff,rect.h-yoff)
-      self._surface.blit(surface,pos,area)
+      self._surface.blit(surface,pos)
       self._clip_pop()
