@@ -106,7 +106,7 @@ class Label(fbgui.Widget):
     if self.screen.w > 0 and self.screen.h > 0:
       if not self._parent or ( self.bg_color.a > 0 and
                        fbgui.Color.neq(self.bg_color,self._parent.bg_color) ):
-        fbgui.App.display.screen.fill(self.bg_color,
+        self._surface.fill(self.bg_color,
                rect=(self.screen.x,self.screen.y,self.screen.w,self.screen.h))
 
     # now render the font
@@ -117,5 +117,5 @@ class Label(fbgui.Widget):
       surface, rect = self.theme.font.render(self._text,
                                                  self.fg_color,self.bg_color)
       area = pygame.Rect(xoff,yoff,rect.w-xoff,rect.h-yoff)
-      fbgui.App.display.screen.blit(surface,pos,area)
+      self._surface.blit(surface,pos,area)
       self._clip_pop()

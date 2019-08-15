@@ -237,7 +237,7 @@ class Panel(fbgui.Widget):
     surface.fill(draw_color,special_flags=pygame.BLEND_RGBA_MAX)
     surface.fill((255,255,255,alpha),special_flags=pygame.BLEND_RGBA_MIN)
 
-    fbgui.App.display.screen.blit(surface,(self.screen.x,self.screen.y))
+    self._surface.blit(surface,(self.screen.x,self.screen.y))
 
   # --- redraw widget   ------------------------------------------------------
 
@@ -258,7 +258,7 @@ class Panel(fbgui.Widget):
     self._clip_push()
     if not self._parent or not fbgui.Color.eq(color,self._parent.theme.bg_color):
       if self._radius == 0.0:
-        fbgui.App.display.screen.fill(color,rect=self._draw_rect)
+        self._surface.fill(color,rect=self._draw_rect)
       else:
         self._draw_rounded(color)
 
@@ -268,7 +268,7 @@ class Panel(fbgui.Widget):
                        self._draw_rect.w-self.margins[0]-self.margins[1],
                        self._draw_rect.h-self.margins[2]-self.margins[3])
     client_clip = rect.clip(self._old_clip)
-    fbgui.App.display.screen.set_clip(client_clip)
+    self._surface.set_clip(client_clip)
 
     for child in self._childs[self._offset:]:
       child.draw(surface)

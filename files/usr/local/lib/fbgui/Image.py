@@ -121,5 +121,5 @@ class Image(fbgui.Widget):
 
     # implement clipping
     self._clip_push()
-    fbgui.App.display.screen.blit(self._scaled_surface,pos)
+    self._surface.blit(self._scaled_surface,pos)
     self._clip_pop()
